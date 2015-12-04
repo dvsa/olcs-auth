@@ -1,0 +1,35 @@
+{
+    "name": "olcs/olcs-auth",
+    "description": "OLCS Authentication",
+    "type": "library",
+    "repositories": [
+        {
+            "packagist": false
+        },
+        {
+            "url": "http://satis.inf.mgt.mtpdvsa",
+            "type": "composer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "zendframework/zendframework": "~2.3.5",
+        "doctrine/annotations": "^1.2.3"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "~1.5.3",
+        "phpunit/phpunit": "^4.4.0",
+        "mockery/mockery": "~0.9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dvsa\\Olcs\\Auth\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "github-oauth": {
+            "github.com": "9d28c36d14775b5d8c4a5ffeee6172eecbd8c9f4"
+        }
+    }
+}

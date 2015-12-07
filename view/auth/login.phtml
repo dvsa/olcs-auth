@@ -3,33 +3,37 @@
     <fieldset>
         <legend><?php echo $this->translate('auth.login.title'); ?></legend>
         <?php
+        echo $this->formErrors($form);
         if (isset($failed) && $failed) {
             ?>
             <div class="validation-summary">
                 <h3><?php echo $this->translate('auth.login.failed.title'); ?></h3>
-                <p><?php echo $this->translate('auth.login.failed.' . $failureReason); ?></p>
+                <p><?php echo $this->translate('auth.login.failed.reason.' . $failureReason); ?></p>
             </div>
             <?php
         }
+
+//          @todo not sure if this is needed yet
+//        $form->get('username')->setOption(
+//            'hint',
+//            sprintf('<a href="%s">%s</a>',
+//                $this->url('auth/forgot-username'),
+//                $this->translate('auth.forgot-username.label')
+//            )
+//        );
+//        $form->get('username')->setOption('hint-position', 'above');
+
+        $form->get('password')->setOption(
+            'hint',
+            sprintf('<a href="%s">%s</a>',
+                $this->url('auth/forgot-password'),
+                $this->translate('auth.forgot-password.label')
+            )
+        );
+        $form->get('password')->setOption('hint-position', 'above');
         ?>
-        <div class="field">
-            <?php echo $this->formLabel($form->get('username')); ?>
-            <p class="hint">
-                <a href="<?php echo $this->url('auth/forgot-username'); ?>">
-                    <?php echo $this->translate('auth.forgot-username.label'); ?>
-                </a>
-            </p>
-            <?php echo $this->formElement($form->get('username')); ?>
-        </div>
-        <div class="field">
-            <?php echo $this->formLabel($form->get('password')); ?>
-            <p class="hint">
-                <a href="<?php echo $this->url('auth/forgot-password'); ?>">
-                    <?php echo $this->translate('auth.forgot-password.label'); ?>
-                </a>
-            </p>
-            <?php echo $this->formElement($form->get('password')); ?>
-        </div>
+        <?php echo $this->formRow($form->get('username')); ?>
+        <?php echo $this->formRow($form->get('password')); ?>
         <?php echo $this->formElement($form->get('submit')); ?>
     </fieldset>
 

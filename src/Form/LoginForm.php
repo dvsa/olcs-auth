@@ -11,16 +11,16 @@ use Zend\Form\Annotation as Form;
 class LoginForm
 {
     /**
-     * @Form\Options({"label": "auth.login.username"})
-     * @Form\Attributes({"id": "auth.login.username"})
+     * @Form\Options({"label": "auth.login.username", "short-label": "auth.login.username"})
+     * @Form\Attributes({"id": "auth.login.username", "tabindex": 1})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Text")
      */
     public $username = null;
 
     /**
-     * @Form\Options({"label": "auth.login.password"})
-     * @Form\Attributes({"id": "auth.login.password"})
+     * @Form\Options({"label": "auth.login.password", "short-label": "auth.login.password"})
+     * @Form\Attributes({"id": "auth.login.password", "tabindex": 2})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Password")
      */
@@ -30,7 +30,8 @@ class LoginForm
      * @Form\Attributes({
      *     "id": "auth.login.button",
      *     "value": "auth.login.button",
-     *     "class": "action--primary large"
+     *     "class": "action--primary large",
+     *     "tabindex": 3
      * })
      * @Form\Type("Submit")
      */

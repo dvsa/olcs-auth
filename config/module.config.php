@@ -30,16 +30,6 @@ return [
                             ]
                         ]
                     ],
-                    'forgot-username' => [
-                        'type' => 'segment',
-                        'options' => [
-                            'route' => 'forgot-username[/]',
-                            'defaults' => [
-                                'controller' => 'Auth\ForgotUsernameController',
-                                'action' => 'index'
-                            ]
-                        ]
-                    ],
                     'forgot-password' => [
                         'type' => 'segment',
                         'options' => [
@@ -47,8 +37,18 @@ return [
                             'defaults' => [
                                 'controller' => 'Auth\ForgotPasswordController',
                                 'action' => 'index'
-                            ]
-                        ]
+                            ],
+                        ],
+                    ],
+                    'reset-password' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => 'reset-password[/]',
+                            'defaults' => [
+                                'controller' => 'Auth\ResetPasswordController',
+                                'action' => 'index'
+                            ],
+                        ],
                     ],
                     'logout' => [
                         'type' => 'segment',
@@ -59,16 +59,7 @@ return [
                                 'action' => 'index'
                             ]
                         ],
-                    ],
-//                    'forgot' => [
-//                        'type' => 'segment',
-//                        'options' => [
-//                            'route' => 'forgot[/]',
-//                            'defaults' => [
-//                                'action' => 'forgot'
-//                            ]
-//                        ]
-//                    ]
+                    ]
                 ]
             ]
         ]
@@ -76,17 +67,18 @@ return [
     'controllers' => [
         'invokables' => [
             'Auth\LoginController' => \Dvsa\Olcs\Auth\Controller\LoginController::class,
-            'Auth\ExpiredPasswordController' => \Dvsa\Olcs\Auth\Controller\ExpiredPasswordController::class,
             'Auth\LogoutController' => \Dvsa\Olcs\Auth\Controller\LogoutController::class,
-            'Auth\ForgotUsernameController' => \Dvsa\Olcs\Auth\Controller\ForgotUsernameController::class,
+            'Auth\ExpiredPasswordController' => \Dvsa\Olcs\Auth\Controller\ExpiredPasswordController::class,
             'Auth\ForgotPasswordController' => \Dvsa\Olcs\Auth\Controller\ForgotPasswordController::class,
-            //'AuthController' => \Dvsa\Olcs\Auth\Controller\DefaultController::class,
+            'Auth\ResetPasswordController' => \Dvsa\Olcs\Auth\Controller\ResetPasswordController::class,
         ]
     ],
     'service_manager' => [
         'factories' => [
             'Auth\AuthenticationService' => \Dvsa\Olcs\Auth\Service\Auth\AuthenticationService::class,
             'Auth\ExpiredPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService::class,
+            'Auth\ForgotPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService::class,
+            'Auth\ResetPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ResetPasswordService::class,
             'Auth\LoginService' => \Dvsa\Olcs\Auth\Service\Auth\LoginService::class,
             'Auth\LogoutService' => \Dvsa\Olcs\Auth\Service\Auth\LogoutService::class,
             'Auth\CookieService' => \Dvsa\Olcs\Auth\Service\Auth\CookieService::class,

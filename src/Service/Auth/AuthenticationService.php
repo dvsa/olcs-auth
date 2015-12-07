@@ -26,7 +26,7 @@ class AuthenticationService extends AbstractRestService
         $data = $this->beginAuthenticationSession();
 
         $data['callbacks'][0]['input'][0]['value'] = $username;
-        $data['callbacks'][1]['input'][0]['value'] = $password;
+        $data['callbacks'][1]['input'][0]['value'] = HashService::hashPassword($password);
 
         $response = $this->post('/json/authenticate', $data);
 

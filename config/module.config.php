@@ -20,6 +20,16 @@ return [
                             ]
                         ]
                     ],
+                    'expired-password' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => 'expired-password/:authId[/]',
+                            'defaults' => [
+                                'controller' => 'Auth\ExpiredPasswordController',
+                                'action' => 'index'
+                            ]
+                        ]
+                    ],
                     'forgot-username' => [
                         'type' => 'segment',
                         'options' => [
@@ -66,6 +76,7 @@ return [
     'controllers' => [
         'invokables' => [
             'Auth\LoginController' => \Dvsa\Olcs\Auth\Controller\LoginController::class,
+            'Auth\ExpiredPasswordController' => \Dvsa\Olcs\Auth\Controller\ExpiredPasswordController::class,
             'Auth\LogoutController' => \Dvsa\Olcs\Auth\Controller\LogoutController::class,
             'Auth\ForgotUsernameController' => \Dvsa\Olcs\Auth\Controller\ForgotUsernameController::class,
             'Auth\ForgotPasswordController' => \Dvsa\Olcs\Auth\Controller\ForgotPasswordController::class,
@@ -75,6 +86,8 @@ return [
     'service_manager' => [
         'factories' => [
             'Auth\AuthenticationService' => \Dvsa\Olcs\Auth\Service\Auth\AuthenticationService::class,
+            'Auth\ExpiredPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService::class,
+            'Auth\LoginService' => \Dvsa\Olcs\Auth\Service\Auth\LoginService::class,
             'Auth\LogoutService' => \Dvsa\Olcs\Auth\Service\Auth\LogoutService::class,
             'Auth\CookieService' => \Dvsa\Olcs\Auth\Service\Auth\CookieService::class,
         ]

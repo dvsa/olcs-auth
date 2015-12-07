@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @Form\Name("login-form")
- * @Form\Attributes({"method":"post"})
- */
 namespace Dvsa\Olcs\Auth\Form;
 
 use Zend\Form\Annotation as Form;

@@ -8,12 +8,12 @@
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Form\LoginForm;
-use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\AuthenticationService;
+use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 
 /**
  * Login Controller
@@ -34,8 +34,8 @@ class LoginController extends AbstractActionController
 
         $form = $this->getServiceLocator()->get('Helper\Form')->createFormWithRequest(LoginForm::class, $request);
 
-        $authenticationFailed = false;
-        $authenticationFailureReason = null;
+        $failed = false;
+        $failureReason = null;
 
         if ($this->isLoginFormPost($request)) {
 
@@ -48,33 +48,26 @@ class LoginController extends AbstractActionController
 
                 $result = $this->getAuthenticationService()->authenticate($data['username'], $data['password']);
 
-                if ($result['status'] === 200) {
+                if ($result['status'] == 200) {
 
                     if (isset($result['tokenId'])) {
-                        /** @var CookieService $cookieService */
-                        $cookieService = $this->getServiceLocator()->get('Auth\CookieService');
-                        $cookieService->createTokenCookie($this->getResponse(), $result['tokenId']);
 
-                        $goto = $this->params()->fromQuery('goto');
-
-                        if ($goto !== null) {
-                            return $this->redirect()->toUrl($goto);
-                        }
-
-                        return $this->redirect()->toRoute('index');
+                        return $this->getLoginService()->login(
+                            $result['tokenId'],
+                            $this->getResponse(),
+                            $this->params()->fromQuery('goto')
+                        );
                     }
 
-                    print '<pre>';
-                    print_r($result);
-                    exit;
+                    return $this->redirect()->toRoute('auth/expired-password', ['authId' => $result['authId']]);
                 }
 
-                if ($result['status'] === 401) {
-                    $authenticationFailed = true;
-                    $authenticationFailureReason = $result['message'];
+                if ($result['status'] == 401) {
+                    $failed = true;
+                    $failureReason = $result['message'];
                 } else {
-                    $authenticationFailed = true;
-                    $authenticationFailureReason = 'unknown-reason';
+                    $failed = true;
+                    $failureReason = 'unknown-reason';
                 }
             }
         }
@@ -83,8 +76,8 @@ class LoginController extends AbstractActionController
         $view = new ViewModel(
             [
                 'form' => $form,
-                'authenticationFailed' => $authenticationFailed,
-                'authenticationFailureReason' => $authenticationFailureReason
+                'failed' => $failed,
+                'failureReason' => $failureReason
             ]
         );
         $view->setTemplate('auth/login');
@@ -98,6 +91,14 @@ class LoginController extends AbstractActionController
     private function getAuthenticationService()
     {
         return $this->getServiceLocator()->get('Auth\AuthenticationService');
+    }
+
+    /**
+     * @return LoginService
+     */
+    private function getLoginService()
+    {
+        return $this->getServiceLocator()->get('Auth\LoginService');
     }
 
     /**

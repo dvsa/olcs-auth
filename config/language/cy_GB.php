@@ -1,8 +1,9 @@
 <?php
 
-return [
-    'auth.login.title' => '{WELSH} Sign in',
-    'auth.login.username' => '{WELSH} Username',
-    'auth.login.password' => '{WELSH} Password',
-    'auth.login.button' => '{WELSH} Sign in',
-];
+$en = include(__DIR__ . '/en_GB.php');
+
+foreach ($en as $key => $val) {
+    $en[$key] = '{WELSH} ' . $val;
+}
+
+return $en;

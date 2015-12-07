@@ -62,6 +62,6 @@ class LoginService implements FactoryInterface
             return $this->redirect->toUrl($goto);
         }
 
-        return $this->redirect->toRoute('index');
+        return $this->redirect->toUrl('/');
     }
 }

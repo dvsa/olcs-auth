@@ -1,0 +1,36 @@
+<?php echo $this->form()->openTag($form); ?>
+    <fieldset>
+        <legend><?php echo $this->translate('auth.login.title'); ?></legend>
+        <?php
+        if (isset($authenticationFailed) && $authenticationFailed) {
+            ?>
+            <div class="validation-summary">
+                <h3><?php echo $this->translate('auth.login.failed.title'); ?></h3>
+                <p><?php echo $this->translate($authenticationFailureReason); ?></p>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="field">
+            <?php echo $this->formLabel($form->get('username')); ?>
+            <p class="hint">
+                <a href="<?php echo $this->url('auth/forgot-username'); ?>">
+                    <?php echo $this->translate('auth.forgot-username.label'); ?>
+                </a>
+            </p>
+            <?php echo $this->formElement($form->get('username')); ?>
+        </div>
+        <div class="field">
+            <?php echo $this->formLabel($form->get('password')); ?>
+            <p class="hint">
+                <a href="<?php echo $this->url('auth/forgot-password'); ?>">
+                    <?php echo $this->translate('auth.forgot-password.label'); ?>
+                </a>
+            </p>
+            <?php echo $this->formElement($form->get('password')); ?>
+        </div>
+        <?php echo $this->formElement($form->get('submit')); ?>
+    </fieldset>
+
+<?php echo $this->formElement($form->get('security')); ?>
+<?php echo $this->form()->closeTag(); ?>

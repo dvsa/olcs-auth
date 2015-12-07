@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * Cookie Service
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+namespace Dvsa\Olcs\Auth\Service\Auth;
+
+use Zend\Http\Header\SetCookie;
+use Zend\Http\Request;
+use Zend\Http\Response;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+/**
+ * Cookie Service
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+class CookieService implements FactoryInterface
+{
+    /**
+     * @var string
+     */
+    private $cookieName;
+
+    /**
+     * @var string
+     */
+    private $cookieDomain;
+
+    /**
+     * Create the cookie service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return $this
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $config = $serviceLocator->get('Config');
+
+        if (empty($config['openam']['cookie']['name']) || empty($config['openam']['cookie']['domain'])) {
+            throw new \RuntimeException('openam/cookie is required but missing from config');
+        }
+
+        $this->cookieName = $config['openam']['cookie']['name'];
+        $this->cookieDomain = $config['openam']['cookie']['domain'];
+
+        return $this;
+    }
+
+    /**
+     * Create the token cookie
+     *
+     * @param Response $response
+     * @param $token
+     */
+    public function createTokenCookie(Response $response, $token)
+    {
+        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->cookieDomain);
+        $headers = $response->getHeaders();
+        $headers->addHeader($cookie);
+    }
+
+    /**
+     * Destroy cookie
+     *
+     * @param Response $response
+     */
+    public function destroyCookie(Response $response)
+    {
+        $cookie = new SetCookie($this->cookieName, null, strtotime('-1 year'), '/', $this->cookieDomain);
+        $headers = $response->getHeaders();
+        $headers->addHeader($cookie);
+    }
+
+    /**
+     * Get the cookie value
+     *
+     * @param Request $request
+     * @return null|string
+     */
+    public function getCookie(Request $request)
+    {
+        $cookie = $request->getHeaders()->get('Cookie');
+
+        if (empty($cookie->{$this->cookieName})) {
+            return null;
+        }
+
+        return $cookie->{$this->cookieName};
+    }
+}

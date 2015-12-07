@@ -21,6 +21,8 @@ class ForgotPasswordController extends AbstractActionController
 {
     /**
      * Forgot password page
+     *
+     * @return ViewModel
      */
     public function indexAction()
     {
@@ -29,53 +31,57 @@ class ForgotPasswordController extends AbstractActionController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest(ForgotPasswordForm::class, $request);
 
-        $failed = false;
-        $failureReason = '';
-
-        if ($request->isPost()) {
-
-            $post = $request->getPost();
-
-            $form->setData($post);
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                $result = $this->getForgotPasswordService()->forgotPassword($data['username']);
-
-                /**
-                 * Rather then redirecting, we show a different view in this case, that way the screen can only be shown
-                 * when a successful request has occurred
-                 */
-                if ($result['status'] == 200) {
-
-                    // @todo look up email address, if safe to do so
-                    $this->layout('auth/layout');
-                    $view = new ViewModel(['email' => 'EMAIL']);
-                    $view->setTemplate('auth/confirm-forgot-password');
-
-                    return $view;
-                }
-
-                $failed = true;
-                $failureReason = $result['message'];
-            }
+        if ($request->isPost() === false) {
+            return $this->renderView($form);
         }
 
+        $form->setData($request->getPost());
+
+        if ($form->isValid() === false) {
+            return $this->renderView($form);
+        }
+
+        $data = $form->getData();
+
+        $result = $this->getForgotPasswordService()->forgotPassword($data['username']);
+
+        /**
+         * Rather then redirecting, we show a different view in this case, that way the screen can only be shown
+         * when a successful request has occurred
+         */
+        if ($result['status'] == 200) {
+
+            // @todo look up email address, if safe to do so
+            $this->layout('auth/layout');
+            $view = new ViewModel(['email' => 'EMAIL']);
+            $view->setTemplate('auth/confirm-forgot-password');
+
+            return $view;
+        }
+
+        return $this->renderView($form, true, $result['message']);
+    }
+
+    /**
+     * Render the view
+     *
+     * @param \Zend\Form\Form $form
+     * @param bool $failed
+     * @param string $failureReason
+     * @return ViewModel
+     */
+    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    {
         $this->layout('auth/layout');
-        $view = new ViewModel(
-            [
-                'form' => $form,
-                'failed' => $failed,
-                'failureReason' => $failureReason
-            ]
-        );
+        $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);
         $view->setTemplate('auth/forgot-password');
 
         return $view;
     }
 
     /**
+     * Get forgot password service
+     *
      * @return ForgotPasswordService
      */
     private function getForgotPasswordService()

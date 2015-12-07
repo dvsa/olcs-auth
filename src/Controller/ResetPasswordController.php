@@ -20,7 +20,9 @@ use Dvsa\Olcs\Auth\Service\Auth\ResetPasswordService;
 class ResetPasswordController extends AbstractActionController
 {
     /**
-     * Forgot password page
+     * Reset password
+     *
+     * @return \Zend\Http\Response|ViewModel
      */
     public function indexAction()
     {
@@ -40,46 +42,49 @@ class ResetPasswordController extends AbstractActionController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest(ResetPasswordForm::class, $request);
 
-        $failed = false;
-        $failureReason = '';
-
-        if ($request->isPost()) {
-
-            $post = $request->getPost();
-
-            $form->setData($post);
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                $result = $this->getResetPasswordService()
-                    ->resetPassword($username, $confirmationId, $tokenId, $data['newPassword']);
-
-                if ($result['status'] == 200) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')
-                        ->addSuccessMessage('auth.reset-password.success');
-                    return $this->redirect()->toRoute('auth/login');
-                }
-
-                $failed = true;
-                $failureReason = $result['message'];
-            }
+        if ($request->isPost() === false) {
+            return $this->renderView($form);
         }
 
+        $form->setData($request->getPost());
+
+        if ($form->isValid() === false) {
+            return $this->renderView($form);
+        }
+
+        $data = $form->getData();
+
+        $result = $this->getResetPasswordService()
+            ->resetPassword($username, $confirmationId, $tokenId, $data['newPassword']);
+
+        if ($result['status'] == 200) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('auth.reset-password.success');
+            return $this->redirect()->toRoute('auth/login');
+        }
+
+        return $this->renderView($form, true, $result['message']);
+    }
+
+    /**
+     * Render the view
+     *
+     * @param \Zend\Form\Form $form
+     * @param bool|false $failed
+     * @param null $failureReason
+     * @return ViewModel
+     */
+    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    {
         $this->layout('auth/layout');
-        $view = new ViewModel(
-            [
-                'form' => $form,
-                'failed' => $failed,
-                'failureReason' => $failureReason
-            ]
-        );
+        $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);
         $view->setTemplate('auth/reset-password');
 
         return $view;
     }
 
     /**
+     * Get reset password service
+     *
      * @return ResetPasswordService
      */
     private function getResetPasswordService()

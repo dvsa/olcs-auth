@@ -36,6 +36,6 @@ class LogoutController extends AbstractActionController
             $cookieService->destroyCookie($this->getResponse());
         }
 
-        return $this->redirect()->toRoute('dashboard');
+        return $this->redirect()->toRoute('auth/login');
     }
 }

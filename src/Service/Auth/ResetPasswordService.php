@@ -33,6 +33,8 @@ class ResetPasswordService extends AbstractRestService
     }
 
     /**
+     * Reset password
+     *
      * @param $username
      * @param $confirmationId
      * @param $tokenId

@@ -11,7 +11,10 @@ use Zend\Form\Annotation as Form;
 class ForgotPasswordForm
 {
     /**
-     * @Form\Options({"label": "auth.forgot-password.username", "short-label": "auth.forgot-password.username"})
+     * @Form\Options({
+     *     "label": "auth.forgot-password.username",
+     *     "short-label": "auth.forgot-password.username"
+     * })
      * @Form\Attributes({"id": "auth.forgot-password.username", "tabindex": 1})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Text")

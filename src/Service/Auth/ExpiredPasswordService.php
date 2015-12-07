@@ -6,6 +6,8 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Dvsa\Olcs\Auth\Service\Auth;
+use Dvsa\Olcs\Auth\Service\Auth\Callback\ConfirmationCallback;
+use Dvsa\Olcs\Auth\Service\Auth\Callback\PasswordCallback;
 
 /**
  * Expired Password Service
@@ -33,97 +35,28 @@ class ExpiredPasswordService extends AbstractRestService
     /**
      * Build request data
      *
-     * @param $authId
-     * @param $oldPassword
-     * @param $newPassword
-     * @param $confirmPassword
+     * @param string $authId
+     * @param string $oldPassword
+     * @param string $newPassword
+     * @param string $confirmPassword
+     * @param boolean $hashOld
      * @return array
      */
     private function buildRequestData($authId, $oldPassword, $newPassword, $confirmPassword, $hashOld = false)
     {
+        $oldPasswordCallback = new PasswordCallback('Old Password', 'IDToken1', $oldPassword, $hashOld);
+        $newPasswordCallback = new PasswordCallback('New Password', 'IDToken2', $newPassword);
+        $confirmPasswordCallback = new PasswordCallback('Confirm Password', 'IDToken3', $confirmPassword);
+        $confirmationCallback = new ConfirmationCallback();
+
         return [
             'authId' => $authId,
             'stage' => 'LDAP2',
             'callbacks' => [
-                [
-                    'type' => 'PasswordCallback',
-                    'output' => [
-                        [
-                            'name' => 'prompt',
-                            'value' => 'Old Password'
-                        ]
-                    ],
-                    'input' => [
-                        [
-                            'name' => 'IDToken1',
-                            'value' => $hashOld ? HashService::hashPassword($oldPassword) : $oldPassword
-                        ]
-                    ]
-                ],
-                [
-                    'type' => 'PasswordCallback',
-                    'output' => [
-                        [
-                            'name' => 'prompt',
-                            'value' => 'New Password'
-                        ]
-                    ],
-                    'input' => [
-                        [
-                            'name' => 'IDToken2',
-                            'value' => HashService::hashPassword($newPassword)
-                        ]
-                    ]
-                ],
-                [
-                    'type' => 'PasswordCallback',
-                    'output' => [
-                        [
-                            'name' => 'prompt',
-                            'value' => 'Confirm Password'
-                        ]
-                    ],
-                    'input' => [
-                        [
-                            'name' => 'IDToken3',
-                            'value' => HashService::hashPassword($confirmPassword)
-                        ]
-                    ]
-                ],
-                [
-                    'type' => 'ConfirmationCallback',
-                    'output' => [
-                        [
-                            'name' => 'prompt',
-                            'value' => ''
-                        ],
-                        [
-                            'name' => 'messageType',
-                            'value' => 0
-                        ],
-                        [
-                            'name' => 'options',
-                            'value' => [
-                                'Submit',
-                                'Cancel'
-                            ]
-                        ],
-                        [
-                            'name' => 'optionType',
-                            'value' => -1
-                        ],
-                        [
-                            'name' => 'defaultOption',
-                            'value' => 0
-                        ]
-                    ],
-                    'input' => [
-                        [
-                            'name' => 'IDToken4',
-                            'value' => 0
-                        ]
-                    ]
-                ]
+                $oldPasswordCallback->toArray(),
+                $newPasswordCallback->toArray(),
+                $confirmPasswordCallback->toArray(),
+                $confirmationCallback->toArray()
             ]
         ];
     }

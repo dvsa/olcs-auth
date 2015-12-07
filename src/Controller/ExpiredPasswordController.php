@@ -33,59 +33,71 @@ class ExpiredPasswordController extends AbstractActionController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest(ExpiredPasswordForm::class, $request);
 
-        $failed = false;
-        $failureReason = '';
-
-        if ($request->isPost()) {
-
-            $post = $request->getPost();
-
-            $form->setData($post);
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $authId = $this->params('authId');
-
-                $result = $this->getExpiredPasswordService()->updatePassword(
-                    $authId,
-                    $data['oldPassword'],
-                    $data['newPassword'],
-                    $data['confirmPassword']
-                );
-
-                if ($result['status'] == 200) {
-
-                    if (isset($result['tokenId'])) {
-                        return $this->getLoginService()->login(
-                            $result['tokenId'],
-                            $this->getResponse(),
-                            $this->params()->fromQuery('goto')
-                        );
-                    }
-
-                    $failed = true;
-                    $failureReason = preg_replace('/(Change Password\<BR\>\<\/BR\>)/', '', $result['header']);
-                } else {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
-                    return $this->redirect()->toRoute('auth/login');
-                }
-            }
+        if ($request->isPost() === false) {
+            return $this->renderView($form);
         }
 
-        $this->layout('auth/layout');
-        $view = new ViewModel(
-            [
-                'form' => $form,
-                'failed' => $failed,
-                'failureReason' => $failureReason
-            ]
+        $form->setData($request->getPost());
+
+        if ($form->isValid() === false) {
+            return $this->renderView($form);
+        }
+
+        $result = $this->updatePassword($form->getData());
+
+        if ($result['status'] != 200) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            return $this->redirect()->toRoute('auth/login');
+        }
+
+        if (isset($result['tokenId'])) {
+            return $this->getLoginService()
+                ->login($result['tokenId'], $this->getResponse(), $this->params()->fromQuery('goto'));
+        }
+
+        $failureReason = preg_replace('/(Change Password\<BR\>\<\/BR\>)/', '', $result['header']);
+
+        return $this->renderView($form, true, $failureReason);
+    }
+
+    /**
+     * Update password
+     *
+     * @param array $data
+     * @return array
+     */
+    private function updatePassword(array $data)
+    {
+        $authId = $this->params('authId');
+
+        return $this->getExpiredPasswordService()->updatePassword(
+            $authId,
+            $data['oldPassword'],
+            $data['newPassword'],
+            $data['confirmPassword']
         );
+    }
+
+    /**
+     * Render the view
+     *
+     * @param \Zend\Form\Form $form
+     * @param bool $failed
+     * @param string $failureReason
+     * @return ViewModel
+     */
+    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    {
+        $this->layout('auth/layout');
+        $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);
         $view->setTemplate('auth/expired-password');
 
         return $view;
     }
 
     /**
+     * Get expired password service
+     *
      * @return ExpiredPasswordService
      */
     private function getExpiredPasswordService()
@@ -94,6 +106,8 @@ class ExpiredPasswordController extends AbstractActionController
     }
 
     /**
+     * Get the login service
+     *
      * @return LoginService
      */
     private function getLoginService()

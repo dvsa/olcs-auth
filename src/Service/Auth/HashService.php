@@ -14,6 +14,12 @@ namespace Dvsa\Olcs\Auth\Service\Auth;
  */
 class HashService
 {
+    /**
+     * Hash password
+     *
+     * @param string $password
+     * @return string
+     */
     public static function hashPassword($password)
     {
         return $password;

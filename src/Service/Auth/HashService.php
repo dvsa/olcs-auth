@@ -10,6 +10,8 @@ namespace Dvsa\Olcs\Auth\Service\Auth;
 /**
  * Hash Service
  *
+ * @todo Maybe remove all logic around hashing
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 class HashService
@@ -22,6 +24,8 @@ class HashService
      */
     public static function hashPassword($password)
     {
-        return sha1($password);
+        // @todo Maybe remove all logic around hashing
+        return $password;
+        //return sha1($password);
     }
 }

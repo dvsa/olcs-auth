@@ -32,7 +32,6 @@ class ExpiredPasswordService extends AbstractRestService
         $result = $this->decodeContent($response);
 
         // If the password was wrong, attempt it again without the hashed password
-        // @todo Maybe remove all logic around hashing
         if (isset($result['header']) && strstr($result['header'], 'The password you entered is invalid')) {
             $response = $this->sendRequest($authId, $oldPassword, $newPassword, $confirmPassword, false);
             $result = $this->decodeContent($response);
@@ -70,7 +69,6 @@ class ExpiredPasswordService extends AbstractRestService
     private function buildRequest($authId, $oldPassword, $newPassword, $confirmPassword, $hashOld = false)
     {
         $request = new Request($authId, Request::STAGE_EXPIRED_PASSWORD);
-        // @todo Maybe remove all logic around hashing
         $request->addCallback(new PasswordCallback('Old Password', 'IDToken1', $oldPassword, $hashOld));
         $request->addCallback(new PasswordCallback('New Password', 'IDToken2', $newPassword));
         $request->addCallback(new PasswordCallback('Confirm Password', 'IDToken3', $confirmPassword));

@@ -43,9 +43,8 @@ class Client extends HttpClient implements FactoryInterface
             $clientOptions = $config['openam']['client']['options'];
         }
 
-        $this->setOptions($clientOptions);
-
         $this->uriBuilder = $serviceLocator->get('Auth\Client\UriBuilder');
+        $this->setOptions($clientOptions);
 
         return $this;
     }

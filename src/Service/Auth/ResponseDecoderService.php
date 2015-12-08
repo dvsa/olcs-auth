@@ -28,7 +28,7 @@ class ResponseDecoderService
 
         $decoded = json_decode($content, true);
 
-        if ($decoded === false) {
+        if ($decoded === null) {
             throw new Exception\RuntimeException('Unable to JSON decode response body: ' . json_last_error_msg());
         }
 

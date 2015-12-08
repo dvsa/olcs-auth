@@ -38,6 +38,7 @@ class PasswordCallback extends AbstractTextPromptCallback
     {
         parent::__construct($label, $name, $value);
 
+        // @todo Maybe remove all logic around hashing
         $this->hash = $hash;
     }
 

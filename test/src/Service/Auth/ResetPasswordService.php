@@ -43,7 +43,6 @@ class ResetPasswordService extends AbstractRestService
     public function resetPassword($username, $confirmationId, $tokenId, $newPassword)
     {
         $data = [
-            // @todo Maybe remove all logic around hashing
             'userpassword' => HashService::hashPassword($newPassword),
             'username' => $username,
             'tokenId' => $tokenId,

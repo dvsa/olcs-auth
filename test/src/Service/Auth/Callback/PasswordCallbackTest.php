@@ -25,26 +25,8 @@ class PasswordCallbackTest extends \PHPUnit_Framework_TestCase
             'output' => [['name' => 'prompt', 'value' => 'UserPassword']],
             'input' => [
                 [
-                    'Password' => 'ID1',
+                    'name' => 'ID1',
                     'value' => 'test'
-                ]
-            ]
-        ];
-
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testCallbackHashed()
-    {
-        $sut = new PasswordCallback('UserPassword', 'ID1', 'test');
-        $result = $sut->toArray();
-        $expected = [
-            'type' => 'PasswordCallback',
-            'output' => [['name' => 'prompt', 'value' => 'UserPassword']],
-            'input' => [
-                [
-                    'Password' => 'ID1',
-                    'value' => sha1('test')
                 ]
             ]
         ];

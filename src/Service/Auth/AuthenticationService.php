@@ -7,6 +7,10 @@
  */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
+use Dvsa\Olcs\Auth\Service\Auth\Callback\NameCallback;
+use Dvsa\Olcs\Auth\Service\Auth\Callback\PasswordCallback;
+use Dvsa\Olcs\Auth\Service\Auth\Callback\Request;
+
 /**
  * Authentication Service
  *
@@ -23,20 +27,56 @@ class AuthenticationService extends AbstractRestService
      */
     public function authenticate($username, $password)
     {
-        $data = $this->beginAuthenticationSession();
+        // At first we attempt to authenticate with a hashed password
+        $response = $this->sendRequest($username, $password);
 
-        $data['callbacks'][0]['input'][0]['value'] = $username;
-        $data['callbacks'][1]['input'][0]['value'] = HashService::hashPassword($password);
-
-        $response = $this->post('/json/authenticate', $data);
+        // If we are unsuccessful, we fallback to authentication without hashed password
+        if ($response->getStatusCode() === 401) {
+            $response = $this->sendRequest($username, $password, false);
+        }
 
         return $this->decodeContent($response);
     }
 
     /**
+     * Build the request and send it
+     *
+     * @param string $username
+     * @param string $password
+     * @param bool $hash
+     * @return \Zend\Http\Response
+     */
+    private function sendRequest($username, $password, $hash = true)
+    {
+        $data = $this->beginAuthenticationSession();
+
+        $request = $this->buildRequest($data['authId'], $username, $password, $hash);
+
+        return $this->post('/json/authenticate', $request->toArray());
+    }
+
+    /**
+     * Build the request object
+     *
+     * @param string $authId
+     * @param string $username
+     * @param string $password
+     * @param bool $hash
+     * @return Request
+     */
+    private function buildRequest($authId, $username, $password, $hash = true)
+    {
+        $request = new Request($authId, Request::STAGE_AUTHENTICATE);
+        $request->addCallback(new NameCallback('User Name:', 'IDToken1', $username));
+        $request->addCallback(new PasswordCallback('Password:', 'IDToken2', $password, $hash));
+
+        return $request;
+    }
+
+    /**
      * Begin an authentication session in OpenAM
      *
-     * @return array|bool
+     * @return array
      */
     private function beginAuthenticationSession()
     {
@@ -46,6 +86,6 @@ class AuthenticationService extends AbstractRestService
             return $this->decodeContent($response);
         }
 
-        throw new \RuntimeException('Unable to begin an authentication session');
+        throw new Exception\RuntimeException('Unable to begin an authentication session');
     }
 }

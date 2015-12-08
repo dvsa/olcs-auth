@@ -50,10 +50,8 @@ class ForgotPasswordController extends AbstractActionController
          * when a successful request has occurred
          */
         if ($result['status'] == 200) {
-
-            // @todo look up email address, if safe to do so
             $this->layout('auth/layout');
-            $view = new ViewModel(['email' => 'EMAIL']);
+            $view = new ViewModel();
             $view->setTemplate('auth/confirm-forgot-password');
 
             return $view;

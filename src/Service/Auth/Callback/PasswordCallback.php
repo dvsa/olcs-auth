@@ -14,22 +14,12 @@ use Dvsa\Olcs\Auth\Service\Auth\HashService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PasswordCallback
+class PasswordCallback extends AbstractTextPromptCallback
 {
     /**
      * @var string
      */
-    private $label;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $value;
+    protected $type = 'PasswordCallback';
 
     /**
      * @var boolean
@@ -46,28 +36,18 @@ class PasswordCallback
      */
     public function __construct($label, $name, $value, $hash = true)
     {
-        $this->label = $label;
-        $this->name = $name;
-        $this->value = $value;
+        parent::__construct($label, $name, $value);
+
         $this->hash = $hash;
     }
 
     /**
-     * To array
+     * Get filtered value
      *
-     * @return array
+     * @return string
      */
-    public function toArray()
+    protected function getFilteredValue()
     {
-        return [
-            'type' => 'PasswordCallback',
-            'output' => [['name' => 'prompt', 'value' => $this->label]],
-            'input' => [
-                [
-                    'name' => $this->name,
-                    'value' => $this->hash ? HashService::hashPassword($this->value) : $this->value
-                ]
-            ]
-        ];
+        return $this->hash ? HashService::hashPassword($this->value) : $this->value;
     }
 }

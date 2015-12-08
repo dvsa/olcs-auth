@@ -41,7 +41,7 @@ class CookieService implements FactoryInterface
         $config = $serviceLocator->get('Config');
 
         if (empty($config['openam']['cookie']['name']) || empty($config['openam']['cookie']['domain'])) {
-            throw new \RuntimeException('openam/cookie is required but missing from config');
+            throw new Exception\RuntimeException('openam/cookie is required but missing from config');
         }
 
         $this->cookieName = $config['openam']['cookie']['name'];

@@ -22,9 +22,6 @@ class HashService
      */
     public static function hashPassword($password)
     {
-        return $password;
-
-        // @todo when we are in a position to hash all passwords
-        //return sha1($password);
+        return sha1($password);
     }
 }

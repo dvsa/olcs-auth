@@ -12,12 +12,25 @@ namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ConfirmationCallback
+class ConfirmationCallback implements CallbackInterface
 {
     /**
-     * To array
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Create a confirmation callback
      *
-     * @return array
+     * @param string $name
+     */
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function toArray()
     {
@@ -26,11 +39,11 @@ class ConfirmationCallback
             'output' => [
                 ['name' => 'prompt', 'value' => ''],
                 ['name' => 'messageType', 'value' => 0],
-                ['name' => 'options', 'value' => ['Submit', 'Cancel'] ],
+                ['name' => 'options', 'value' => ['Submit', 'Cancel']],
                 ['name' => 'optionType', 'value' => -1],
                 ['name' => 'defaultOption', 'value' => 0]
             ],
-            'input' => [['name' => 'IDToken4', 'value' => 0]]
+            'input' => [['name' => $this->name, 'value' => 0]]
         ];
     }
 }

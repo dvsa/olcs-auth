@@ -5,8 +5,8 @@ return [
     'auth.login.failed.title' => 'There was a problem signing in',
     'auth.login.failed.reason.Authentication Failed!!' => 'Please check your username and password',
     'auth.login.failed.reason.Invalid Password!!' => 'Please check your username and password',
-    'auth.login.failed.reason.Your account is locked. Please contact service desk to unlock your account'
-        => 'Your account is locked. Please contact service desk to unlock your account',
+    'auth.login.failed.reason. Your account is locked. Please contact service desk to unlock your account'
+        => 'Your account is locked. Email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a> to unlock it',
     'auth.login.username' => 'Username',
     'auth.login.password' => 'Password',
     'auth.login.button' => 'Sign in',
@@ -19,7 +19,7 @@ return [
     'auth.expired-password.button' => 'Continue',
     'auth.expired-password.failed.title' => 'We couldn\'t update your password',
     'auth.expired-password.failed.reason.New password contains fewer than minimum number of characters.'
-        => 'Your new password must be at least 8 characters',
+        => 'Your new password must be at least eight characters long',
     'auth.expired-password.failed.reason.The password and the confirm password do not match.'
         => 'New re-entered password does not match the new password',
     'auth.expired-password.failed.reason.The password you entered is invalid.'
@@ -40,5 +40,7 @@ return [
     'auth.reset-password.success' => 'Your password was reset successfully',
     'auth.reset-password.failed.title' => 'We couldn\'t update your password',
     'auth.reset-password.failed.reason.Minimum password length is 8.'
-        => 'Your new password must be at least 8 characters',
+        => 'Your new password must be at least eight characters long',
+    'auth.expired-password.failed.reason.The password must be different. Try again.'
+        => 'Your new password can\'t be the same as your old password',
 ];

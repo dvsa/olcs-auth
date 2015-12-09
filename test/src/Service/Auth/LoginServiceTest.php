@@ -47,27 +47,12 @@ class LoginServiceTest extends MockeryTestCase
     {
         $tokenId = 'some-token';
         $response = m::mock(Response::class);
-        $goto = null;
 
         $this->cookie->shouldReceive('createTokenCookie')
             ->with($response, 'some-token');
 
         $this->redirect->shouldReceive('toUrl')->with('/')->andReturn('REDIRECT');
 
-        $this->assertEquals('REDIRECT', $this->sut->login($tokenId, $response, $goto));
-    }
-
-    public function testLoginGoto()
-    {
-        $tokenId = 'some-token';
-        $response = m::mock(Response::class);
-        $goto = '/foo';
-
-        $this->cookie->shouldReceive('createTokenCookie')
-            ->with($response, 'some-token');
-
-        $this->redirect->shouldReceive('toUrl')->with('/foo')->andReturn('REDIRECT');
-
-        $this->assertEquals('REDIRECT', $this->sut->login($tokenId, $response, $goto));
+        $this->assertEquals('REDIRECT', $this->sut->login($tokenId, $response));
     }
 }

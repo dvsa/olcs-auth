@@ -51,16 +51,11 @@ class LoginService implements FactoryInterface
      *
      * @param $tokenId
      * @param Response $response
-     * @param string $goto
      * @return Response
      */
-    public function login($tokenId, Response $response, $goto = null)
+    public function login($tokenId, Response $response)
     {
         $this->cookieService->createTokenCookie($response, $tokenId);
-
-        if ($goto !== null) {
-            return $this->redirect->toUrl($goto);
-        }
 
         return $this->redirect->toUrl('/');
     }

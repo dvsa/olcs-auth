@@ -54,7 +54,7 @@ class LoginController extends AbstractActionController
 
         if (isset($result['tokenId'])) {
             return $this->getLoginService()
-                ->login($result['tokenId'], $this->getResponse(), $this->params()->fromQuery('goto'));
+                ->login($result['tokenId'], $this->getResponse());
         }
 
         return $this->redirect()->toRoute('auth/expired-password', ['authId' => $result['authId']]);

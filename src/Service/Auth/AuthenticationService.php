@@ -32,9 +32,9 @@ class AuthenticationService extends AbstractRestService
 
         // If we are unsuccessful, we fallback to authentication without hashed password
         // @todo Maybe remove all logic around hashing
-        if ($response->getStatusCode() === 401) {
-            $response = $this->sendRequest($username, $password, false);
-        }
+        //if ($response->getStatusCode() === 401) {
+        //    $response = $this->sendRequest($username, $password, false);
+        //}
 
         return $this->decodeContent($response);
     }

@@ -33,10 +33,10 @@ class ExpiredPasswordService extends AbstractRestService
 
         // If the password was wrong, attempt it again without the hashed password
         // @todo Maybe remove all logic around hashing
-        if (isset($result['header']) && strstr($result['header'], 'The password you entered is invalid')) {
-            $response = $this->sendRequest($authId, $oldPassword, $newPassword, $confirmPassword, false);
-            $result = $this->decodeContent($response);
-        }
+        //if (isset($result['header']) && strstr($result['header'], 'The password you entered is invalid')) {
+        //    $response = $this->sendRequest($authId, $oldPassword, $newPassword, $confirmPassword, false);
+        //    $result = $this->decodeContent($response);
+        //}
 
         return $result;
     }

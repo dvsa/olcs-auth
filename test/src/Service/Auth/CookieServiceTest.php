@@ -117,4 +117,9 @@ class CookieServiceTest extends MockeryTestCase
 
         $this->assertEquals('foo', $this->sut->getCookie($request));
     }
+
+    public function testGetCookieName()
+    {
+        $this->assertEquals('secureToken', $this->sut->getCookieName());
+    }
 }

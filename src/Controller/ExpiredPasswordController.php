@@ -12,7 +12,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
-use Dvsa\Olcs\Auth\Form\ExpiredPasswordForm;
+use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 
 /**
  * Expired Password Controller
@@ -31,7 +31,7 @@ class ExpiredPasswordController extends AbstractActionController
         $request = $this->getRequest();
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest(ExpiredPasswordForm::class, $request);
+            ->createFormWithRequest(ChangePasswordForm::class, $request);
 
         if ($request->isPost() === false) {
             return $this->renderView($form);

@@ -28,14 +28,18 @@ class LogoutServiceTest extends MockeryTestCase
 
     private $client;
 
+    private $cookie;
+
     private $responseDecoder;
 
     public function setUp()
     {
+        $this->cookie = m::mock();
         $this->client = m::mock();
         $this->responseDecoder = m::mock();
 
         $sm = m::mock(ServiceManager::class)->makePartial();
+        $sm->setService('Auth\CookieService', $this->cookie);
         $sm->setService('Auth\Client', $this->client);
         $sm->setService('Auth\ResponseDecoderService', $this->responseDecoder);
 
@@ -47,11 +51,14 @@ class LogoutServiceTest extends MockeryTestCase
     {
         $tokenId = 'some-token';
 
+        $this->cookie->shouldReceive('getCookieName')
+            ->andReturn('cookie-name');
+
         $this->client->shouldReceive('post')
             ->with('/json/sessions/?_action=logout', [], m::type(Headers::class))
             ->andReturnUsing(
                 function ($url, $data, Headers $headers) {
-                    $this->assertEquals('some-token', $headers->get('iplanetDirectoryPro')->getFieldValue());
+                    $this->assertEquals('some-token', $headers->get('cookie-name')->getFieldValue());
 
                     $response = new Response();
                     $response->setStatusCode(200);

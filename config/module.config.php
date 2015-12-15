@@ -61,7 +61,17 @@ return [
                         ],
                     ]
                 ]
-            ]
+            ],
+            'change-password' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/change-password[/]',
+                    'defaults' => [
+                        'controller' => 'Auth\ChangePasswordController',
+                        'action' => 'index'
+                    ],
+                ],
+            ],
         ]
     ],
     'controllers' => [
@@ -70,6 +80,7 @@ return [
             'Auth\LogoutController' => \Dvsa\Olcs\Auth\Controller\LogoutController::class,
             'Auth\ExpiredPasswordController' => \Dvsa\Olcs\Auth\Controller\ExpiredPasswordController::class,
             'Auth\ForgotPasswordController' => \Dvsa\Olcs\Auth\Controller\ForgotPasswordController::class,
+            'Auth\ChangePasswordController' => \Dvsa\Olcs\Auth\Controller\ChangePasswordController::class,
             'Auth\ResetPasswordController' => \Dvsa\Olcs\Auth\Controller\ResetPasswordController::class,
         ]
     ],
@@ -82,6 +93,7 @@ return [
             'Auth\ExpiredPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService::class,
             'Auth\ForgotPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService::class,
             'Auth\ResetPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ResetPasswordService::class,
+            'Auth\ChangePasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService::class,
             'Auth\LoginService' => \Dvsa\Olcs\Auth\Service\Auth\LoginService::class,
             'Auth\LogoutService' => \Dvsa\Olcs\Auth\Service\Auth\LogoutService::class,
             'Auth\CookieService' => \Dvsa\Olcs\Auth\Service\Auth\CookieService::class,

@@ -86,7 +86,6 @@ class ChangePasswordController extends AbstractActionController
      */
     private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
     {
-        $this->layout('auth/layout-change-password');
         $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);
         $view->setTemplate('auth/change-password');
 

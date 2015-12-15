@@ -64,13 +64,8 @@ class ChangePasswordController extends AbstractActionController
      */
     private function updatePassword(array $data)
     {
-        /** @var CookieService $cookieService */
-        $cookieService = $this->getServiceLocator()->get('Auth\CookieService');
-
-        $token = $cookieService->getCookie($this->getRequest());
-
         return $this->getChangePasswordService()->updatePassword(
-            $token,
+            $this->getRequest(),
             $data['oldPassword'],
             $data['newPassword']
         );

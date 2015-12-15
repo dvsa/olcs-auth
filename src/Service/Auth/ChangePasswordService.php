@@ -7,6 +7,7 @@ namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Zend\Http\Headers;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\RequestInterface as Request;
 
 /**
  * Change Password Service
@@ -34,13 +35,15 @@ class ChangePasswordService extends AbstractRestService
     /**
      * Update password
      *
-     * @param $token
-     * @param $oldPassword
-     * @param $newPassword
+     * @param Request $request
+     * @param string $oldPassword
+     * @param string $newPassword
      * @return array
      */
-    public function updatePassword($token, $oldPassword, $newPassword)
+    public function updatePassword(Request $request, $oldPassword, $newPassword)
     {
+        $token = $this->cookieService->getCookie($request);
+
         $username = $this->getIdFromSession($token);
 
         $data = [
@@ -60,7 +63,7 @@ class ChangePasswordService extends AbstractRestService
     /**
      * Get OpenAM Id from the session
      *
-     * @param $token
+     * @param string $token
      * @return string
      */
     private function getIdFromSession($token)

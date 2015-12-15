@@ -10,6 +10,7 @@ use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Http\Headers;
+use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\ServiceManager\ServiceManager;
 
@@ -51,8 +52,11 @@ class ChangePasswordServiceTest extends MockeryTestCase
             'userpassword' => 'new-password',
         ];
 
-        $this->cookie->shouldReceive('getCookieName')
-            ->andReturn('cookie-name');
+        $request = new Request();
+
+        $this->cookie
+            ->shouldReceive('getCookieName')->andReturn('cookie-name')
+            ->shouldReceive('getCookie')->with($request)->andReturn('some-token');
 
         $this->client->shouldReceive('post')
             ->with('json/users/?_action=idFromSession', [], m::type(Headers::class))
@@ -80,7 +84,7 @@ class ChangePasswordServiceTest extends MockeryTestCase
                 }
             );
 
-        $result = $this->sut->updatePassword('some-token', 'old-password', 'new-password');
+        $result = $this->sut->updatePassword($request, 'old-password', 'new-password');
 
         $expected = [
             'status' => 200

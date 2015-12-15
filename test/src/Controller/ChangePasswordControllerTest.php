@@ -28,8 +28,6 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
     private $formHelper;
 
-    private $cookie;
-
     private $changePasswordService;
 
     private $flashMessenger;
@@ -39,14 +37,12 @@ class ChangePasswordControllerTest extends MockeryTestCase
     public function setUp()
     {
         $this->formHelper = m::mock();
-        $this->cookie = m::mock();
         $this->changePasswordService = m::mock();
         $this->flashMessenger = m::mock();
         $this->redirect = m::mock(Redirect::class)->makePartial();
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Helper\Form', $this->formHelper);
-        $sm->setService('Auth\CookieService', $this->cookie);
         $sm->setService('Auth\ChangePasswordService', $this->changePasswordService);
         $sm->setService('Helper\FlashMessenger', $this->flashMessenger);
 
@@ -108,7 +104,6 @@ class ChangePasswordControllerTest extends MockeryTestCase
             'oldPassword' => 'old-password',
             'newPassword' => 'new-password',
         ];
-        $token = 'some-token';
 
         $form = m::mock(Form::class);
         $form->shouldReceive('setData')->once();
@@ -123,12 +118,8 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $request->setMethod('POST');
         $request->setPost(new \Zend\Stdlib\Parameters($post));
 
-        $this->cookie->shouldReceive('getCookie')
-            ->with($request)
-            ->andReturn($token);
-
         $this->changePasswordService->shouldReceive('updatePassword')
-            ->with($token, $post['oldPassword'], $post['newPassword'])
+            ->with($request, $post['oldPassword'], $post['newPassword'])
             ->andReturn(['status' => 200, 'message' => 'error message']);
 
         $this->flashMessenger->shouldReceive('addSuccessMessage')
@@ -146,7 +137,6 @@ class ChangePasswordControllerTest extends MockeryTestCase
             'oldPassword' => 'old-password',
             'newPassword' => 'new-password',
         ];
-        $token = 'some-token';
 
         $form = m::mock(Form::class);
         $form->shouldReceive('setData')->once();
@@ -161,12 +151,8 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $request->setMethod('POST');
         $request->setPost(new \Zend\Stdlib\Parameters($post));
 
-        $this->cookie->shouldReceive('getCookie')
-            ->with($request)
-            ->andReturn($token);
-
         $this->changePasswordService->shouldReceive('updatePassword')
-            ->with($token, $post['oldPassword'], $post['newPassword'])
+            ->with($request, $post['oldPassword'], $post['newPassword'])
             ->andReturn(['status' => 401, 'message' => 'error message']);
 
         $result = $this->sut->indexAction();

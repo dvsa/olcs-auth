@@ -10,6 +10,7 @@ return [
     'auth.login.username' => 'Username',
     'auth.login.password' => 'Password',
     'auth.login.button' => 'Sign in',
+    'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
     'auth.forgot-username.label' => 'Forgotten your username?',
     'auth.forgot-password.label' => 'Forgotten your password?',
     'auth.expired-password.title' => 'Change your password',

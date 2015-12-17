@@ -91,4 +91,14 @@ class CookieService implements FactoryInterface
 
         return $cookie->{$this->cookieName};
     }
+
+    /**
+     * Get the cookie name
+     *
+     * @return string
+     */
+    public function getCookieName()
+    {
+        return $this->cookieName;
+    }
 }

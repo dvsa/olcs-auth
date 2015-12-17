@@ -10,13 +10,10 @@ return [
     'auth.login.username' => 'Username',
     'auth.login.password' => 'Password',
     'auth.login.button' => 'Sign in',
+    'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
     'auth.forgot-username.label' => 'Forgotten your username?',
     'auth.forgot-password.label' => 'Forgotten your password?',
     'auth.expired-password.title' => 'Change your password',
-    'auth.expired-password.old-password' => 'Current password',
-    'auth.expired-password.new-password' => 'New password',
-    'auth.expired-password.confirm-password' => 'Re-enter new password',
-    'auth.expired-password.button' => 'Continue',
     'auth.expired-password.failed.title' => 'We couldn\'t update your password',
     'auth.expired-password.failed.reason.New password contains fewer than minimum number of characters.'
         => 'Your new password must be at least eight characters long',
@@ -43,4 +40,19 @@ return [
         => 'Your new password must be at least eight characters long',
     'auth.expired-password.failed.reason.The password must be different. Try again.'
         => 'Your new password can\'t be the same as your old password',
+    'auth.change-password.title' => 'Change your password',
+    'auth.change-password.subtitle'
+        => 'Your password has to be at least 8 characters long and must contain at least 1 lower-case letter, 1 capital letter and 1 number. Never share your password with anyone.',
+    'auth.change-password.old-password' => 'Current password',
+    'auth.change-password.new-password' => 'New password',
+    'auth.change-password.confirm-password' => 'Re-enter new password',
+    'auth.change-password.button' => 'Save',
+    'auth.change-password.success' => 'Your password updated successfully',
+    'auth.change-password.failed.title' => 'We couldn\'t update your password',
+    'auth.change-password.failed.reason.An error occurred while trying to change the password'
+        => 'An error occurred while trying to change the password',
+    'auth.change-password.failed.reason.The password must be different. Try again.'
+        => 'Your new password can\'t be the same as your old password',
+    'auth.change-password.failed.reason.The password you entered is invalid.'
+        => 'The current password you entered is incorrect',
 ];

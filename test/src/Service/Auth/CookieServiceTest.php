@@ -30,6 +30,9 @@ class CookieServiceTest extends MockeryTestCase
 
     public function setUp()
     {
+        $request = m::mock();
+        $request->shouldReceive('getUri->getHost')->andReturn('foo.olcs.com');
+
         $config = [
             'openam' => [
                 'cookie' => [
@@ -41,6 +44,7 @@ class CookieServiceTest extends MockeryTestCase
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Config', $config);
+        $sm->setService('Request', $request);
 
         $this->sut = new CookieService();
         $this->sut->createService($sm);
@@ -48,10 +52,13 @@ class CookieServiceTest extends MockeryTestCase
 
     public function testCreateService()
     {
+        $request = m::mock();
+
         $this->setExpectedException(RuntimeException::class);
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Config', []);
+        $sm->setService('Request', $request);
 
         $sut = new CookieService();
         $sut->createService($sm);
@@ -66,6 +73,43 @@ class CookieServiceTest extends MockeryTestCase
                 function (SetCookie $setCookie) {
                     $this->assertEquals('secureToken', $setCookie->getName());
                     $this->assertEquals('.olcs.com', $setCookie->getDomain());
+                    $this->assertEquals('some-token', $setCookie->getValue());
+                    $this->assertEquals('/', $setCookie->getPath());
+                    $this->assertEquals(null, $setCookie->getExpires());
+                }
+            );
+
+        $this->sut->createTokenCookie($response, 'some-token');
+    }
+
+    public function testCreateTokenCookieWithoutMatchingHost()
+    {
+        $request = m::mock();
+        $request->shouldReceive('getUri->getHost')->andReturn('foo.olcs.co.uk');
+
+        $config = [
+            'openam' => [
+                'cookie' => [
+                    'name' => 'secureToken',
+                    'domain' => '.olcs.com'
+                ]
+            ]
+        ];
+
+        $sm = m::mock(ServiceManager::class)->makePartial();
+        $sm->setService('Config', $config);
+        $sm->setService('Request', $request);
+
+        $this->sut = new CookieService();
+        $this->sut->createService($sm);
+
+        $response = m::mock(Response::class);
+        $response->shouldReceive('getHeaders->addHeader')
+            ->with(m::type(SetCookie::class))
+            ->andReturnUsing(
+                function (SetCookie $setCookie) {
+                    $this->assertEquals('secureToken', $setCookie->getName());
+                    $this->assertEquals(null, $setCookie->getDomain());
                     $this->assertEquals('some-token', $setCookie->getValue());
                     $this->assertEquals('/', $setCookie->getPath());
                     $this->assertEquals(null, $setCookie->getExpires());

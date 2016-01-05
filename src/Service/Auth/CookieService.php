@@ -31,6 +31,11 @@ class CookieService implements FactoryInterface
     private $cookieDomain;
 
     /**
+     * @var \Zend\Http\Request
+     */
+    private $request;
+
+    /**
      * Create the cookie service
      *
      * @param ServiceLocatorInterface $serviceLocator
@@ -39,13 +44,17 @@ class CookieService implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Config');
+        $this->request = $serviceLocator->get('Request');
 
-        if (empty($config['openam']['cookie']['name']) || empty($config['openam']['cookie']['domain'])) {
+        if (empty($config['openam']['cookie']['name'])) {
             throw new Exception\RuntimeException('openam/cookie is required but missing from config');
         }
 
         $this->cookieName = $config['openam']['cookie']['name'];
-        $this->cookieDomain = $config['openam']['cookie']['domain'];
+
+        if (isset($config['openam']['cookie']['domain'])) {
+            $this->cookieDomain = $config['openam']['cookie']['domain'];
+        }
 
         return $this;
     }
@@ -58,7 +67,7 @@ class CookieService implements FactoryInterface
      */
     public function createTokenCookie(Response $response, $token)
     {
-        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->cookieDomain);
+        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->getCookieDomain());
         $headers = $response->getHeaders();
         $headers->addHeader($cookie);
     }
@@ -70,7 +79,7 @@ class CookieService implements FactoryInterface
      */
     public function destroyCookie(Response $response)
     {
-        $cookie = new SetCookie($this->cookieName, null, strtotime('-1 year'), '/', $this->cookieDomain);
+        $cookie = new SetCookie($this->cookieName, null, strtotime('-1 year'), '/', $this->getCookieDomain());
         $headers = $response->getHeaders();
         $headers->addHeader($cookie);
     }
@@ -100,5 +109,20 @@ class CookieService implements FactoryInterface
     public function getCookieName()
     {
         return $this->cookieName;
+    }
+
+    protected function getCookieDomain()
+    {
+        if ($this->cookieDomain === null) {
+            return null;
+        }
+
+        $host = $this->request->getUri()->getHost();
+
+        if (!strstr($host, $this->cookieDomain)) {
+            return null;
+        }
+
+        return $this->cookieDomain;
     }
 }

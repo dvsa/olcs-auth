@@ -7,6 +7,7 @@
  */
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Dvsa\Olcs\Auth\Controller\Traits\Authenticate;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Form\ResetPasswordForm;
@@ -19,6 +20,8 @@ use Dvsa\Olcs\Auth\Service\Auth\ResetPasswordService;
  */
 class ResetPasswordController extends AbstractActionController
 {
+    use Authenticate;
+
     /**
      * Reset password
      *
@@ -59,7 +62,14 @@ class ResetPasswordController extends AbstractActionController
 
         if ($result['status'] == 200) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('auth.reset-password.success');
-            return $this->redirect()->toRoute('auth/login');
+
+            return $this->authenticate(
+                $result['username'],
+                $data['newPassword'],
+                function () {
+                    return $this->redirect()->toRoute('auth/login');
+                }
+            );
         }
 
         return $this->renderView($form, true, $result['message']);

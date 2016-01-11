@@ -11,6 +11,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService;
+use Dvsa\Olcs\Transfer\Query\User\Pid;
 
 /**
  * Forgot Password Controller
@@ -43,21 +44,35 @@ class ForgotPasswordController extends AbstractActionController
 
         $data = $form->getData();
 
-        $result = $this->getForgotPasswordService()->forgotPassword($data['username']);
+        $response = $this->handleQuery(Pid::create(['id' => $data['username']]));
 
-        /**
-         * Rather then redirecting, we show a different view in this case, that way the screen can only be shown
-         * when a successful request has occurred
-         */
-        if ($result['status'] == 200) {
-            $this->layout('auth/layout');
-            $view = new ViewModel();
-            $view->setTemplate('auth/confirm-forgot-password');
+        if ($response->isOk()) {
+            $result = $this->getForgotPasswordService()->forgotPassword($response->getResult()['pid']);
 
-            return $view;
+            /**
+             * Rather than redirecting, we show a different view in this case, that way the screen can only be shown
+             * when a successful request has occurred
+             */
+            if ($result['status'] == 200) {
+                $this->layout('auth/layout');
+                $view = new ViewModel();
+                $view->setTemplate('auth/confirm-forgot-password');
+
+                return $view;
+            } else {
+                $message = $result['message'];
+            }
+
+        } else {
+            if ($response->isClientError()) {
+                // Mimic the OpenAM error message
+                $message = 'User not found';
+            } else {
+                $message = 'unknown-error';
+            }
         }
 
-        return $this->renderView($form, true, $result['message']);
+        return $this->renderView($form, true, $message);
     }
 
     /**

@@ -11,6 +11,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService;
+use Dvsa\Olcs\Transfer\Query\User\Pid;
 
 /**
  * Forgot Password Controller
@@ -43,13 +44,13 @@ class ForgotPasswordController extends AbstractActionController
 
         $data = $form->getData();
 
-        $response = $this->handleQuery(GetUidFromLoginId::create(['loginId' => $data['username']]));
+        $response = $this->handleQuery(Pid::create(['id' => $data['username']]));
 
         if ($response->isOk()) {
             $result = $this->getForgotPasswordService()->forgotPassword($response->getResult()['pid']);
 
             /**
-             * Rather then redirecting, we show a different view in this case, that way the screen can only be shown
+             * Rather than redirecting, we show a different view in this case, that way the screen can only be shown
              * when a successful request has occurred
              */
             if ($result['status'] == 200) {

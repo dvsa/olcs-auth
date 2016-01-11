@@ -51,7 +51,11 @@ class LoginController extends AbstractActionController
             $data['username'],
             $data['password'],
             function ($result) use ($form) {
-                return $this->renderView($form, true, ($result['status'] == 401 ? $result['message'] : 'unknown-reason'));
+                return $this->renderView(
+                    $form,
+                    true,
+                    ($result['status'] == 401 ? $result['message'] : 'unknown-reason')
+                );
             }
         );
     }

@@ -7,13 +7,12 @@
  */
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Dvsa\Olcs\Auth\Controller\Traits\Authenticate;
 use Dvsa\Olcs\Auth\Form\LoginForm;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Dvsa\Olcs\Auth\Service\Auth\AuthenticationService;
-use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 
 /**
  * Login Controller
@@ -22,6 +21,8 @@ use Dvsa\Olcs\Auth\Service\Auth\LoginService;
  */
 class LoginController extends AbstractActionController
 {
+    use Authenticate;
+
     /**
      * Login page
      *
@@ -46,18 +47,13 @@ class LoginController extends AbstractActionController
 
         $data = $form->getData();
 
-        $result = $this->getAuthenticationService()->authenticate($data['username'], $data['password']);
-
-        if ($result['status'] != 200) {
-            return $this->renderView($form, true, ($result['status'] == 401 ? $result['message'] : 'unknown-reason'));
-        }
-
-        if (isset($result['tokenId'])) {
-            return $this->getLoginService()
-                ->login($result['tokenId'], $this->getResponse());
-        }
-
-        return $this->redirect()->toRoute('auth/expired-password', ['authId' => $result['authId']]);
+        return $this->authenticate(
+            $data['username'],
+            $data['password'],
+            function ($result) use ($form) {
+                return $this->renderView($form, true, ($result['status'] == 401 ? $result['message'] : 'unknown-reason'));
+            }
+        );
     }
 
     /**
@@ -75,26 +71,6 @@ class LoginController extends AbstractActionController
         $view->setTemplate('auth/login');
 
         return $view;
-    }
-
-    /**
-     * Get authentication service
-     *
-     * @return AuthenticationService
-     */
-    private function getAuthenticationService()
-    {
-        return $this->getServiceLocator()->get('Auth\AuthenticationService');
-    }
-
-    /**
-     * Get login service
-     *
-     * @return LoginService
-     */
-    private function getLoginService()
-    {
-        return $this->getServiceLocator()->get('Auth\LoginService');
     }
 
     /**

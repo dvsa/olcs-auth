@@ -47,20 +47,26 @@ class ForgotPasswordController extends AbstractActionController
         $response = $this->handleQuery(Pid::create(['id' => $data['username']]));
 
         if ($response->isOk()) {
-            $result = $this->getForgotPasswordService()->forgotPassword($response->getResult()['pid']);
+            $pidResult = $response->getResult();
 
-            /**
-             * Rather than redirecting, we show a different view in this case, that way the screen can only be shown
-             * when a successful request has occurred
-             */
-            if ($result['status'] == 200) {
-                $this->layout('auth/layout');
-                $view = new ViewModel();
-                $view->setTemplate('auth/confirm-forgot-password');
+            if (!empty($pidResult['isActive']) && ($pidResult['isActive'] === true)) {
+                $result = $this->getForgotPasswordService()->forgotPassword($pidResult['pid']);
 
-                return $view;
+                /**
+                 * Rather than redirecting, we show a different view in this case, that way the screen can only be shown
+                 * when a successful request has occurred
+                 */
+                if ($result['status'] == 200) {
+                    $this->layout('auth/layout');
+                    $view = new ViewModel();
+                    $view->setTemplate('auth/confirm-forgot-password');
+
+                    return $view;
+                } else {
+                    $message = $result['message'];
+                }
             } else {
-                $message = $result['message'];
+                $message = 'account-not-active';
             }
 
         } else {

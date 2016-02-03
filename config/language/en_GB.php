@@ -34,6 +34,7 @@ return [
     'auth.reset-password.new-password' => 'New password',
     'auth.reset-password.confirm-password' => 'Re-enter new password',
     'auth.reset-password.button' => 'Continue',
+    'auth.forgot-password.failed.reason.account-not-active' => '<p>It looks like your account isn\'t active.</p><p>You need to activate your account before you can change your password.</p><p>If you\'ve lost your original login details please contact us at <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a> for a new letter/email.</p>',
     'auth.forgot-password-expired' => 'The forgot password link has expired, please try again',
     'auth.reset-password.success' => 'Your password was reset successfully',
     'auth.reset-password.failed.title' => 'We couldn\'t update your password',

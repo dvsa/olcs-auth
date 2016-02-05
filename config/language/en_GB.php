@@ -21,6 +21,8 @@ return [
         => 'New re-entered password does not match the new password',
     'auth.expired-password.failed.reason.The password you entered is invalid.'
         => 'The current password you entered is incorrect',
+    'auth.expired-password.failed.reason.New password does not meet the password policy requirements.'
+        => 'Your password has to be at least 8 characters long and must contain at least 1 lower-case letter, 1 capital letter and 1 number. Never share your password with anyone. Your password can not be one of the last 5 passwords used.',
     'auth.forgot-password.title' => 'Reset your password',
     'auth.forgot-password.username' => 'Enter your username',
     'auth.forgot-password.button' => 'Submit',
@@ -34,7 +36,7 @@ return [
     'auth.reset-password.new-password' => 'New password',
     'auth.reset-password.confirm-password' => 'Re-enter new password',
     'auth.reset-password.button' => 'Continue',
-    'auth.forgot-password.failed.reason.account-not-active' => '<p>It looks like your account isn\'t active.</p><p>You need to activate your account before you can change your password.</p><p>If you\'ve lost your original login details please contact us at <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a> for a new letter/email.</p>',
+    'auth.forgot-password.failed.reason.account-not-active' => '<p>It looks like your account isn\'t active.</p><p>You need to activate your account before you can change your password.</p><p>If you\'ve lost your original login details please contact us for a new letter/email.</p>',
     'auth.forgot-password-expired' => 'The forgot password link has expired, please try again',
     'auth.reset-password.success' => 'Your password was reset successfully',
     'auth.reset-password.failed.title' => 'We couldn\'t update your password',
@@ -44,7 +46,7 @@ return [
         => 'Your new password can\'t be the same as your old password',
     'auth.change-password.title' => 'Change your password',
     'auth.change-password.subtitle'
-        => 'Your password has to be at least 8 characters long and must contain at least 1 lower-case letter, 1 capital letter and 1 number. Never share your password with anyone.',
+        => 'Your password has to be at least 8 characters long and must contain at least 1 lower-case letter, 1 capital letter and 1 number. Never share your password with anyone. Your password can not be one of the last 5 passwords used.',
     'auth.change-password.old-password' => 'Current password',
     'auth.change-password.new-password' => 'New password',
     'auth.change-password.confirm-password' => 'Re-enter new password',

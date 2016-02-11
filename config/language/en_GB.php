@@ -22,7 +22,7 @@ return [
     'auth.expired-password.failed.reason.The password you entered is invalid.'
         => 'The current password you entered is incorrect',
     'auth.expired-password.failed.reason.New password does not meet the password policy requirements.'
-        => 'Your password has to be at least 8 characters long and must contain at least 1 lower-case letter, 1 capital letter and 1 number. Never share your password with anyone. Your password can not be one of the last 5 passwords used.',
+        => 'Your password should be at least 8 characters long. It must contain at least one lower-case letter, one capital letter and one number. Your new password can\'t be the same as your last 5 passwords.<br/><br/>Never share your password with anyone.',
     'auth.forgot-password.title' => 'Reset your password',
     'auth.forgot-password.username' => 'Enter your username',
     'auth.forgot-password.button' => 'Submit',
@@ -46,7 +46,7 @@ return [
         => 'Your new password can\'t be the same as your old password',
     'auth.change-password.title' => 'Change your password',
     'auth.change-password.subtitle'
-        => 'Your password has to be at least 8 characters long and must contain at least 1 lower-case letter, 1 capital letter and 1 number. Never share your password with anyone. Your password can not be one of the last 5 passwords used.',
+        => 'Your password should be at least 8 characters long. It must contain at least one lower-case letter, one capital letter and one number. Your new password can\'t be the same as your last 5 passwords.<br/><br/>Never share your password with anyone.',
     'auth.change-password.old-password' => 'Current password',
     'auth.change-password.new-password' => 'New password',
     'auth.change-password.confirm-password' => 'Re-enter new password',

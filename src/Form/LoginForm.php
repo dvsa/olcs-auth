@@ -13,7 +13,10 @@ class LoginForm
     /**
      * @Form\Options({
      *     "label": "auth.login.username",
-     *     "short-label": "auth.login.username"
+     *     "short-label": "auth.login.username",
+     *     "label_attributes": {
+     *         "aria-label": "Enter your username"
+     *     }
      * })
      * @Form\Attributes({"id": "auth.login.username"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
@@ -24,7 +27,10 @@ class LoginForm
     /**
      * @Form\Options({
      *     "label": "auth.login.password",
-     *     "short-label": "auth.login.password"
+     *     "short-label": "auth.login.password",
+     *     "label_attributes": {
+     *         "aria-label": "Enter your password"
+     *     }
      * })
      * @Form\Attributes({"id": "auth.login.password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})

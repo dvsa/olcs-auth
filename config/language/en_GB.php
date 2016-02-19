@@ -12,7 +12,9 @@ return [
     'auth.login.button' => 'Sign in',
     'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
     'auth.forgot-username.label' => 'Forgotten your username?',
+    'auth.forgot-username.label.audio' => 'Retrieve your username',
     'auth.forgot-password.label' => 'Forgotten your password?',
+    'auth.forgot-password.label.audio' => 'Retrieve your password',
     'auth.expired-password.title' => 'Change your password',
     'auth.expired-password.failed.title' => 'We couldn\'t update your password',
     'auth.expired-password.failed.reason.New password contains fewer than minimum number of characters.'

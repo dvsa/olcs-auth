@@ -15,7 +15,7 @@ class ChangePasswordForm
      *     "label": "auth.change-password.old-password",
      *     "short-label": "auth.change-password.old-password"
      * })
-     * @Form\Attributes({"id": "auth.change-password.old-password", "tabindex": 1})
+     * @Form\Attributes({"id": "auth.change-password.old-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Password")
      */
@@ -26,7 +26,7 @@ class ChangePasswordForm
      *     "label": "auth.change-password.new-password",
      *     "short-label": "auth.change-password.new-password"
      * })
-     * @Form\Attributes({"id": "auth.change-password.new-password", "tabindex": 2})
+     * @Form\Attributes({"id": "auth.change-password.new-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":8, "max":160}})
      * @Form\Validator({"name":"Common\Form\Elements\Validators\PasswordConfirm","options":{"token":"confirmPassword"}})
@@ -39,7 +39,7 @@ class ChangePasswordForm
      *     "label": "auth.change-password.confirm-password",
      *     "short-label": "auth.change-password.confirm-password"
      * })
-     * @Form\Attributes({"id": "auth.change-password.confirm-password", "tabindex": 3})
+     * @Form\Attributes({"id": "auth.change-password.confirm-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Password")
      */
@@ -49,8 +49,7 @@ class ChangePasswordForm
      * @Form\Attributes({
      *     "id": "auth.change-password.button",
      *     "value": "auth.change-password.button",
-     *     "class": "action--primary large",
-     *     "tabindex": 4
+     *     "class": "action--primary large"
      * })
      * @Form\Type("Submit")
      */

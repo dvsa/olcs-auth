@@ -15,7 +15,7 @@ class ForgotPasswordForm
      *     "label": "auth.forgot-password.username",
      *     "short-label": "auth.forgot-password.username"
      * })
-     * @Form\Attributes({"id": "auth.forgot-password.username", "tabindex": 1})
+     * @Form\Attributes({"id": "auth.forgot-password.username"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Text")
      */
@@ -25,8 +25,7 @@ class ForgotPasswordForm
      * @Form\Attributes({
      *     "id": "auth.forgot-password.button",
      *     "value": "auth.forgot-password.button",
-     *     "class": "action--primary large",
-     *     "tabindex": 2
+     *     "class": "action--primary large"
      * })
      * @Form\Type("Submit")
      */

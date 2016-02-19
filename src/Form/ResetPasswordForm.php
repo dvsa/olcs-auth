@@ -15,7 +15,7 @@ class ResetPasswordForm
      *     "label": "auth.reset-password.new-password",
      *     "short-label": "auth.reset-password.new-password"
      * })
-     * @Form\Attributes({"id": "auth.reset-password.new-password", "tabindex": 1})
+     * @Form\Attributes({"id": "auth.reset-password.new-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Password")
      */
@@ -26,7 +26,7 @@ class ResetPasswordForm
      *     "label": "auth.reset-password.confirm-password",
      *     "short-label": "auth.reset-password.confirm-password"
      * })
-     * @Form\Attributes({"id": "auth.reset-password.confirm-password", "tabindex": 2})
+     * @Form\Attributes({"id": "auth.reset-password.confirm-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Validator({"name": "Zend\Validator\Identical", "options": {"token": "newPassword"}})
      * @Form\Type("Password")
@@ -37,8 +37,7 @@ class ResetPasswordForm
      * @Form\Attributes({
      *     "id": "auth.reset-password.button",
      *     "value": "auth.reset-password.button",
-     *     "class": "action--primary large",
-     *     "tabindex": 3
+     *     "class": "action--primary large"
      * })
      * @Form\Type("Submit")
      */

@@ -17,6 +17,8 @@ return [
     'auth.forgot-password.label' => 'Forgotten your password?',
     'auth.forgot-username.label.audio' => 'Retrieve your username',
     'auth.forgot-password.label.audio' => 'Retrieve your password',
+    'auth.forgot-username.licence-number.label.audio' => 'Enter your licence number',
+    'auth.forgot-username.email.label.audio' => 'Enter your email address',
     'auth.expired-password.title' => 'Change your password',
     'auth.expired-password.failed.title' => 'We couldn\'t update your password',
     'auth.expired-password.failed.reason.New password contains fewer than minimum number of characters.'

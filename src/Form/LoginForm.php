@@ -18,7 +18,10 @@ class LoginForm
      *         "aria-label": "Enter your username"
      *     }
      * })
-     * @Form\Attributes({"id": "auth.login.username"})
+     * @Form\Attributes({
+     *     "id": "auth.login.username",
+     *     "tabindex": "1"
+     * })
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Text")
      */
@@ -32,7 +35,10 @@ class LoginForm
      *         "aria-label": "Enter your password"
      *     }
      * })
-     * @Form\Attributes({"id": "auth.login.password"})
+     * @Form\Attributes({
+     *     "id": "auth.login.password",
+     *     "tabindex": "2"
+     * })
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Password")
      */
@@ -42,7 +48,8 @@ class LoginForm
      * @Form\Attributes({
      *     "id": "auth.login.button",
      *     "value": "auth.login.button",
-     *     "class": "action--primary large"
+     *     "class": "action--primary large",
+     *     "tabindex": "3"
      * })
      * @Form\Type("Submit")
      */

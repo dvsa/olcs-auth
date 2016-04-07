@@ -17,6 +17,7 @@ class ForgotPasswordForm
      * })
      * @Form\Attributes({"id": "auth.forgot-password.username"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Common\Form\Elements\Validators\Username"})
      * @Form\Type("Text")
      */
     public $username = null;

@@ -23,6 +23,7 @@ class LoginForm
      *     "tabindex": "1"
      * })
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Common\Form\Elements\Validators\Username"})
      * @Form\Type("Text")
      */
     public $username = null;

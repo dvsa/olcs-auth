@@ -1,9 +1,6 @@
 <?php
 
-$en = include(__DIR__ . '/en_GB.php');
+# All these are in the common repo!
 
-foreach ($en as $key => $val) {
-    $en[$key] = '{WELSH} ' . $val;
-}
-
-return $en;
+return [
+];

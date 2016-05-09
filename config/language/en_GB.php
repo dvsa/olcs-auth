@@ -60,7 +60,7 @@ return [
     'auth.change-password.success' => 'Your password updated successfully',
     'auth.change-password.failed.title' => 'We couldn\'t update your password',
     'auth.change-password.failed.reason.An error occurred while trying to change the password'
-        => 'Your new password must contain at least one lower-case letter, one capital letter and one number.',
+        => 'Your current password may be incorrect or your new password may not follow the rules.',
     'auth.change-password.failed.reason.The password must be different. Try again.'
         => 'Your new password can\'t be the same as your old password',
     'auth.change-password.failed.reason.The password you entered is invalid.'

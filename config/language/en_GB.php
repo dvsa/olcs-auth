@@ -35,6 +35,7 @@ return [
     'auth.forgot-password.failed.title' => 'Failed to reset your password',
     'auth.forgot-password.failed.reason.User not found' => 'Please check your username',
     'auth.forgot-password.failed.reason.unknown-error' => 'An error occurred, please try again',
+    'auth.forgot-password.failed.reason.Failed to send mail' => 'An error occurred, when try to send mail',
     'auth.confirm-forgot-password.title' => 'Check your email',
     'auth.forgot-password.email.subject' => 'Reset your password',
     'auth.forgot-password.email.message' => 'Please follow the link below to reset your password',

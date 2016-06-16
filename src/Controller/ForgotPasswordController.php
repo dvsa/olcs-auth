@@ -7,7 +7,6 @@
  */
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService;
@@ -18,7 +17,7 @@ use Dvsa\Olcs\Transfer\Query\User\Pid;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ForgotPasswordController extends AbstractActionController
+class ForgotPasswordController extends AbstractController
 {
     /**
      * Forgot password page
@@ -34,6 +33,10 @@ class ForgotPasswordController extends AbstractActionController
 
         if ($request->isPost() === false) {
             return $this->renderView($form);
+        }
+
+        if ($this->isButtonPressed('cancel')) {
+            return $this->redirect()->toRoute('auth/login');
         }
 
         $form->setData($request->getPost());
@@ -84,9 +87,10 @@ class ForgotPasswordController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form
-     * @param bool $failed
-     * @param string $failureReason
+     * @param \Zend\Form\Form $form          Form
+     * @param bool            $failed        Failed
+     * @param string          $failureReason Failure reason
+     *
      * @return ViewModel
      */
     private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)

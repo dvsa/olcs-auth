@@ -98,6 +98,27 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $this->assertEquals('auth/change-password', $result->getTemplate());
     }
 
+    public function testIndexActionForPostWithCancel()
+    {
+        $post = [
+            'cancel' => '',
+        ];
+
+        $form = m::mock(Form::class);
+
+        $this->formHelper->shouldReceive('createFormWithRequest')
+            ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
+            ->andReturn($form);
+
+        $request = $this->sut->getRequest();
+        $request->setMethod('POST');
+        $request->setPost(new \Zend\Stdlib\Parameters($post));
+
+        $this->redirect->shouldReceive('toRouteAjax')->with('my-account')->andReturn('REDIRECT');
+
+        $this->assertEquals('REDIRECT', $this->sut->indexAction());
+    }
+
     public function testIndexActionForPostWithValidDataSuccess()
     {
         $post = [

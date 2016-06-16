@@ -31,4 +31,13 @@ class ForgotPasswordForm
      * @Form\Type("Submit")
      */
     public $submit = null;
+
+    /**
+     * @Form\Attributes({"id":"cancel","type":"submit","class":"action--secondary large"})
+     * @Form\Options({
+     *     "label": "cancel.button",
+     * })
+     * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
+     */
+    public $cancel = null;
 }

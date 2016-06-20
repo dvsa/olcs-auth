@@ -7,7 +7,6 @@
  */
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
@@ -17,7 +16,7 @@ use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ChangePasswordController extends AbstractActionController
+class ChangePasswordController extends AbstractController
 {
     /**
      * Forgot password page
@@ -35,6 +34,11 @@ class ChangePasswordController extends AbstractActionController
             return $this->renderView($form);
         }
 
+        if ($this->isButtonPressed('cancel')) {
+            // redir to my account
+            return $this->redirectToMyAccount();
+        }
+
         $form->setData($request->getPost());
 
         if ($form->isValid() === false) {
@@ -47,19 +51,31 @@ class ChangePasswordController extends AbstractActionController
             $this->getServiceLocator()->get('Helper\FlashMessenger')
                 ->addSuccessMessage('auth.change-password.success');
 
-            $config = $this->getServiceLocator()->get('Config');
-
             // redir to my account
-            return $this->redirect()->toRouteAjax($config['my_account_route']);
+            return $this->redirectToMyAccount();
         }
 
         return $this->renderView($form, true, $result['message']);
     }
 
     /**
+     * Redirect to My Account page
+     *
+     * @return \Zend\Http\Response
+     */
+    private function redirectToMyAccount()
+    {
+        $config = $this->getServiceLocator()->get('Config');
+
+        // redir to my account
+        return $this->redirect()->toRouteAjax($config['my_account_route']);
+    }
+
+    /**
      * Update password
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     private function updatePassword(array $data)
@@ -74,9 +90,10 @@ class ChangePasswordController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form
-     * @param bool $failed
-     * @param string $failureReason
+     * @param \Zend\Form\Form $form          Form
+     * @param bool            $failed        Failed
+     * @param string          $failureReason Failure reason
+     *
      * @return ViewModel
      */
     private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)

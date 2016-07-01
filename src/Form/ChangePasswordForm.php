@@ -13,7 +13,8 @@ class ChangePasswordForm
     /**
      * @Form\Options({
      *     "label": "auth.change-password.old-password",
-     *     "short-label": "auth.change-password.old-password"
+     *     "short-label": "auth.change-password.old-password",
+     *     "error-message": "changePasswordForm_oldPassword-error"
      * })
      * @Form\Attributes({"id": "auth.change-password.old-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
@@ -24,7 +25,8 @@ class ChangePasswordForm
     /**
      * @Form\Options({
      *     "label": "auth.change-password.new-password",
-     *     "short-label": "auth.change-password.new-password"
+     *     "short-label": "auth.change-password.new-password",
+     *     "error-message": "changePasswordForm_newPassword-error"
      * })
      * @Form\Attributes({"id": "auth.change-password.new-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
@@ -37,7 +39,8 @@ class ChangePasswordForm
     /**
      * @Form\Options({
      *     "label": "auth.change-password.confirm-password",
-     *     "short-label": "auth.change-password.confirm-password"
+     *     "short-label": "auth.change-password.confirm-password",
+     *     "error-message": "changePasswordForm_confirmPassword-error"
      * })
      * @Form\Attributes({"id": "auth.change-password.confirm-password"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})

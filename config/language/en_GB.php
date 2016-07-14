@@ -49,6 +49,8 @@ return [
     'auth.reset-password.failed.title' => 'We couldn\'t update your password',
     'auth.reset-password.failed.reason.Minimum password length is 8.'
         => 'Your new password must be at least eight characters long',
+    'auth.reset-password.failed.reason.Plug-in org.forgerock.openam.idrepo.ldap.DJLDAPv3Repo encountered an ldap exception 19: The provided new password was found in the password history for the user'
+        => 'Your new password was found in the password history',
     'auth.expired-password.failed.reason.The password must be different. Try again.'
         => 'Your new password can\'t be the same as your old password',
     'auth.change-password.title' => 'Change your password',

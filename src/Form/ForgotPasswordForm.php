@@ -17,6 +17,7 @@ class ForgotPasswordForm
      * })
      * @Form\Attributes({"id": "auth.forgot-password.username"})
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Filter({"name": "Common\Filter\StripSpaces"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Username"})
      * @Form\Type("Text")
      */

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Cookie Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Zend\Http\Header\SetCookie;
@@ -38,8 +33,10 @@ class CookieService implements FactoryInterface
     /**
      * Create the cookie service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
+     * @throws Exception\RuntimeException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -62,12 +59,14 @@ class CookieService implements FactoryInterface
     /**
      * Create the token cookie
      *
-     * @param Response $response
-     * @param $token
+     * @param Response $response Response
+     * @param string   $token    Token
+     *
+     * @return void
      */
     public function createTokenCookie(Response $response, $token)
     {
-        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->getCookieDomain());
+        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->getCookieDomain(), false, true);
         $headers = $response->getHeaders();
         $headers->addHeader($cookie);
     }
@@ -75,7 +74,9 @@ class CookieService implements FactoryInterface
     /**
      * Destroy cookie
      *
-     * @param Response $response
+     * @param Response $response Response
+     *
+     * @return void
      */
     public function destroyCookie(Response $response)
     {
@@ -87,7 +88,8 @@ class CookieService implements FactoryInterface
     /**
      * Get the cookie value
      *
-     * @param Request $request
+     * @param Request $request Request
+     *
      * @return null|string
      */
     public function getCookie(Request $request)
@@ -111,6 +113,11 @@ class CookieService implements FactoryInterface
         return $this->cookieName;
     }
 
+    /**
+     * Get the cookie domain
+     *
+     * @return null|string
+     */
     protected function getCookieDomain()
     {
         if ($this->cookieDomain === null) {

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract Text Prompt Callback
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
 
 /**
@@ -37,10 +32,11 @@ abstract class AbstractTextPromptCallback implements CallbackInterface
     /**
      * Construct the object
      *
-     * @param string $label
-     * @param string $name
-     * @param string $value
-     * @param bool|true $hash
+     * @param string $label Label
+     * @param string $name  Name
+     * @param string $value Value
+     *
+     * @return void
      */
     public function __construct($label, $name, $value)
     {
@@ -50,7 +46,9 @@ abstract class AbstractTextPromptCallback implements CallbackInterface
     }
 
     /**
-     * @inheritdoc
+     * To array
+     *
+     * @return array
      */
     public function toArray()
     {

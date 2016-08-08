@@ -76,6 +76,8 @@ class CookieServiceTest extends MockeryTestCase
                     $this->assertEquals('some-token', $setCookie->getValue());
                     $this->assertEquals('/', $setCookie->getPath());
                     $this->assertEquals(null, $setCookie->getExpires());
+                    $this->assertFalse($setCookie->isSecure());
+                    $this->assertTrue($setCookie->isHttponly());
                 }
             );
 
@@ -113,6 +115,8 @@ class CookieServiceTest extends MockeryTestCase
                     $this->assertEquals('some-token', $setCookie->getValue());
                     $this->assertEquals('/', $setCookie->getPath());
                     $this->assertEquals(null, $setCookie->getExpires());
+                    $this->assertFalse($setCookie->isSecure());
+                    $this->assertTrue($setCookie->isHttponly());
                 }
             );
 

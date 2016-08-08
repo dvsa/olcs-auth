@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Expired Password Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\Callback\ConfirmationCallback;
@@ -21,9 +16,12 @@ class ExpiredPasswordService extends AbstractRestService
     /**
      * Update password
      *
-     * @param $oldPassword
-     * @param $newPassword
-     * @param $confirmPassword
+     * @param string $authId          Auth id
+     * @param string $oldPassword     Old password
+     * @param string $newPassword     New password
+     * @param string $confirmPassword Confirm password
+     *
+     * @return array
      */
     public function updatePassword($authId, $oldPassword, $newPassword, $confirmPassword)
     {
@@ -32,7 +30,7 @@ class ExpiredPasswordService extends AbstractRestService
         $result = $this->decodeContent($response);
 
         // If the password was wrong, attempt it again without the hashed password
-        // @todo Maybe remove all logic around hashing
+        // @todo OLCS-13439
         //if (isset($result['header']) && strstr($result['header'], 'The password you entered is invalid')) {
         //    $response = $this->sendRequest($authId, $oldPassword, $newPassword, $confirmPassword, false);
         //    $result = $this->decodeContent($response);
@@ -44,10 +42,12 @@ class ExpiredPasswordService extends AbstractRestService
     /**
      * Build the request and send it
      *
-     * @param string $authId
-     * @param string $username
-     * @param string $password
-     * @param bool $hash
+     * @param string $authId          Auth id
+     * @param string $oldPassword     Old password
+     * @param string $newPassword     New password
+     * @param string $confirmPassword Confirm password
+     * @param bool   $hash            Whether to hash the password
+     *
      * @return \Zend\Http\Response
      */
     private function sendRequest($authId, $oldPassword, $newPassword, $confirmPassword, $hash = true)
@@ -60,17 +60,18 @@ class ExpiredPasswordService extends AbstractRestService
     /**
      * Build request data
      *
-     * @param string $authId
-     * @param string $oldPassword
-     * @param string $newPassword
-     * @param string $confirmPassword
-     * @param boolean $hashOld
+     * @param string  $authId          Auth id
+     * @param string  $oldPassword     Old password
+     * @param string  $newPassword     New password
+     * @param string  $confirmPassword Confirm password
+     * @param boolean $hashOld         Whether to hash the password
+     *
      * @return Request
      */
     private function buildRequest($authId, $oldPassword, $newPassword, $confirmPassword, $hashOld = false)
     {
         $request = new Request($authId, Request::STAGE_EXPIRED_PASSWORD);
-        // @todo Maybe remove all logic around hashing
+        // @todo OLCS-13439
         $request->addCallback(new PasswordCallback('Old Password', 'IDToken1', $oldPassword, $hashOld));
         $request->addCallback(new PasswordCallback('New Password', 'IDToken2', $newPassword));
         $request->addCallback(new PasswordCallback('Confirm Password', 'IDToken3', $confirmPassword));

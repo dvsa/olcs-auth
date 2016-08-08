@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Password Callback
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
 
 use Dvsa\Olcs\Auth\Service\Auth\HashService;
@@ -29,16 +24,16 @@ class PasswordCallback extends AbstractTextPromptCallback
     /**
      * Construct the object
      *
-     * @param string $label
-     * @param string $name
-     * @param string $value
-     * @param bool|true $hash
+     * @param string    $label Label
+     * @param string    $name  Name
+     * @param string    $value Value
+     * @param bool|true $hash  Whether to hash the password
      */
     public function __construct($label, $name, $value, $hash = true)
     {
         parent::__construct($label, $name, $value);
 
-        // @todo Maybe remove all logic around hashing
+        // @todo OLCS-13439
         $this->hash = $hash;
     }
 
@@ -49,6 +44,7 @@ class PasswordCallback extends AbstractTextPromptCallback
      */
     protected function getFilteredValue()
     {
+        // @todo OLCS-13439
         return $this->hash ? HashService::hashPassword($this->value) : $this->value;
     }
 }

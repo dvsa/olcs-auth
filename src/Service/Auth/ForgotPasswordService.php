@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Forgot Password Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Mvc\I18n\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Forgot Password Service
@@ -25,7 +20,8 @@ class ForgotPasswordService extends AbstractRestService
     /**
      * Configure a restful service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -36,7 +32,10 @@ class ForgotPasswordService extends AbstractRestService
     }
 
     /**
-     * @param $username
+     * Forgot password
+     *
+     * @param string $username Username
+     *
      * @return array
      */
     public function forgotPassword($username)

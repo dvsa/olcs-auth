@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Logout Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Zend\Http\Headers;
@@ -25,7 +20,8 @@ class LogoutService extends AbstractRestService
     /**
      * Create the logout service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -38,13 +34,14 @@ class LogoutService extends AbstractRestService
     /**
      * Delete the session from OpenAM
      *
-     * @param string $tokenId
+     * @param string $token Token
+     *
      * @return boolean
      */
-    public function logout($tokenId)
+    public function logout($token)
     {
         $headers = new Headers();
-        $headers->addHeaderLine($this->cookieService->getCookieName(), $tokenId);
+        $headers->addHeaderLine($this->cookieService->getCookieName(), $token);
 
         $response = $this->post('/json/sessions/?_action=logout', [], $headers);
 

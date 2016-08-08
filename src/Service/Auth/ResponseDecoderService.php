@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Response Decoder Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Zend\Http\Response;
@@ -19,8 +14,10 @@ class ResponseDecoderService
     /**
      * Decode a response content
      *
-     * @param Response $response
+     * @param Response $response Response
+     *
      * @return array
+     * @throws Exception\RuntimeException
      */
     public function decode(Response $response)
     {

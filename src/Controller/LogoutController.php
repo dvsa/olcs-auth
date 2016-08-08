@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Logout Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;

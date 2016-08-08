@@ -1,16 +1,11 @@
 <?php
 
-/**
- * Login Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Zend\Http\Response;
+use Zend\Mvc\Controller\Plugin\Redirect;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Mvc\Controller\Plugin\Redirect;
 
 /**
  * Login Service
@@ -32,7 +27,8 @@ class LoginService implements FactoryInterface
     /**
      * Create the login service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -49,13 +45,14 @@ class LoginService implements FactoryInterface
     /**
      * Login and redirect
      *
-     * @param $tokenId
-     * @param Response $response
+     * @param string   $token    Token
+     * @param Response $response Response
+     *
      * @return Response
      */
-    public function login($tokenId, Response $response)
+    public function login($token, Response $response)
     {
-        $this->cookieService->createTokenCookie($response, $tokenId);
+        $this->cookieService->createTokenCookie($response, $token);
 
         return $this->redirect->toUrl('/');
     }

@@ -67,7 +67,7 @@ class CookieService implements FactoryInterface
      */
     public function createTokenCookie(Response $response, $token)
     {
-        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->getCookieDomain());
+        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->getCookieDomain(), false, true);
         $headers = $response->getHeaders();
         $headers->addHeader($cookie);
     }

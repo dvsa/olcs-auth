@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Authentication Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\Callback\NameCallback;
@@ -21,8 +16,9 @@ class AuthenticationService extends AbstractRestService
     /**
      * Authenticate the user
      *
-     * @param $username
-     * @param $password
+     * @param string $username Username
+     * @param string $password Password
+     *
      * @return array
      */
     public function authenticate($username, $password)
@@ -36,9 +32,10 @@ class AuthenticationService extends AbstractRestService
     /**
      * Build the request and send it
      *
-     * @param string $username
-     * @param string $password
-     * @param bool $hash
+     * @param string $username Username
+     * @param string $password Password
+     * @param bool   $hash     Whether to hash the password
+     *
      * @return \Zend\Http\Response
      */
     private function sendRequest($username, $password, $hash = true)
@@ -53,10 +50,11 @@ class AuthenticationService extends AbstractRestService
     /**
      * Build the request object
      *
-     * @param string $authId
-     * @param string $username
-     * @param string $password
-     * @param bool $hash
+     * @param string $authId   Auth id
+     * @param string $username Username
+     * @param string $password Password
+     * @param bool   $hash     Whether to hash the password
+     *
      * @return Request
      */
     private function buildRequest($authId, $username, $password, $hash = true)

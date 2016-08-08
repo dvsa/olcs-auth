@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Callback Interface
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
 
 /**

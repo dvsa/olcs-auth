@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Forgot Password Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;

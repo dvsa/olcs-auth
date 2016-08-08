@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Confirmation Callback
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
 
 /**
@@ -22,7 +17,9 @@ class ConfirmationCallback implements CallbackInterface
     /**
      * Create a confirmation callback
      *
-     * @param string $name
+     * @param string $name Name
+     *
+     * @return void
      */
     public function __construct($name)
     {
@@ -30,7 +27,9 @@ class ConfirmationCallback implements CallbackInterface
     }
 
     /**
-     * @inheritdoc
+     * To array
+     *
+     * @return array
      */
     public function toArray()
     {

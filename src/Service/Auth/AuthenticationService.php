@@ -23,7 +23,6 @@ class AuthenticationService extends AbstractRestService
      */
     public function authenticate($username, $password)
     {
-        // At first we attempt to authenticate with a hashed password
         $response = $this->sendRequest($username, $password);
 
         return $this->decodeContent($response);
@@ -34,15 +33,14 @@ class AuthenticationService extends AbstractRestService
      *
      * @param string $username Username
      * @param string $password Password
-     * @param bool   $hash     Whether to hash the password
      *
      * @return \Zend\Http\Response
      */
-    private function sendRequest($username, $password, $hash = true)
+    private function sendRequest($username, $password)
     {
         $data = $this->beginAuthenticationSession();
 
-        $request = $this->buildRequest($data['authId'], $username, $password, $hash);
+        $request = $this->buildRequest($data['authId'], $username, $password);
 
         return $this->post('/json/authenticate', $request->toArray());
     }
@@ -53,15 +51,14 @@ class AuthenticationService extends AbstractRestService
      * @param string $authId   Auth id
      * @param string $username Username
      * @param string $password Password
-     * @param bool   $hash     Whether to hash the password
      *
      * @return Request
      */
-    private function buildRequest($authId, $username, $password, $hash = true)
+    private function buildRequest($authId, $username, $password)
     {
         $request = new Request($authId, Request::STAGE_AUTHENTICATE);
         $request->addCallback(new NameCallback('User Name:', 'IDToken1', $username));
-        $request->addCallback(new PasswordCallback('Password:', 'IDToken2', $password, $hash));
+        $request->addCallback(new PasswordCallback('Password:', 'IDToken2', $password));
 
         return $request;
     }

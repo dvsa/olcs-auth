@@ -46,9 +46,8 @@ class ChangePasswordService extends AbstractRestService
         $username = $this->getIdFromSession($token);
 
         $data = [
-            // @todo OLCS-13439
-            'currentpassword' => HashService::hashPassword($oldPassword),
-            'userpassword' => HashService::hashPassword($newPassword)
+            'currentpassword' => $oldPassword,
+            'userpassword' => $newPassword
         ];
 
         $uri = sprintf('json/users/%s?_action=changePassword', $username);

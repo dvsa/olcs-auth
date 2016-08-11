@@ -42,8 +42,7 @@ class ResetPasswordService extends AbstractRestService
     public function resetPassword($username, $confirmationId, $tokenId, $newPassword)
     {
         $data = [
-            // @todo OLCS-13439
-            'userpassword' => HashService::hashPassword($newPassword),
+            'userpassword' => $newPassword,
             'username' => $username,
             'tokenId' => $tokenId,
             'confirmationId' => $confirmationId

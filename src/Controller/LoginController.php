@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Login Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Controller\Traits\Authenticate;
@@ -63,9 +58,10 @@ class LoginController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form
-     * @param bool|false $failed
-     * @param null $failureReason
+     * @param \Zend\Form\Form $form          Form
+     * @param bool            $failed        Failed
+     * @param string          $failureReason Failure reason
+     *
      * @return ViewModel
      */
     private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
@@ -80,7 +76,9 @@ class LoginController extends AbstractActionController
     /**
      * Check if the request is post, and whether it looks like it's a post from our login form
      *
-     * @param Request $request
+     * @param Request $request Request
+     *
+     * @return bool
      */
     private function isLoginFormPost(Request $request)
     {

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\Client\Client;
@@ -33,7 +28,8 @@ abstract class AbstractRestService implements FactoryInterface
     /**
      * Configure a restful service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -47,7 +43,8 @@ abstract class AbstractRestService implements FactoryInterface
     /**
      * Decode a response content
      *
-     * @param Response $response
+     * @param Response $response Response
+     *
      * @return array
      */
     protected function decodeContent(Response $response)
@@ -58,9 +55,10 @@ abstract class AbstractRestService implements FactoryInterface
     /**
      * Send a POST
      *
-     * @param string $uri
-     * @param array $data
-     * @param Headers $headers
+     * @param string  $uri     URI
+     * @param array   $data    Data
+     * @param Headers $headers Headers
+     *
      * @return Response
      */
     protected function post($uri, $data = [], Headers $headers = null)

@@ -76,6 +76,46 @@ class CookieServiceTest extends MockeryTestCase
                     $this->assertEquals('some-token', $setCookie->getValue());
                     $this->assertEquals('/', $setCookie->getPath());
                     $this->assertEquals(null, $setCookie->getExpires());
+                    $this->assertFalse($setCookie->isSecure());
+                    $this->assertTrue($setCookie->isHttponly());
+                }
+            );
+
+        $this->sut->createTokenCookie($response, 'some-token');
+    }
+
+    public function testCreateTokenCookieWithoutHost()
+    {
+        $request = m::mock();
+        $request->shouldReceive('getUri->getHost')->andReturn('foo.olcs.co.uk');
+
+        $config = [
+            'openam' => [
+                'cookie' => [
+                    'name' => 'secureToken',
+                ]
+            ]
+        ];
+
+        $sm = m::mock(ServiceManager::class)->makePartial();
+        $sm->setService('Config', $config);
+        $sm->setService('Request', $request);
+
+        $this->sut = new CookieService();
+        $this->sut->createService($sm);
+
+        $response = m::mock(Response::class);
+        $response->shouldReceive('getHeaders->addHeader')
+            ->with(m::type(SetCookie::class))
+            ->andReturnUsing(
+                function (SetCookie $setCookie) {
+                    $this->assertEquals('secureToken', $setCookie->getName());
+                    $this->assertEquals(null, $setCookie->getDomain());
+                    $this->assertEquals('some-token', $setCookie->getValue());
+                    $this->assertEquals('/', $setCookie->getPath());
+                    $this->assertEquals(null, $setCookie->getExpires());
+                    $this->assertFalse($setCookie->isSecure());
+                    $this->assertTrue($setCookie->isHttponly());
                 }
             );
 
@@ -113,6 +153,8 @@ class CookieServiceTest extends MockeryTestCase
                     $this->assertEquals('some-token', $setCookie->getValue());
                     $this->assertEquals('/', $setCookie->getPath());
                     $this->assertEquals(null, $setCookie->getExpires());
+                    $this->assertFalse($setCookie->isSecure());
+                    $this->assertTrue($setCookie->isHttponly());
                 }
             );
 

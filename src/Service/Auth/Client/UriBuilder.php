@@ -1,16 +1,10 @@
 <?php
 
-/**
- * Uri Builder
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
-use Zend\Http\Response;
+use Dvsa\Olcs\Auth\Service\Auth\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Dvsa\Olcs\Auth\Service\Auth\Exception;
 
 /**
  * Uri Builder
@@ -32,8 +26,10 @@ class UriBuilder implements FactoryInterface
     /**
      * Configure the uri builder
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
+     * @throws Exception\RuntimeException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -55,7 +51,8 @@ class UriBuilder implements FactoryInterface
     /**
      * Build a full uri, including the baseUrl, $uri and optionally the realm
      *
-     * @param $uri
+     * @param string $uri URI
+     *
      * @return string
      */
     public function build($uri)

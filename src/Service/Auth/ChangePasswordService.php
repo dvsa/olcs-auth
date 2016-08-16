@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Change Password Service
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Zend\Http\Headers;
@@ -22,7 +19,8 @@ class ChangePasswordService extends AbstractRestService
     /**
      * Create the change password service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -35,9 +33,10 @@ class ChangePasswordService extends AbstractRestService
     /**
      * Update password
      *
-     * @param Request $request
-     * @param string $oldPassword
-     * @param string $newPassword
+     * @param Request $request     Request
+     * @param string  $oldPassword Old password
+     * @param string  $newPassword New password
+     *
      * @return array
      */
     public function updatePassword(Request $request, $oldPassword, $newPassword)
@@ -47,9 +46,8 @@ class ChangePasswordService extends AbstractRestService
         $username = $this->getIdFromSession($token);
 
         $data = [
-            // @todo Maybe remove all logic around hashing
-            'currentpassword' => HashService::hashPassword($oldPassword),
-            'userpassword' => HashService::hashPassword($newPassword)
+            'currentpassword' => $oldPassword,
+            'userpassword' => $newPassword
         ];
 
         $uri = sprintf('json/users/%s?_action=changePassword', $username);
@@ -63,7 +61,8 @@ class ChangePasswordService extends AbstractRestService
     /**
      * Get OpenAM Id from the session
      *
-     * @param string $token
+     * @param string $token Token
+     *
      * @return string
      */
     private function getIdFromSession($token)

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Authentication Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\Callback\NameCallback;
@@ -21,13 +16,13 @@ class AuthenticationService extends AbstractRestService
     /**
      * Authenticate the user
      *
-     * @param $username
-     * @param $password
+     * @param string $username Username
+     * @param string $password Password
+     *
      * @return array
      */
     public function authenticate($username, $password)
     {
-        // At first we attempt to authenticate with a hashed password
         $response = $this->sendRequest($username, $password);
 
         return $this->decodeContent($response);
@@ -36,16 +31,16 @@ class AuthenticationService extends AbstractRestService
     /**
      * Build the request and send it
      *
-     * @param string $username
-     * @param string $password
-     * @param bool $hash
+     * @param string $username Username
+     * @param string $password Password
+     *
      * @return \Zend\Http\Response
      */
-    private function sendRequest($username, $password, $hash = true)
+    private function sendRequest($username, $password)
     {
         $data = $this->beginAuthenticationSession();
 
-        $request = $this->buildRequest($data['authId'], $username, $password, $hash);
+        $request = $this->buildRequest($data['authId'], $username, $password);
 
         return $this->post('/json/authenticate', $request->toArray());
     }
@@ -53,17 +48,17 @@ class AuthenticationService extends AbstractRestService
     /**
      * Build the request object
      *
-     * @param string $authId
-     * @param string $username
-     * @param string $password
-     * @param bool $hash
+     * @param string $authId   Auth id
+     * @param string $username Username
+     * @param string $password Password
+     *
      * @return Request
      */
-    private function buildRequest($authId, $username, $password, $hash = true)
+    private function buildRequest($authId, $username, $password)
     {
         $request = new Request($authId, Request::STAGE_AUTHENTICATE);
         $request->addCallback(new NameCallback('User Name:', 'IDToken1', $username));
-        $request->addCallback(new PasswordCallback('Password:', 'IDToken2', $password, $hash));
+        $request->addCallback(new PasswordCallback('Password:', 'IDToken2', $password));
 
         return $request;
     }

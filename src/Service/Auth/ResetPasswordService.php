@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Reset Password Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 /**
@@ -17,9 +12,11 @@ class ResetPasswordService extends AbstractRestService
     /**
      * Confirm link is still valid
      *
-     * @param $username
-     * @param $confirmationId
-     * @param $tokenId
+     * @param string $username       Username
+     * @param string $confirmationId Confirmation id
+     * @param string $tokenId        Token id
+     *
+     * @return array
      */
     public function confirm($username, $confirmationId, $tokenId)
     {
@@ -35,16 +32,17 @@ class ResetPasswordService extends AbstractRestService
     /**
      * Reset password
      *
-     * @param $username
-     * @param $confirmationId
-     * @param $tokenId
-     * @param $newPassword
+     * @param string $username       Username
+     * @param string $confirmationId Confirmation id
+     * @param string $tokenId        Token id
+     * @param string $newPassword    New password
+     *
+     * @return array
      */
     public function resetPassword($username, $confirmationId, $tokenId, $newPassword)
     {
         $data = [
-            // @todo Maybe remove all logic around hashing
-            'userpassword' => HashService::hashPassword($newPassword),
+            'userpassword' => $newPassword,
             'username' => $username,
             'tokenId' => $tokenId,
             'confirmationId' => $confirmationId

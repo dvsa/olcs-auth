@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Expired Password Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Zend\Http\Response;
@@ -63,7 +58,8 @@ class ExpiredPasswordController extends AbstractActionController
     /**
      * Update password
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     private function updatePassword(array $data)
@@ -81,9 +77,10 @@ class ExpiredPasswordController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form
-     * @param bool $failed
-     * @param string $failureReason
+     * @param \Zend\Form\Form $form          Form
+     * @param bool            $failed        Failed
+     * @param string          $failureReason Failure reason
+     *
      * @return ViewModel
      */
     private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)

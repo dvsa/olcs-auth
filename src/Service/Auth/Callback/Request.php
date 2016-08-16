@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Request
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
 
 /**
@@ -35,9 +30,11 @@ class Request
     /**
      * Create a request
      *
-     * @param string $authId
-     * @param string $stage
-     * @param CallbackInterface[]|array $callbacks
+     * @param string                    $authId    Auth id
+     * @param string                    $stage     Stage
+     * @param CallbackInterface[]|array $callbacks Callbacks
+     *
+     * @return void
      */
     public function __construct($authId, $stage, array $callbacks = [])
     {
@@ -49,7 +46,9 @@ class Request
     /**
      * Add callback
      *
-     * @param CallbackInterface $callback
+     * @param CallbackInterface $callback Callback
+     *
+     * @return void
      */
     public function addCallback(CallbackInterface $callback)
     {

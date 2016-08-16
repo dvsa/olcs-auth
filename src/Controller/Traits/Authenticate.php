@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Authenticate
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Controller\Traits;
 
 use Dvsa\Olcs\Auth\Service\Auth\AuthenticationService;
@@ -17,6 +12,15 @@ use Dvsa\Olcs\Auth\Service\Auth\LoginService;
  */
 trait Authenticate
 {
+    /**
+     * Authenticate the user
+     *
+     * @param string   $username        Username
+     * @param string   $password        Password
+     * @param callable $failureCallback Failure callback
+     *
+     * @return \Zend\Http\Response
+     */
     protected function authenticate($username, $password, $failureCallback)
     {
         $result = $this->getAuthenticationService()->authenticate($username, $password);

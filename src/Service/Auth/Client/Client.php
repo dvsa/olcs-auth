@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Client
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
+use Dvsa\Olcs\Auth\Service\Auth\Exception;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Header\ContentType;
 use Zend\Http\Headers;
@@ -14,7 +10,6 @@ use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Dvsa\Olcs\Auth\Service\Auth\Exception;
 
 /**
  * Client
@@ -31,7 +26,8 @@ class Client extends HttpClient implements FactoryInterface
     /**
      * Configure the client
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
      * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -52,9 +48,10 @@ class Client extends HttpClient implements FactoryInterface
     /**
      * Send a POST
      *
-     * @param string $uri
-     * @param array $data
-     * @param Headers $headers
+     * @param string  $uri     URI
+     * @param array   $data    Data
+     * @param Headers $headers Headers
+     *
      * @return Response
      */
     public function post($uri, $data = [], Headers $headers = null)

@@ -59,7 +59,17 @@ return [
                                 'action' => 'index'
                             ]
                         ],
-                    ]
+                    ],
+                    'validate' => [
+                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => 'validate[/]',
+                            'defaults' => [
+                                'controller' => \Dvsa\Olcs\Auth\Controller\ValidateController::class,
+                                'action' => 'index',
+                            ]
+                        ],
+                    ],
                 ]
             ],
             'change-password' => [
@@ -82,6 +92,10 @@ return [
             'Auth\ForgotPasswordController' => \Dvsa\Olcs\Auth\Controller\ForgotPasswordController::class,
             'Auth\ChangePasswordController' => \Dvsa\Olcs\Auth\Controller\ChangePasswordController::class,
             'Auth\ResetPasswordController' => \Dvsa\Olcs\Auth\Controller\ResetPasswordController::class,
+        ],
+        'factories' => [
+            \Dvsa\Olcs\Auth\Controller\ValidateController::class =>
+                \Dvsa\Olcs\Auth\Controller\ValidateController::class,
         ]
     ],
     'service_manager' => [
@@ -97,6 +111,8 @@ return [
             'Auth\LoginService' => \Dvsa\Olcs\Auth\Service\Auth\LoginService::class,
             'Auth\LogoutService' => \Dvsa\Olcs\Auth\Service\Auth\LogoutService::class,
             'Auth\CookieService' => \Dvsa\Olcs\Auth\Service\Auth\CookieService::class,
+            \Dvsa\Olcs\Auth\Service\Auth\ValidateService::class =>
+                \Dvsa\Olcs\Auth\Service\Auth\ValidateService::class,
             'Auth\Client' => \Dvsa\Olcs\Auth\Service\Auth\Client\Client::class,
             'Auth\Client\UriBuilder' => \Dvsa\Olcs\Auth\Service\Auth\Client\UriBuilder::class,
         ]
@@ -108,7 +124,10 @@ return [
         ],
         'template_path_stack' => [
             __DIR__ . '/../view/'
-        ]
+        ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ],
     ],
     'zfc_rbac' => [
         'guards' => [

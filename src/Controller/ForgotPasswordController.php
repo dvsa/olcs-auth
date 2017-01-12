@@ -47,7 +47,7 @@ class ForgotPasswordController extends AbstractController
         if ($response->isOk()) {
             $pidResult = $response->getResult();
 
-            if (!empty($pidResult['isActive']) && ($pidResult['isActive'] === true)) {
+            if (isset($pidResult['canResetPassword']) && ($pidResult['canResetPassword'] === true)) {
                 $result = $this->getForgotPasswordService()->forgotPassword($pidResult['pid']);
 
                 /**

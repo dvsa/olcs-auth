@@ -3,8 +3,12 @@
 return [
     'auth.login.title' => 'Sign in',
     'auth.login.failed.title' => 'There was a problem signing in',
+    // auth.login.failed.reason with "!!" suffix are for openAM 12.02
     'auth.login.failed.reason.Authentication Failed!!' => 'Please check your username and password',
     'auth.login.failed.reason.Invalid Password!!' => 'Please check your username and password',
+    // auth.login.failed.reason without "!!" suffix are for openAM 12.04
+    'auth.login.failed.reason.Authentication Failed' => 'Please check your username and password',
+    'auth.login.failed.reason.Invalid Password' => 'Please check your username and password',
     'auth.login.failed.reason. Your account is locked. Please contact service desk to unlock your account'
         => 'Your account is locked. Email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a> to unlock it',
     'auth.login.username' => 'Username',

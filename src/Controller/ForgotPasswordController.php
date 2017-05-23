@@ -48,7 +48,7 @@ class ForgotPasswordController extends AbstractController
             $pidResult = $response->getResult();
 
             if (isset($pidResult['canResetPassword']) && ($pidResult['canResetPassword'] === true)) {
-                $result = $this->getForgotPasswordService()->forgotPassword($pidResult['pid']);
+                $result = $this->getForgotPasswordService()->forgotPassword($data['username']);
 
                 /**
                  * Rather than redirecting, we show a different view in this case, that way the screen can only be shown

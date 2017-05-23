@@ -87,15 +87,19 @@ return [
     'controllers' => [
         'invokables' => [
             'Auth\LoginController' => \Dvsa\Olcs\Auth\Controller\LoginController::class,
-            'Auth\LogoutController' => \Dvsa\Olcs\Auth\Controller\LogoutController::class,
             'Auth\ExpiredPasswordController' => \Dvsa\Olcs\Auth\Controller\ExpiredPasswordController::class,
             'Auth\ForgotPasswordController' => \Dvsa\Olcs\Auth\Controller\ForgotPasswordController::class,
             'Auth\ChangePasswordController' => \Dvsa\Olcs\Auth\Controller\ChangePasswordController::class,
             'Auth\ResetPasswordController' => \Dvsa\Olcs\Auth\Controller\ResetPasswordController::class,
         ],
+        'aliases' => [
+            'Auth\LogoutController' => \Dvsa\Olcs\Auth\Controller\LogoutController::class,
+        ],
         'factories' => [
             \Dvsa\Olcs\Auth\Controller\ValidateController::class =>
                 \Dvsa\Olcs\Auth\Controller\ValidateController::class,
+            \Dvsa\Olcs\Auth\Controller\LogoutController::class =>
+                \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory::class,
         ]
     ],
     'service_manager' => [
@@ -149,5 +153,6 @@ return [
                 'timeout' => 60,
             ]
         ]
-    ]
+    ],
+    'selfserve_logout_redirect_url' => 'http://gov.uk/done/vehicle-operator-licensing',
 ];

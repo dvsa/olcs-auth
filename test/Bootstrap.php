@@ -2,56 +2,121 @@
 
 namespace Dvsa\OlcsTest\Auth;
 
-use Mockery as m;
+use Zend\Mvc\Service\ServiceManagerConfig;
+use Zend\ServiceManager\ServiceManager;
+use Zend\I18n\Translator\Translator;
+use Zend\Loader\AutoloaderFactory;
+use Zend\Console\Console;
+use RuntimeException;
 
-error_reporting(-1);
-chdir(dirname(__DIR__));
 date_default_timezone_set('Europe/London');
+error_reporting(E_ALL | E_STRICT);
+chdir(__DIR__);
 
 /**
  * Test bootstrap, for setting up autoloading
  */
 class Bootstrap
 {
-    protected static $config = [];
+    /** @var ServiceManager */
+    protected static $serviceManager;
+
+    /** @var array */
+    protected static $config;
 
     public static function init()
     {
-        ini_set('memory_limit', '1G');
+        Console::overrideIsConsole(false);
 
-        $loader = static::initAutoloader();
-        $loader->addPsr4('Dvsa\\OlcsTest\\Auth\\', __DIR__ . '/src');
+        $zf2ModulePaths = array(dirname(dirname(__DIR__)));
+        if (($path = static::findParentPath('vendor'))) {
+            $zf2ModulePaths[] = $path;
+        }
+        if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {
+            $zf2ModulePaths[] = $path;
+        }
 
-        self::$config = [
+        self::initAutoloader();
+
+        $config = [
             'modules' => [
-                'Dvsa\Olcs\Auth'
+                'Dvsa\Olcs\Auth',
             ],
             'module_listener_options' => [
                 'module_paths' => [
-                    __DIR__ . '/../'
-                ]
-            ]
+                    __DIR__ . '/../',
+                ],
+            ],
         ];
+
+        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager->setService('ApplicationConfig', $config);
+        $serviceManager->setService('translator', new Translator());
+        $serviceManager->get('ModuleManager')->loadModules();
+
+        // If we want to a mock a service, we can.  But default services apply.
+        $serviceManager->setAllowOverride(true);
+
+        self::$config = $config;
+        self::$serviceManager = $serviceManager;
     }
 
-    /**
-     * Changed this method to return a mock
-     *
-     * @return \Zend\ServiceManager\ServiceManager
-     */
+    public static function getConfig()
+    {
+        return self::$config;
+    }
+
+    public static function chroot()
+    {
+        $rootPath = dirname(static::findParentPath(''));
+        chdir($rootPath);
+    }
+
     public static function getServiceManager()
     {
-        $sm = m::mock('\Zend\ServiceManager\ServiceManager')
-            ->makePartial()
-            ->setAllowOverride(true);
-
-        return $sm;
+        return self::$serviceManager;
     }
 
     protected static function initAutoloader()
     {
-        return require('vendor/autoload.php');
+        $vendorPath = static::findParentPath('vendor');
+
+        if (file_exists($vendorPath . '/autoload.php')) {
+            include $vendorPath . '/autoload.php';
+        }
+
+        if (! class_exists('Zend\Loader\AutoloaderFactory')) {
+            throw new RuntimeException(
+                'Unable to load ZF2. Run `php composer.phar install`'
+            );
+        }
+
+        AutoloaderFactory::factory(
+            [
+                'Zend\Loader\StandardAutoloader' => [
+                    'autoregister_zf' => true,
+                    'namespaces' => [
+                        __NAMESPACE__ => __DIR__ . DIRECTORY_SEPARATOR . __NAMESPACE__,
+                    ],
+                ],
+            ]
+        );
+    }
+
+    protected static function findParentPath($path)
+    {
+        $dir = __DIR__;
+        $previousDir = '.';
+        while (!is_dir($dir . DIRECTORY_SEPARATOR . $path)) {
+            $dir = dirname($dir);
+            if ($previousDir === $dir) {
+                return false;
+            }
+            $previousDir = $dir;
+        }
+        return $dir . DIRECTORY_SEPARATOR . $path;
     }
 }
 
 Bootstrap::init();
+Bootstrap::chroot();

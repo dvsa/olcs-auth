@@ -19,8 +19,7 @@ class LoginForm
      *     }
      * })
      * @Form\Attributes({
-     *     "id": "auth.login.username",
-     *     "tabindex": "1"
+     *     "id": "auth.login.username"
      * })
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Filter({"name": "Common\Filter\StripSpaces"})
@@ -38,8 +37,7 @@ class LoginForm
      *     }
      * })
      * @Form\Attributes({
-     *     "id": "auth.login.password",
-     *     "tabindex": "2"
+     *     "id": "auth.login.password"
      * })
      * @Form\Filter({"name": "Zend\Filter\StringTrim"})
      * @Form\Type("Password")
@@ -50,8 +48,7 @@ class LoginForm
      * @Form\Attributes({
      *     "id": "auth.login.button",
      *     "value": "auth.login.button",
-     *     "class": "action--primary large",
-     *     "tabindex": "3"
+     *     "class": "action--primary large"
      * })
      * @Form\Type("Submit")
      */

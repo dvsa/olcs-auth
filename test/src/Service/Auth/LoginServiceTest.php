@@ -61,6 +61,7 @@ class LoginServiceTest extends MockeryTestCase
 
         $this->redirect->shouldReceive('toUrl')->with('/')->andReturn('REDIRECT');
         $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn(false);
+        $this->request->shouldReceive('getUri->getScheme')->with()->once()->andReturn('https');
 
         $this->assertEquals('REDIRECT', $this->sut->login($tokenId, $response));
     }
@@ -79,7 +80,7 @@ class LoginServiceTest extends MockeryTestCase
         $this->cookie->shouldReceive('createTokenCookie')->with($response, 'some-token')->once();
 
         $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn($gotoUrl);
-        $this->request->shouldReceive('getUri->getScheme')->with()->once()->andReturn('https');
+        $this->request->shouldReceive('getUri->getScheme')->with()->atLeast()->times(1)->andReturn('https');
         $this->request->shouldReceive('getUri->getHost')->with()->once()->andReturn('foo.com');
 
         if ($expectedRedirectToGotoUrl) {
@@ -98,7 +99,6 @@ class LoginServiceTest extends MockeryTestCase
             'Wrong domain 2' => [false, 'http://food.com/xxx'],
             'Wrong domain 3' => [false, 'https://www.foo.com/xxx'],
             'Wrong domain 4' => [false, 'https://www.foo.comd/xxx'],
-            'Wrong scheme' => [false, 'http://foo.com/xxx'],
             [true, 'https://foo.com/xxx'],
         ];
     }

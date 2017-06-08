@@ -61,6 +61,11 @@ class LoginService implements FactoryInterface
         $this->cookieService->createTokenCookie($response, $token);
 
         $gotoUrl = $this->request->getQuery('goto', false);
+        // The "goto" URL added by openAm is always http, if we are running https, then need to change it
+        if ($this->request->getUri()->getScheme() === 'https') {
+            $gotoUrl = str_replace('http://', 'https://', $gotoUrl);
+        }
+
         if ($this->validateGotoUrl($gotoUrl)) {
             return $this->redirect->toUrl($gotoUrl);
         }
@@ -77,7 +82,7 @@ class LoginService implements FactoryInterface
      */
     private function validateGotoUrl($gotoUrl)
     {
-        if (!is_string($gotoUrl)) {
+        if (!is_string($gotoUrl) || empty($gotoUrl)) {
             return false;
         }
 

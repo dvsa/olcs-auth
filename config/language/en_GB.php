@@ -55,6 +55,12 @@ return [
         => 'Your new password must be at least eight characters long',
     'auth.reset-password.failed.reason.Plug-in org.forgerock.openam.idrepo.ldap.DJLDAPv3Repo encountered an ldap exception 19: The provided new password was found in the password history for the user'
         => 'You\'ve used this password before. Please choose a new one.',
+    'auth.reset-password.failed.reason.Plug-in org.forgerock.openam.idrepo.ldap.DJLDAPv3Repo encountered an ldap exception 19: The provided password value was rejected by a password validator:  The provided password did not contain enough characters from the character range \'0-9\'.  The minimum number of characters from that range that must be present in user passwords is 1'
+        => 'Your password must contain at least one number',
+    'auth.reset-password.failed.reason.Plug-in org.forgerock.openam.idrepo.ldap.DJLDAPv3Repo encountered an ldap exception 19: The provided password value was rejected by a password validator:  The provided password did not contain enough characters from the character range \'A-Z\'.  The minimum number of characters from that range that must be present in user passwords is 1'
+        => 'Your password must contain at least one upper case character',
+    'auth.reset-password.failed.reason.Plug-in org.forgerock.openam.idrepo.ldap.DJLDAPv3Repo encountered an ldap exception 19: The provided password value was rejected by a password validator:  The provided password did not contain enough characters from the character range \'a-z\'.  The minimum number of characters from that range that must be present in user passwords is 1'
+        => 'Your password must contain at least one lower case character',
     'auth.expired-password.failed.reason.The password must be different. Try again.'
         => 'Your new password can\'t be the same as your old password',
     'auth.change-password.title' => 'Change your password',
@@ -72,4 +78,14 @@ return [
         => 'Your new password can\'t be the same as your old password',
     'auth.change-password.failed.reason.The password you entered is invalid.'
         => 'The current password you entered is incorrect',
+    'auth.change-password.failed.reason.Old password is incorrect.' => 'Current password is incorrect',
+    'auth.change-password.failed.reason.The provided password value was rejected by a password validator:  The provided password did not contain enough characters from the character range \'0-9\'.  The minimum number of characters from that range that must be present in user passwords is 1'
+        => 'Your password must contain at least one number',
+    'auth.change-password.failed.reason.The provided password value was rejected by a password validator:  The provided password did not contain enough characters from the character range \'A-Z\'.  The minimum number of characters from that range that must be present in user passwords is 1'
+        => 'Your password must contain at least one upper case character',
+    'auth.change-password.failed.reason.The provided password value was rejected by a password validator:  The provided password did not contain enough characters from the character range \'a-z\'.  The minimum number of characters from that range that must be present in user passwords is 1'
+        => 'Your password must contain at least one lower case character',
+
+    //  Zend Error Messages
+    'The two given tokens do not match' => 'The two passwords do not match',
 ];

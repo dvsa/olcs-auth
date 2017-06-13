@@ -85,6 +85,8 @@ return [
         => 'Your password must contain at least one upper case character',
     'auth.change-password.failed.reason.The provided password value was rejected by a password validator:  The provided password did not contain enough characters from the character range \'a-z\'.  The minimum number of characters from that range that must be present in user passwords is 1'
         => 'Your password must contain at least one lower case character',
+    'auth.change-password.failed.reason.The provided new password was found in the password history for the user'
+        => 'You\'ve used this password before. Please choose a new one.',
 
     //  Zend Error Messages
     'The two given tokens do not match' => 'The two passwords do not match',

@@ -47,14 +47,8 @@ class LogoutControllerFactoryTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider realmDataProvider
      */
-    public function testLogoutControllerFactoryWithNoRealm(
-        $realm,
-        $expectedException = false
-    ) {
-        if ($expectedException === true) {
-            $this->setExpectedException(\InvalidArgumentException::class, 'Realm is not specified');
-        }
-
+    public function testLogoutControllerFactoryWithNoRealm($realm)
+    {
         // Set realm defined in data provider
         $mockRequest = $this->getMock(Request::class, [], [], '', false);
         $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
@@ -78,7 +72,6 @@ class LogoutControllerFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * 1. Realm
-     * 2. Exception expected?
      *
      * @return array
      */
@@ -87,11 +80,12 @@ class LogoutControllerFactoryTest extends \PHPUnit_Framework_TestCase
         return [
             'No realm specified' => [
                 '',
-                true
             ],
             'any realm specified' => [
                 'test',
-                false,
+            ],
+            'self serve' => [
+                'selfserve',
             ],
         ];
     }

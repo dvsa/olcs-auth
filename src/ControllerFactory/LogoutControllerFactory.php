@@ -65,12 +65,7 @@ class LogoutControllerFactory implements FactoryInterface
     private function isSelfServeUser(Request $requestService)
     {
         $realmName = $requestService->getServer(self::OPENAM_HEADER_REALM_KEY);
-
-        if (empty($realmName)) {
-            throw new \InvalidArgumentException('Realm is not specified');
-        }
-
-        return ($realmName === 'selfserve');
+        return ($realmName === 'selfserve' || empty($realmName));
     }
 
     /**

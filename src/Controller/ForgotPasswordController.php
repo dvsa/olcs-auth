@@ -2,6 +2,8 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Common\Service\Cqrs\Exception;
+use Common\Service\Cqrs\Exception\NotFoundException;
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService;
@@ -42,16 +44,17 @@ class ForgotPasswordController extends AbstractController
 
         $data = $form->getData();
 
-        $response = $this->handleQuery(Pid::create(['id' => $data['username']]));
+        try {
+            $response = $this->handleQuery(Pid::create(['id' => $data['username']]));
+        } catch (NotFoundException $e) {
+            // Mimic the OpenAM error message
+            return $this->renderView($form, true, 'User not found');
+        } catch (Exception $e) {
+            return $this->renderView($form, true, 'unknown-error');
+        }
 
         if (!$response->isOk()) {
-            if ($response->isClientError()) {
-                // Mimic the OpenAM error message
-                $message = 'User not found';
-            } else {
-                $message = 'unknown-error';
-            }
-            return $this->renderView($form, true, $message);
+            return $this->renderView($form, true, 'unknown-error');
         }
 
         $pidResult = $response->getResult();

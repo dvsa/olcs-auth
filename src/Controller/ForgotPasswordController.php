@@ -44,39 +44,36 @@ class ForgotPasswordController extends AbstractController
 
         $response = $this->handleQuery(Pid::create(['id' => $data['username']]));
 
-        if ($response->isOk()) {
-            $pidResult = $response->getResult();
-
-            if (isset($pidResult['canResetPassword']) && ($pidResult['canResetPassword'] === true)) {
-                $result = $this->getForgotPasswordService()->forgotPassword($data['username']);
-
-                /**
-                 * Rather than redirecting, we show a different view in this case, that way the screen can only be shown
-                 * when a successful request has occurred
-                 */
-                if ($result['status'] == 200) {
-                    $this->layout('auth/layout');
-                    $view = new ViewModel();
-                    $view->setTemplate('auth/confirm-forgot-password');
-
-                    return $view;
-                } else {
-                    $message = $result['message'];
-                }
-            } else {
-                $message = 'account-not-active';
-            }
-
-        } else {
+        if (!$response->isOk()) {
             if ($response->isClientError()) {
                 // Mimic the OpenAM error message
                 $message = 'User not found';
             } else {
                 $message = 'unknown-error';
             }
+            return $this->renderView($form, true, $message);
         }
 
-        return $this->renderView($form, true, $message);
+        $pidResult = $response->getResult();
+
+        if (!isset($pidResult['canResetPassword']) || $pidResult['canResetPassword'] !== true) {
+            return $this->renderView($form, true, 'account-not-active');
+        }
+
+        $result = $this->getForgotPasswordService()->forgotPassword($data['username']);
+        if ($result['status'] != 200) {
+            return $this->renderView($form, true, $result['message']);
+        }
+
+        /**
+         * Rather than redirecting, we show a different view in this case, that way the screen can only be shown
+         * when a successful request has occurred
+         */
+        $this->layout('auth/layout');
+        $view = new ViewModel();
+        $view->setTemplate('auth/confirm-forgot-password');
+
+        return $view;
     }
 
     /**

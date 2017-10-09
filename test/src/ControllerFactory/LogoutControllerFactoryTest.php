@@ -26,15 +26,15 @@ class LogoutControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager->setAllowOverride(true);
 
         // Mock coockie service
-        $cookieService = $this->getMock(CookieService::class, [], [], '', false);
+        $cookieService = $this->createMock(CookieService::class);
         $serviceManager->setService('Auth\CookieService', $cookieService);
 
         // Mock logout service
-        $logoutService = $this->getMock(LogoutService::class, [], [], '', false);
+        $logoutService = $this->createMock(LogoutService::class);
         $serviceManager->setService('Auth\LogoutService', $logoutService);
 
         // Set realm by default, but can be overwritten
-        $mockRequest = $this->getMock(Request::class, [], [], '', false);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn('test');
         $serviceManager->setService('request', $mockRequest);
 
@@ -50,7 +50,7 @@ class LogoutControllerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testLogoutControllerFactoryWithNoRealm($realm)
     {
         // Set realm defined in data provider
-        $mockRequest = $this->getMock(Request::class, [], [], '', false);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
         $this->serviceManager->setService('request', $mockRequest);
 

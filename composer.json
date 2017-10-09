@@ -9,6 +9,10 @@
         {
             "url": "http://devrepo.shd.ci.nonprod.dvsa.aws",
             "type": "composer"
+        },
+        {
+            "type": "vcs",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-devtools.git"
         }
     ],
     "require": {
@@ -18,7 +22,7 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
-        "phpunit/phpunit": "^4.4.0",
+        "olcs/olcs-devtools": "dev-master",
         "mockery/mockery": "~0.9.3"
     },
     "autoload": {

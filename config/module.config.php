@@ -109,7 +109,8 @@ return [
         'factories' => [
             'Auth\AuthenticationService' => \Dvsa\Olcs\Auth\Service\Auth\AuthenticationService::class,
             'Auth\ExpiredPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService::class,
-            'Auth\ForgotPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService::class,
+            \Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService::class =>
+                \Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService::class,
             'Auth\ResetPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ResetPasswordService::class,
             'Auth\ChangePasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService::class,
             'Auth\LoginService' => \Dvsa\Olcs\Auth\Service\Auth\LoginService::class,

@@ -34,12 +34,12 @@ class LogoutControllerTest extends \PHPUnit_Framework_TestCase
         $this->serviceManager->setAllowOverride(true);
 
         // Mock coockie service
-        $cookieService = $this->getMock(CookieService::class, [], [], '', false);
+        $cookieService = $this->createMock(CookieService::class);
         $cookieService->method('getCookie')->willReturn('test');
         $this->serviceManager->setService('Auth\CookieService', $cookieService);
 
         // Mock logout service
-        $logoutService = $this->getMock(LogoutService::class, [], [], '', false);
+        $logoutService = $this->createMock(LogoutService::class);
         $this->serviceManager->setService('Auth\LogoutService', $logoutService);
     }
 

@@ -2,10 +2,15 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Common\Service\Cqrs;
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
+use Dvsa\Olcs\Auth\Service\Auth\Exception\OpenAmResetPasswordFailedException;
+use Dvsa\Olcs\Auth\Service\Auth\Exception\UserCannotResetPasswordException;
+use Dvsa\Olcs\Auth\Service\Auth\Exception\UserNotFoundException;
+use Zend\Form\Form;
+use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService;
-use Dvsa\Olcs\Transfer\Query\User\Pid;
 
 /**
  * Forgot Password Controller
@@ -17,78 +22,52 @@ class ForgotPasswordController extends AbstractController
     /**
      * Forgot password page
      *
-     * @return ViewModel
+     * @return ViewModel|\Zend\Http\Response
      */
     public function indexAction()
     {
-        $request = $this->getRequest();
-
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest(ForgotPasswordForm::class, $request);
-
-        if ($request->isPost() === false) {
-            return $this->renderView($form);
-        }
-
         if ($this->isButtonPressed('cancel')) {
             return $this->redirect()->toRoute('auth/login');
         }
 
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        /** @var Form $form */
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest(ForgotPasswordForm::class, $request);
+
         $form->setData($request->getPost());
 
-        if ($form->isValid() === false) {
-            return $this->renderView($form);
+        if ($request->isPost() === false || $form->isValid() === false) {
+            return $this->renderFormView($form);
         }
 
-        $data = $form->getData();
-
-        $response = $this->handleQuery(Pid::create(['id' => $data['username']]));
-
-        if ($response->isOk()) {
-            $pidResult = $response->getResult();
-
-            if (isset($pidResult['canResetPassword']) && ($pidResult['canResetPassword'] === true)) {
-                $result = $this->getForgotPasswordService()->forgotPassword($data['username']);
-
-                /**
-                 * Rather than redirecting, we show a different view in this case, that way the screen can only be shown
-                 * when a successful request has occurred
-                 */
-                if ($result['status'] == 200) {
-                    $this->layout('auth/layout');
-                    $view = new ViewModel();
-                    $view->setTemplate('auth/confirm-forgot-password');
-
-                    return $view;
-                } else {
-                    $message = $result['message'];
-                }
-            } else {
-                $message = 'account-not-active';
-            }
-
-        } else {
-            if ($response->isClientError()) {
-                // Mimic the OpenAM error message
-                $message = 'User not found';
-            } else {
-                $message = 'unknown-error';
-            }
+        try {
+            $this->getServiceLocator()->get(ForgotPasswordService::class)->forgotPassword($form->getData()['username']);
+        } catch (UserNotFoundException $exception) {
+            return $this->renderFormView($form, true, 'User not found');
+        } catch (Cqrs\Exception $e) {
+            return $this->renderFormView($form, true, 'unknown-error');
+        } catch (UserCannotResetPasswordException $exception) {
+            return $this->renderFormView($form, true, 'account-not-active');
+        } catch (OpenAmResetPasswordFailedException $exception) {
+            return $this->renderFormView($form, true, $exception->getOpenAmErrorMessage());
         }
 
-        return $this->renderView($form, true, $message);
+        return $this->renderConfirmationView();
     }
 
     /**
-     * Render the view
+     * Render the form view
      *
-     * @param \Zend\Form\Form $form          Form
-     * @param bool            $failed        Failed
-     * @param string          $failureReason Failure reason
+     * @param Form   $form          Form
+     * @param bool   $failed        Failed
+     * @param string $failureReason Failure reason
      *
      * @return ViewModel
      */
-    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    private function renderFormView(Form $form, $failed = false, $failureReason = null)
     {
         $this->layout('auth/layout');
         $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);
@@ -98,12 +77,15 @@ class ForgotPasswordController extends AbstractController
     }
 
     /**
-     * Get forgot password service
+     * Render the confirmation view
      *
-     * @return ForgotPasswordService
+     * @return ViewModel
      */
-    private function getForgotPasswordService()
+    private function renderConfirmationView()
     {
-        return $this->getServiceLocator()->get('Auth\ForgotPasswordService');
+        $this->layout('auth/layout');
+        $view = new ViewModel();
+        $view->setTemplate('auth/confirm-forgot-password');
+        return $view;
     }
 }

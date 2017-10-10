@@ -9,16 +9,30 @@
         {
             "url": "http://devrepo.shd.ci.nonprod.dvsa.aws",
             "type": "composer"
+        },
+        {
+            "type": "vcs",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-devtools.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-common.git"
         }
     ],
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "~2.4.0",
-        "doctrine/annotations": "^1.2.3"
+        "doctrine/annotations": "^1.2.3",
+        "olcs/olcs-transfer": "dev-develop",
+        "olcs/OlcsCommon": "dev-develop"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
-        "phpunit/phpunit": "^4.4.0",
+        "olcs/olcs-devtools": "dev-master",
         "mockery/mockery": "~0.9.3"
     },
     "autoload": {

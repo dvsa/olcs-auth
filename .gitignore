@@ -17,4 +17,5 @@ config/autoload/local.php
 coverage/
 node_modules
 Common/data
-test/review
+test/coverage
+.scannerwork

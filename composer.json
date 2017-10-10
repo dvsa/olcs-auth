@@ -31,7 +31,6 @@
         "olcs/OlcsCommon": "dev-develop"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "~1.5.3",
         "olcs/olcs-devtools": "dev-master",
         "mockery/mockery": "~0.9.3"
     },
@@ -43,5 +42,13 @@
     "config": {
         "preferred-install": "dist",
         "secure-http": false
+    },
+    "scripts": {
+        "ut": "vendor/bin/phpunit -c test/phpunit.xml --stop-on-failure",
+        "review": "vendor/bin/review",
+        "cs": "vendor/bin/phpcs --severity=1 --standard=vendor/olcs/coding-standards/Profiles/DVSA/CS/ruleset.xml",
+        "coverage": "vendor/bin/phpunit -c test/phpunit.xml --coverage-html ./test/coverage/html",
+        "sonar": "vendor/bin/phpunit -c test/phpunit.xml --coverage-clover ./test/coverage/coverage-report.clover --log-junit ./test/coverage/log.junit",
+        "update-syms": "vendor/bin/composer-update-syms"
     }
 }

@@ -27,8 +27,8 @@
         "php": ">=5.4",
         "zendframework/zendframework": "~2.4.0",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "dev-project/OLCS-17250",
-        "olcs/OlcsCommon": "dev-project/OLCS-17250"
+        "olcs/olcs-transfer": "dev-develop",
+        "olcs/OlcsCommon": "dev-develop"
     },
     "require-dev": {
         "olcs/olcs-devtools": "dev-master",

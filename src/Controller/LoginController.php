@@ -12,6 +12,8 @@ use Zend\View\Model\ViewModel;
 /**
  * Login Controller
  *
+ * @method \Common\Controller\Plugin\CurrentUser currentUser()
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 class LoginController extends AbstractActionController
@@ -27,6 +29,11 @@ class LoginController extends AbstractActionController
     {
         /** @var Request $request */
         $request = $this->getRequest();
+        $identity = $this->currentUser()->getIdentity();
+
+        if ($identity->isNotIdentified()) {
+            throw new \Exception('Unable to retrieve identity');
+        }
 
         $form = $this->getServiceLocator()->get('Helper\Form')->createFormWithRequest(LoginForm::class, $request);
 

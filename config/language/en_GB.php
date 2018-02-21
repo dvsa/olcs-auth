@@ -10,8 +10,8 @@ return [
     'auth.login.failed.reason.Authentication Failed' => 'Please check your username and password',
     'auth.login.failed.reason.Invalid Password' => 'Please check your username and password',
     'auth.login.failed.reason. Your account is locked. Please contact service desk to unlock your account'
-        => 'Your account is locked. Email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a> to unlock it',
-    'auth.login.failed.reason.account-disabled' => 'This account has been disabled. Please contact Operator Licencing on <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
+        => 'Your account is locked. Email <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a> to unlock it',
+    'auth.login.failed.reason.account-disabled' => 'This account has been disabled. Please contact Operator Licencing on <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a>.',
     'auth.login.username' => 'Username',
     'auth.login.password' => 'Password',
     'auth.login.username.audio' => 'Enter your username',

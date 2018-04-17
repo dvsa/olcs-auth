@@ -25,10 +25,10 @@
     ],
     "require": {
         "php": ">=5.4",
-        "zendframework/zendframework": "~2.4.0",
+        "zendframework/zendframework": "~3.0.0",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "dev-develop",
-        "olcs/OlcsCommon": "dev-develop"
+        "olcs/olcs-transfer": "dev-feature/OLCS-19144-ZF3",
+        "olcs/OlcsCommon": "dev-feature/OLCS-19144-ZF3"
     },
     "require-dev": {
         "olcs/olcs-devtools": "dev-master",

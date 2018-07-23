@@ -27,8 +27,8 @@
         "php": ">=5.4",
         "zendframework/zendframework": "~3.0.0",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "dev-develop",
-        "olcs/OlcsCommon": "dev-develop"
+        "olcs/olcs-transfer": "dev-project/zf3-upgrade",
+        "olcs/OlcsCommon": "dev-project/zf3-upgrade"
     },
     "require-dev": {
         "olcs/olcs-devtools": "dev-master",

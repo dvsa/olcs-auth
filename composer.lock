@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e5e7336ec947a3e2cb63d4a09573e7b",
+    "content-hash": "2ed5bcbc2025a179089354ec180d7f76",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1072,11 +1072,11 @@
         },
         {
             "name": "olcs/olcs-transfer",
-            "version": "dev-release/4.188",
+            "version": "dev-release/4.189",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "c4698cb825c35e001d7d84eb4789b52e2db5d85f"
+                "reference": "aa3b9713a901d15667afb3337edb83cef380c500"
             },
             "require": {
                 "php": ">=5.4",
@@ -1114,7 +1114,7 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2018-09-07T12:03:29+00:00"
+            "time": "2018-09-17T16:37:01+00:00"
         },
         {
             "name": "psr/log",

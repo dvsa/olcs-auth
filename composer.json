@@ -28,7 +28,7 @@
         "zendframework/zendframework": "~2.4.0",
         "doctrine/annotations": "^1.2.3",
         "olcs/olcs-transfer": "dev-release/4.188",
-        "olcs/OlcsCommon": "dev-release/4.188"
+        "olcs/OlcsCommon": "dev-release/4.189.1"
     },
     "require-dev": {
         "olcs/olcs-devtools": "dev-master",

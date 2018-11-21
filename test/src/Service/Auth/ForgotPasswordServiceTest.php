@@ -76,7 +76,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
         $this->client->shouldNotReceive($this->getValidMethodName(Client::class, 'post'));
 
         $this->querySender->shouldReceive('send')
-            ->with(equalTo(Pid::create(['id' => 'bob'])))
+            ->with(\Hamcrest\Matchers::equalTo(Pid::create(['id' => 'bob'])))
             ->andThrow(NotFoundException::class);
 
         $this->expectException(UserNotFoundException::class);
@@ -92,7 +92,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
         $cqrsResponse = m::mock(Response::class);
 
         $this->querySender->shouldReceive('send')
-            ->with(equalTo(Pid::create(['id' => 'bob'])))
+            ->with(\Hamcrest\Matchers::equalTo(Pid::create(['id' => 'bob'])))
             ->andReturn($cqrsResponse);
 
         $cqrsResponse->shouldReceive('isOk')
@@ -110,7 +110,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
 
         $expectedException = new Exception();
         $this->querySender->shouldReceive('send')
-            ->with(equalTo(Pid::create(['id' => 'bob'])))
+            ->with(\Hamcrest\Matchers::equalTo(Pid::create(['id' => 'bob'])))
             ->andThrow($expectedException);
 
         $this->expectException(Exception::class);
@@ -131,7 +131,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
         $cqrsResponse = m::mock(Response::class);
 
         $this->querySender->shouldReceive('send')
-            ->with(equalTo(Pid::create(['id' => 'bob'])))
+            ->with(\Hamcrest\Matchers::equalTo(Pid::create(['id' => 'bob'])))
             ->andReturn($cqrsResponse);
 
         $cqrsResponse->shouldReceive('isOk')
@@ -152,7 +152,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
         $cqrsResponse = m::mock(Response::class);
 
         $this->querySender->shouldReceive('send')
-            ->with(equalTo(Pid::create(['id' => 'bob'])))
+            ->with(\Hamcrest\Matchers::equalTo(Pid::create(['id' => 'bob'])))
             ->andReturn($cqrsResponse);
 
         $cqrsResponse->shouldReceive('isOk')
@@ -171,7 +171,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
         $cqrsResponse = m::mock(Response::class);
 
         $this->querySender->shouldReceive('send')
-            ->with(equalTo(Pid::create(['id' => 'bob'])))
+            ->with(\Hamcrest\Matchers::equalTo(Pid::create(['id' => 'bob'])))
             ->andReturn($cqrsResponse);
 
         $cqrsResponse->shouldReceive('isOk')
@@ -209,7 +209,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
         $cqrsResponse = m::mock(Response::class);
 
         $this->querySender->shouldReceive('send')
-            ->with(equalTo(Pid::create(['id' => 'bob'])))
+            ->with(\Hamcrest\Matchers::equalTo(Pid::create(['id' => 'bob'])))
             ->andReturn($cqrsResponse);
 
         $cqrsResponse->shouldReceive('isOk')

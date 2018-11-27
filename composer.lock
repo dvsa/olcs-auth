@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe0ec1a9ff5c7979c55246f2e9ab9c47",
+    "hash": "f0e99c5b3ad33f534a78412b59f8fde2",
+    "content-hash": "7c6edecce54d8c1020373bbb0692c32b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -72,7 +73,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2017-12-06T07:11:42+00:00"
+            "time": "2017-12-06 07:11:42"
         },
         {
             "name": "doctrine/cache",
@@ -147,7 +148,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2018-08-21T18:01:43+00:00"
+            "time": "2018-08-21 18:01:43"
         },
         {
             "name": "doctrine/collections",
@@ -214,21 +215,21 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2017-07-22T10:37:32+00:00"
+            "time": "2017-07-22 10:37:32"
         },
         {
             "name": "doctrine/common",
-            "version": "v2.9.0",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "a210246d286c77d2b89040f8691ba7b3a713d2c1"
+                "reference": "30e33f60f64deec87df728c02b107f82cdafad9d"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-common-a210246d286c77d2b89040f8691ba7b3a713d2c1-zip-607122.tar",
-                "reference": "a210246d286c77d2b89040f8691ba7b3a713d2c1",
-                "shasum": "7d9b65474838713099df24080e0c08bc2869d9bb"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-common-30e33f60f64deec87df728c02b107f82cdafad9d-zip-1830b6.tar",
+                "reference": "30e33f60f64deec87df728c02b107f82cdafad9d",
+                "shasum": "a65c429cc184d5b51a72a81cf9b6256b53d1e62a"
             },
             "require": {
                 "doctrine/annotations": "^1.0",
@@ -237,7 +238,7 @@
                 "doctrine/event-manager": "^1.0",
                 "doctrine/inflector": "^1.0",
                 "doctrine/lexer": "^1.0",
-                "doctrine/persistence": "^1.0",
+                "doctrine/persistence": "^1.1",
                 "doctrine/reflection": "^1.0",
                 "php": "^7.1"
             },
@@ -250,7 +251,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.9.x-dev"
+                    "dev-master": "2.10.x-dev"
                 }
             },
             "autoload": {
@@ -288,16 +289,14 @@
                     "email": "ocramius@gmail.com"
                 }
             ],
-            "description": "Common Library for Doctrine projects",
-            "homepage": "https://www.doctrine-project.org",
+            "description": "PHP Doctrine Common project is a library that provides additional functionality that other Doctrine projects depend on such as better reflection support, persistence interfaces, proxies, event system and much more.",
+            "homepage": "https://www.doctrine-project.org/projects/common.html",
             "keywords": [
-                "annotations",
-                "collections",
-                "eventmanager",
-                "persistence",
-                "spl"
+                "common",
+                "doctrine",
+                "php"
             ],
-            "time": "2018-07-12T21:16:12+00:00"
+            "time": "2018-11-21 01:24:55"
         },
         {
             "name": "doctrine/dbal",
@@ -370,7 +369,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-11-19T13:38:54+00:00"
+            "time": "2017-11-19 13:38:54"
         },
         {
             "name": "doctrine/doctrine-module",
@@ -448,7 +447,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2016-03-21T23:55:21+00:00"
+            "time": "2016-03-21 23:55:21"
         },
         {
             "name": "doctrine/doctrine-orm-module",
@@ -526,7 +525,7 @@
                 "orm",
                 "zf2"
             ],
-            "time": "2015-10-05T23:06:08+00:00"
+            "time": "2015-10-05 23:06:08"
         },
         {
             "name": "doctrine/event-manager",
@@ -600,7 +599,7 @@
                 "eventdispatcher",
                 "eventmanager"
             ],
-            "time": "2018-06-11T11:59:03+00:00"
+            "time": "2018-06-11 11:59:03"
         },
         {
             "name": "doctrine/inflector",
@@ -667,7 +666,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2018-01-09T20:05:19+00:00"
+            "time": "2018-01-09 20:05:19"
         },
         {
             "name": "doctrine/instantiator",
@@ -721,7 +720,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2017-07-22T11:58:36+00:00"
+            "time": "2017-07-22 11:58:36"
         },
         {
             "name": "doctrine/lexer",
@@ -775,21 +774,35 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09T13:34:57+00:00"
+            "time": "2014-09-09 13:34:57"
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.6.2",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "d2b4dd71d2a276edd65d0c170375b445f8a4a4a8"
+                "reference": "434820973cadf2da2d66e7184be370084cc32ca8"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-orm-d2b4dd71d2a276edd65d0c170375b445f8a4a4a8-zip-0a750b.tar",
-                "reference": "d2b4dd71d2a276edd65d0c170375b445f8a4a4a8",
-                "shasum": "762954ce75d1a509edced44fac2685f26ea8ec4a"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-orm-434820973cadf2da2d66e7184be370084cc32ca8-zip-ebc83c.tar",
+                "reference": "434820973cadf2da2d66e7184be370084cc32ca8",
+                "shasum": "8549ee7c9ab0a9858aed074bf978a3ad474f2673"
+            },
+            "archive": {
+                "exclude": [
+                    "!vendor",
+                    "tests",
+                    "*phpunit.xml",
+                    ".travis.yml",
+                    "build.xml",
+                    "build.properties",
+                    "composer.phar",
+                    "vendor/satooshi",
+                    "lib/vendor",
+                    "*.swp"
+                ]
             },
             "require": {
                 "doctrine/annotations": "~1.5",
@@ -857,21 +870,21 @@
                 "database",
                 "orm"
             ],
-            "time": "2018-07-12T20:47:13+00:00"
+            "time": "2018-11-20 23:46:46"
         },
         {
             "name": "doctrine/persistence",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "af1ec238659a83e320f03e0e454e200f689b4b97"
+                "reference": "c0f1c17602afc18b4cbd8e1c8125f264c9cf7d38"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-persistence-af1ec238659a83e320f03e0e454e200f689b4b97-zip-f68ace.tar",
-                "reference": "af1ec238659a83e320f03e0e454e200f689b4b97",
-                "shasum": "49b58cf401566c96f5348cbdb8bf3732128f7a34"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-persistence-c0f1c17602afc18b4cbd8e1c8125f264c9cf7d38-zip-c839d7.tar",
+                "reference": "c0f1c17602afc18b4cbd8e1c8125f264c9cf7d38",
+                "shasum": "9403bdd6de72355615e1b4570c2cd36daf035edc"
             },
             "require": {
                 "doctrine/annotations": "^1.0",
@@ -882,17 +895,17 @@
                 "php": "^7.1"
             },
             "conflict": {
-                "doctrine/common": "<2.9@dev"
+                "doctrine/common": "<2.10@dev"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^4.0",
+                "doctrine/coding-standard": "^5.0",
                 "phpstan/phpstan": "^0.8",
                 "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -930,12 +943,16 @@
                     "email": "ocramius@gmail.com"
                 }
             ],
-            "description": "Doctrine Persistence abstractions.",
+            "description": "The Doctrine Persistence project is a set of shared interfaces and functionality that the different Doctrine object mappers share.",
             "homepage": "https://doctrine-project.org/projects/persistence.html",
             "keywords": [
+                "mapper",
+                "object",
+                "odm",
+                "orm",
                 "persistence"
             ],
-            "time": "2018-07-12T12:37:50+00:00"
+            "time": "2018-11-21 00:33:13"
         },
         {
             "name": "doctrine/reflection",
@@ -1010,15 +1027,15 @@
             "keywords": [
                 "reflection"
             ],
-            "time": "2018-06-14T14:45:07+00:00"
+            "time": "2018-06-14 14:45:07"
         },
         {
             "name": "olcs/OlcsCommon",
-            "version": "dev-release/4.192",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-common.git",
-                "reference": "d0dda0660f35bdf8436027e5bb90828d1078ddc2"
+                "reference": "10238a691ea2f308883d609a7631df11d21d2034"
             },
             "require": {
                 "doctrine/annotations": "^1.2.3",
@@ -1032,10 +1049,12 @@
                 "mikey179/vfsstream": "~1.4.0",
                 "mockery/mockery": "~0.9.3",
                 "olcs/olcs-devtools": "dev-master",
-                "olcs/olcs-logging": "dev-release/4.192",
+                "olcs/olcs-logging": "dev-develop",
                 "olcs/olcs-testhelpers": "dev-develop",
-                "olcs/olcs-transfer": "dev-release/4.192",
-                "olcs/olcs-utils": "dev-release/4.191",
+                "olcs/olcs-transfer": "dev-develop",
+                "olcs/olcs-utils": "dev-develop",
+                "phpstan/phpstan-mockery": "^0.10.2",
+                "phpstan/phpstan-shim": "^0.10.5",
                 "soflomo/purifier": "~0.1.0"
             },
             "type": "library",
@@ -1068,15 +1087,15 @@
                 ]
             },
             "description": "Common library for the OLCS Project",
-            "time": "2018-10-12T08:58:52+00:00"
+            "time": "2018-11-21 13:51:31"
         },
         {
             "name": "olcs/olcs-transfer",
-            "version": "dev-release/4.192",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "8b26ac55e10724d2966600bfa57650256e1267af"
+                "reference": "b0d77c4d4cab1ba12625f6216fc4cf9fa84e7731"
             },
             "require": {
                 "php": ">=5.4",
@@ -1085,7 +1104,9 @@
             "require-dev": {
                 "doctrine/annotations": "^1.2.3",
                 "mockery/mockery": "~0.9.3",
-                "olcs/olcs-devtools": "dev-master"
+                "olcs/olcs-devtools": "dev-master",
+                "phpstan/phpstan-mockery": "^0.10.2",
+                "phpstan/phpstan-shim": "^0.10.5"
             },
             "type": "library",
             "autoload": {
@@ -1114,7 +1135,7 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2018-10-11T08:42:31+00:00"
+            "time": "2018-11-21 13:57:23"
         },
         {
             "name": "psr/log",
@@ -1161,7 +1182,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "symfony/console",
@@ -1224,21 +1245,21 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-29T21:27:41+00:00"
+            "time": "2017-07-29 21:27:41"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.17",
+            "version": "v3.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "0a612e9dfbd2ccce03eb174365f31ecdca930ff6"
+                "reference": "fe9793af008b651c5441bdeab21ede8172dab097"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-debug-0a612e9dfbd2ccce03eb174365f31ecdca930ff6-zip-dd97fc.tar",
-                "reference": "0a612e9dfbd2ccce03eb174365f31ecdca930ff6",
-                "shasum": "f83bfd1be1640c25bfe712f571e45b87c8abb9e5"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-debug-fe9793af008b651c5441bdeab21ede8172dab097-zip-64832a.tar",
+                "reference": "fe9793af008b651c5441bdeab21ede8172dab097",
+                "shasum": "6e36a2b6ac44a9f861e40a40075e22cabfa8f733"
             },
             "require": {
                 "php": "^5.5.9|>=7.0.8",
@@ -1280,7 +1301,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-02T16:33:53+00:00"
+            "time": "2018-10-31 09:06:03"
         },
         {
             "name": "symfony/filesystem",
@@ -1330,21 +1351,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-08T05:59:48+00:00"
+            "time": "2015-07-08 05:59:48"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8"
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-polyfill-mbstring-d0cd638f4634c16d8df4508e847f14e9e43168b8-zip-940b7f.tar",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8",
-                "shasum": "575bc9d8f018205b9458b2a221f77fe31cdacf1d"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-polyfill-mbstring-c79c051f5b3a46be09205c73b80b346e4153e494-zip-b04f60.tar",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
+                "shasum": "fd2b7461a254b32b345dc917127587b9d32fd19c"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1389,7 +1410,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-08-06T14:22:27+00:00"
+            "time": "2018-09-21 13:07:52"
         },
         {
             "name": "zendframework/zendframework",
@@ -1506,7 +1527,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2017-07-13T17:23:56+00:00"
+            "time": "2017-07-13 17:23:56"
         },
         {
             "name": "zendframework/zendxml",
@@ -1552,7 +1573,7 @@
                 "xml",
                 "zf"
             ],
-            "time": "2018-04-30T15:11:04+00:00"
+            "time": "2018-04-30 15:11:04"
         },
         {
             "name": "zf-commons/zfc-rbac",
@@ -1628,7 +1649,7 @@
                 "rbac",
                 "zf2"
             ],
-            "time": "2015-01-26T11:29:23+00:00"
+            "time": "2015-01-26 11:29:23"
         },
         {
             "name": "zfr/rbac",
@@ -1678,26 +1699,26 @@
                 "zf2",
                 "zf3"
             ],
-            "time": "2014-02-06T14:18:34+00:00"
+            "time": "2014-02-06 14:18:34"
         }
     ],
     "packages-dev": [
         {
             "name": "hamcrest/hamcrest-php",
-            "version": "v1.2.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hamcrest/hamcrest-php.git",
-                "reference": "b37020aa976fa52d3de9aa904aa2522dc518f79c"
+                "reference": "776503d3a8e85d4f9a1148614f95b7a608b046ad"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/hamcrest-hamcrest-php-b37020aa976fa52d3de9aa904aa2522dc518f79c-zip-2bc6c0.tar",
-                "reference": "b37020aa976fa52d3de9aa904aa2522dc518f79c",
-                "shasum": "0e1548a743071bb1971a777b338cbe0f5ada854c"
+                "type": "zip",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/776503d3a8e85d4f9a1148614f95b7a608b046ad",
+                "reference": "776503d3a8e85d4f9a1148614f95b7a608b046ad",
+                "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": "^5.3|^7.0"
             },
             "replace": {
                 "cordoval/hamcrest-php": "*",
@@ -1706,15 +1727,18 @@
             },
             "require-dev": {
                 "phpunit/php-file-iterator": "1.3.3",
-                "satooshi/php-coveralls": "dev-master"
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "^1.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "hamcrest"
-                ],
-                "files": [
-                    "hamcrest/Hamcrest.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1725,34 +1749,34 @@
             "keywords": [
                 "test"
             ],
-            "time": "2015-05-11T14:41:42+00:00"
+            "time": "2016-01-20 08:20:44"
         },
         {
             "name": "mockery/mockery",
-            "version": "0.9.9",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "6fdb61243844dc924071d3404bb23994ea0b6856"
+                "reference": "100633629bf76d57430b86b7098cd6beb996a35a"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/mockery-mockery-6fdb61243844dc924071d3404bb23994ea0b6856-zip-fc289d.tar",
-                "reference": "6fdb61243844dc924071d3404bb23994ea0b6856",
-                "shasum": "9e1a9ebe9f7ac7c0d189e9f14c25de48c2d9877c"
+                "type": "zip",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/100633629bf76d57430b86b7098cd6beb996a35a",
+                "reference": "100633629bf76d57430b86b7098cd6beb996a35a",
+                "shasum": ""
             },
             "require": {
-                "hamcrest/hamcrest-php": "~1.1",
+                "hamcrest/hamcrest-php": "~2.0",
                 "lib-pcre": ">=7.0",
-                "php": ">=5.3.2"
+                "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "~5.7.10|~6.5|~7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.9.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -1776,8 +1800,8 @@
                     "homepage": "http://davedevelopment.co.uk"
                 }
             ],
-            "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
-            "homepage": "http://github.com/padraic/mockery",
+            "description": "Mockery is a simple yet flexible PHP mock object framework",
+            "homepage": "https://github.com/mockery/mockery",
             "keywords": [
                 "BDD",
                 "TDD",
@@ -1790,7 +1814,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2017-02-28T12:52:32+00:00"
+            "time": "2018-10-02 21:52:37"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1838,7 +1862,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2018-06-11T23:09:50+00:00"
+            "time": "2018-06-11 23:09:50"
         },
         {
             "name": "olcs/coding-standards",
@@ -1856,7 +1880,7 @@
             },
             "type": "library",
             "description": "OLCS CodeSniffer and MessDetector rule sets",
-            "time": "2018-03-13T16:45:48+00:00"
+            "time": "2018-03-13 16:45:48"
         },
         {
             "name": "olcs/olcs-devtools",
@@ -1864,7 +1888,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-devtools.git",
-                "reference": "5a8fe5c2f1a3d54be241ecd88387c88d8b1809c7"
+                "reference": "47d0cce1dcc6d7ce8913e8d2df055fed2cfef56e"
             },
             "require": {
                 "olcs/coding-standards": "^1.2.1",
@@ -1885,7 +1909,7 @@
                 }
             },
             "description": "Dev tools",
-            "time": "2018-09-21T13:05:11+00:00"
+            "time": "2018-11-15 15:33:21"
         },
         {
             "name": "pdepend/pdepend",
@@ -1925,7 +1949,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2017-12-13T13:21:38+00:00"
+            "time": "2017-12-13 13:21:38"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1979,7 +2003,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2017-09-11T18:02:19+00:00"
+            "time": "2017-09-11 18:02:19"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2030,7 +2054,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-11-30T07:14:17+00:00"
+            "time": "2017-11-30 07:14:17"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2077,7 +2101,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2017-07-14T14:27:02+00:00"
+            "time": "2017-07-14 14:27:02"
         },
         {
             "name": "phpmd/phpmd",
@@ -2143,7 +2167,7 @@
                 "phpmd",
                 "pmd"
             ],
-            "time": "2017-01-20T14:41:10+00:00"
+            "time": "2017-01-20 14:41:10"
         },
         {
             "name": "phpspec/prophecy",
@@ -2206,7 +2230,100 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-08-05T17:53:17+00:00"
+            "time": "2018-08-05 17:53:17"
+        },
+        {
+            "name": "phpstan/phpstan-mockery",
+            "version": "0.10.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-mockery.git",
+                "reference": "14d568b6b56c957c9ae5330603303a367b21f0e9"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpstan-phpstan-mockery-14d568b6b56c957c9ae5330603303a367b21f0e9-zip-2bda4d.tar",
+                "reference": "14d568b6b56c957c9ae5330603303a367b21f0e9",
+                "shasum": "d7b547e34a20713202ea90edab4152f9f8c50e2a"
+            },
+            "require": {
+                "nikic/php-parser": "^4.0",
+                "php": "~7.1",
+                "phpstan/phpdoc-parser": "^0.3",
+                "phpstan/phpstan": "^0.10.3"
+            },
+            "require-dev": {
+                "consistence/coding-standard": "^3.0.1",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+                "jakub-onderka/php-parallel-lint": "^1.0",
+                "mockery/mockery": "^1.1",
+                "phing/phing": "^2.16.0",
+                "phpstan/phpstan-phpunit": "^0.10",
+                "phpstan/phpstan-strict-rules": "^0.10",
+                "phpunit/phpunit": "^7.2",
+                "slevomat/coding-standard": "^4.6.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan Mockery extension",
+            "time": "2018-09-09 15:22:28"
+        },
+        {
+            "name": "phpstan/phpstan-shim",
+            "version": "0.10.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-shim.git",
+                "reference": "a274185548d140a7f48cc1eed5b94f3a9068c674"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpstan-phpstan-shim-a274185548d140a7f48cc1eed5b94f3a9068c674-zip-1af885.tar",
+                "reference": "a274185548d140a7f48cc1eed5b94f3a9068c674",
+                "shasum": "d86051b299de544710ac2cf1f882fce8aef0dfb5"
+            },
+            "require": {
+                "php": "~7.1"
+            },
+            "replace": {
+                "nikic/php-parser": "^4.0.2",
+                "phpstan/phpdoc-parser": "^0.3",
+                "phpstan/phpstan": "self.version"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan Phar distribution",
+            "time": "2018-10-20 17:45:03"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2269,7 +2386,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-04-02T07:44:40+00:00"
+            "time": "2017-04-02 07:44:40"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2316,7 +2433,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2017-11-27T13:52:08+00:00"
+            "time": "2017-11-27 13:52:08"
         },
         {
             "name": "phpunit/php-text-template",
@@ -2357,7 +2474,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21T13:50:34+00:00"
+            "time": "2015-06-21 13:50:34"
         },
         {
             "name": "phpunit/php-timer",
@@ -2406,7 +2523,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-02-26T11:10:40+00:00"
+            "time": "2017-02-26 11:10:40"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -2455,7 +2572,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-11-27T05:48:46+00:00"
+            "time": "2017-11-27 05:48:46"
         },
         {
             "name": "phpunit/phpcov",
@@ -2507,7 +2624,7 @@
             ],
             "description": "CLI frontend for PHP_CodeCoverage",
             "homepage": "https://github.com/sebastianbergmann/phpcov",
-            "time": "2016-06-03T07:01:55+00:00"
+            "time": "2016-06-03 07:01:55"
         },
         {
             "name": "phpunit/phpunit",
@@ -2589,7 +2706,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-02-01T05:50:59+00:00"
+            "time": "2018-02-01 05:50:59"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2648,7 +2765,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-06-30T09:13:00+00:00"
+            "time": "2017-06-30 09:13:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2693,7 +2810,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04T06:30:41+00:00"
+            "time": "2017-03-04 06:30:41"
         },
         {
             "name": "sebastian/comparator",
@@ -2757,7 +2874,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-01-29T09:50:25+00:00"
+            "time": "2017-01-29 09:50:25"
         },
         {
             "name": "sebastian/diff",
@@ -2809,7 +2926,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-22T07:24:03+00:00"
+            "time": "2017-05-22 07:24:03"
         },
         {
             "name": "sebastian/environment",
@@ -2859,7 +2976,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-11-26T07:53:53+00:00"
+            "time": "2016-11-26 07:53:53"
         },
         {
             "name": "sebastian/exporter",
@@ -2926,7 +3043,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-11-19T08:54:04+00:00"
+            "time": "2016-11-19 08:54:04"
         },
         {
             "name": "sebastian/finder-facade",
@@ -2965,7 +3082,7 @@
             ],
             "description": "FinderFacade is a convenience wrapper for Symfony's Finder component.",
             "homepage": "https://github.com/sebastianbergmann/finder-facade",
-            "time": "2017-11-18T17:31:49+00:00"
+            "time": "2017-11-18 17:31:49"
         },
         {
             "name": "sebastian/global-state",
@@ -3016,7 +3133,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12T03:26:01+00:00"
+            "time": "2015-10-12 03:26:01"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -3062,7 +3179,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-02-18T15:18:39+00:00"
+            "time": "2017-02-18 15:18:39"
         },
         {
             "name": "sebastian/recursion-context",
@@ -3115,7 +3232,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-11-19T07:33:16+00:00"
+            "time": "2016-11-19 07:33:16"
         },
         {
             "name": "sebastian/resource-operations",
@@ -3157,7 +3274,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2015-07-28T20:34:47+00:00"
+            "time": "2015-07-28 20:34:47"
         },
         {
             "name": "sebastian/version",
@@ -3200,7 +3317,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03T07:35:21+00:00"
+            "time": "2016-10-03 07:35:21"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -3251,21 +3368,21 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-09-23T23:08:17+00:00"
+            "time": "2018-09-23 23:08:17"
         },
         {
             "name": "symfony/config",
-            "version": "v2.8.46",
+            "version": "v2.8.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "fb3469266daaa67a1e6d42fc78fa6cdc254689f6"
+                "reference": "506aaec58da5b042ec23f7de5cc866eb4b57a21e"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-config-fb3469266daaa67a1e6d42fc78fa6cdc254689f6-zip-f5d2df.tar",
-                "reference": "fb3469266daaa67a1e6d42fc78fa6cdc254689f6",
-                "shasum": "9c0b59f0cd89b883bf4120a00a6e1d2210cbfd3b"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-config-506aaec58da5b042ec23f7de5cc866eb4b57a21e-zip-afd6b3.tar",
+                "reference": "506aaec58da5b042ec23f7de5cc866eb4b57a21e",
+                "shasum": "c1c88e2f27e772939fe09f8b4e67443e2d6bed16"
             },
             "require": {
                 "php": ">=5.3.9",
@@ -3308,7 +3425,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2018-09-08T12:44:02+00:00"
+            "time": "2018-10-30 16:24:01"
         },
         {
             "name": "symfony/dependency-injection",
@@ -3371,11 +3488,11 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-28T15:22:55+00:00"
+            "time": "2017-07-28 15:22:55"
         },
         {
             "name": "symfony/finder",
-            "version": "v4.1.6",
+            "version": "v4.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -3420,11 +3537,11 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-03T08:47:56+00:00"
+            "time": "2018-10-03 08:47:56"
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -3478,7 +3595,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2018-08-06T14:22:27+00:00"
+            "time": "2018-08-06 14:22:27"
         },
         {
             "name": "symfony/yaml",
@@ -3533,7 +3650,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-20T15:04:53+00:00"
+            "time": "2018-01-20 15:04:53"
         },
         {
             "name": "theseer/fdomdocument",
@@ -3573,7 +3690,7 @@
             ],
             "description": "The classes contained within this repository extend the standard DOM to use exceptions at all occasions of errors instead of PHP warnings or notices. They also add various custom methods and shortcuts for convenience and to simplify the usage of DOM.",
             "homepage": "https://github.com/theseer/fDOMDocument",
-            "time": "2017-06-30T11:53:12+00:00"
+            "time": "2017-06-30 11:53:12"
         },
         {
             "name": "webmozart/assert",
@@ -3623,7 +3740,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2018-01-29T19:49:41+00:00"
+            "time": "2018-01-29 19:49:41"
         }
     ],
     "aliases": [],

@@ -22,7 +22,7 @@ class UriBuilderTest extends MockeryTestCase
 {
     public function testBuildMissingConfig()
     {
-        $this->setExpectedException(Exception\RuntimeException::class);
+        $this->expectException(Exception\RuntimeException::class);
 
         $config = [];
 

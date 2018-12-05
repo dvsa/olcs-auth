@@ -22,7 +22,7 @@ class ResponseDecoderServiceTest extends MockeryTestCase
 {
     public function testDecodeFailed()
     {
-        $this->setExpectedException(RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $response = new Response();
         $response->setContent('{"foo":\'var\'}');

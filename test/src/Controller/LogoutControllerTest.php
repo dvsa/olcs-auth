@@ -10,12 +10,11 @@ use Zend\Mvc\Controller\PluginManager;
 use Zend\Di\ServiceLocatorInterface;
 use Dvsa\OlcsTest\Auth\Bootstrap;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Change Password Controller Test
  */
-class LogoutControllerTest extends TestCase
+class LogoutControllerTest extends \PHPUnit_Framework_TestCase
 {
     const REDIRECT_URL = 'http://www.example-gov-site.uk';
 

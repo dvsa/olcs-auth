@@ -14,7 +14,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Callback\ConfirmationCallback;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ConfirmationCallbackTest extends \PHPUnit\Framework\TestCase
+class ConfirmationCallbackTest extends \PHPUnit_Framework_TestCase
 {
     public function testCallback()
     {

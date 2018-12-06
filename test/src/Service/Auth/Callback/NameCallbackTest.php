@@ -14,7 +14,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Callback\NameCallback;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class NameCallbackTest extends \PHPUnit\Framework\TestCase
+class NameCallbackTest extends \PHPUnit_Framework_TestCase
 {
     public function testCallback()
     {

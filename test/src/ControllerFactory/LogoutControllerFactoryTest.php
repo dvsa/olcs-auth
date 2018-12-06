@@ -14,7 +14,7 @@ use Zend\ServiceManager\ServiceManager;
  * Class ControllerFactoryTest
  * @covers \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory
  */
-class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
+class LogoutControllerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /** @var ServiceManager */
     private $serviceManager;
@@ -92,7 +92,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function testNoSelfServeLogoutUrlSpecified()
     {
-        $this->expectException(
+        $this->setExpectedException(
             \InvalidArgumentException::class,
             'Selfserve logout redirect is not available in config'
         );

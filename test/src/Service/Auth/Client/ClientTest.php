@@ -123,7 +123,7 @@ class ClientTest extends MockeryTestCase
 
     public function testPostBadJson()
     {
-        $this->expectException(Exception\RuntimeException::class);
+        $this->setExpectedException(Exception\RuntimeException::class);
 
         $uri = 'foo/bar';
 

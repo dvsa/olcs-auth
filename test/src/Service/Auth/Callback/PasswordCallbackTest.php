@@ -14,7 +14,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Callback\PasswordCallback;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PasswordCallbackTest extends \PHPUnit\Framework\TestCase
+class PasswordCallbackTest extends \PHPUnit_Framework_TestCase
 {
     public function testCallback()
     {

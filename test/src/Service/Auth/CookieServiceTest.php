@@ -54,7 +54,7 @@ class CookieServiceTest extends MockeryTestCase
     {
         $request = m::mock();
 
-        $this->expectException(RuntimeException::class);
+        $this->setExpectedException(RuntimeException::class);
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Config', []);

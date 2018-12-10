@@ -14,7 +14,7 @@ use Mockery as m;
 /**
  * Change Password Controller Test
  */
-class LogoutControllerTest extends \PHPUnit_Framework_TestCase
+class LogoutControllerTest extends \PHPunit\Framework\TestCase
 {
     const REDIRECT_URL = 'http://www.example-gov-site.uk';
 

@@ -46,7 +46,7 @@ class AuthenticationServiceTest extends MockeryTestCase
 
     public function testAuthenticateFailedBegin()
     {
-        $this->setExpectedException(RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $username = 'foo';
         $password = 'bar';

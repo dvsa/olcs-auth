@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e0f07f35d289abe4d504281cc9a316f",
+    "content-hash": "3fd01e64688aa334282fcf5d2b1977ea",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1020,7 +1020,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-common.git",
-                "reference": "ec3ca89b163fa7629fcd65c39ab6252a61568c94"
+                "reference": "c2f74eb2b8f2e3a45db8d5d565a97445ca7bc0a7"
             },
             "require": {
                 "doctrine/annotations": "^1.2.3",
@@ -1072,7 +1072,7 @@
                 ]
             },
             "description": "Common library for the OLCS Project",
-            "time": "2018-12-10T10:21:27+00:00"
+            "time": "2018-12-14T18:44:31+00:00"
         },
         {
             "name": "olcs/olcs-transfer",
@@ -1080,7 +1080,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "3d9ae83b42ae398414cb1855035c8b88da7bb801"
+                "reference": "e82188a6a94a5bc104f4d68c7f1086228f3cebe6"
             },
             "require": {
                 "php": ">=5.4",
@@ -1120,7 +1120,7 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2018-12-10T10:21:22+00:00"
+            "time": "2018-12-14T13:39:04+00:00"
         },
         {
             "name": "psr/log",
@@ -1737,6 +1737,54 @@
             "time": "2016-01-20T08:20:44+00:00"
         },
         {
+            "name": "johnkary/phpunit-speedtrap",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johnkary/phpunit-speedtrap.git",
+                "reference": "5f1ede99bd53fd0e5ff72669877420e801256d90"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/johnkary-phpunit-speedtrap-5f1ede99bd53fd0e5ff72669877420e801256d90-zip-e29200.tar",
+                "reference": "5f1ede99bd53fd0e5ff72669877420e801256d90",
+                "shasum": "1a6a15a5ff99f56b0abed7f5d552fe8f51ea4e17"
+            },
+            "require": {
+                "php": ">=7.1",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JohnKary\\PHPUnit\\Listener\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Kary",
+                    "email": "john@johnkary.net"
+                }
+            ],
+            "description": "Find slow tests in your PHPUnit test suite",
+            "homepage": "https://github.com/johnkary/phpunit-speedtrap",
+            "keywords": [
+                "phpunit",
+                "profile",
+                "slow"
+            ],
+            "time": "2018-02-24T18:55:28+00:00"
+        },
+        {
             "name": "mockery/mockery",
             "version": "1.2.0",
             "source": {
@@ -1869,11 +1917,11 @@
         },
         {
             "name": "olcs/olcs-devtools",
-            "version": "dev-feature/OLCS-19483-upgrade-phpunit",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-devtools.git",
-                "reference": "204f0ae4644b515b1ca7e90b9576f8b919538d79"
+                "reference": "8d528a54a803174745f3ff53a3b94d210c8c26a6"
             },
             "require": {
                 "olcs/coding-standards": "^1.2.1",
@@ -1894,7 +1942,7 @@
                 }
             },
             "description": "Dev tools",
-            "time": "2018-12-10T11:26:37+00:00"
+            "time": "2018-12-14T13:31:23+00:00"
         },
         {
             "name": "pdepend/pdepend",
@@ -2718,17 +2766,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.0",
+            "version": "7.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "520723129e2b3fc1dc4c0953e43c9d40e1ecb352"
+                "reference": "c23d78776ad415d5506e0679723cb461d71f488f"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-phpunit-520723129e2b3fc1dc4c0953e43c9d40e1ecb352-zip-0c79c3.tar",
-                "reference": "520723129e2b3fc1dc4c0953e43c9d40e1ecb352",
-                "shasum": "52b86df155138c98c80ea9c7ddc1acae55a3ccec"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-phpunit-c23d78776ad415d5506e0679723cb461d71f488f-zip-9c0c11.tar",
+                "reference": "c23d78776ad415d5506e0679723cb461d71f488f",
+                "shasum": "6c9957b0da2244bf99fc0fe0e7a69e35f1ae99dd"
             },
             "require": {
                 "doctrine/instantiator": "^1.1",
@@ -2798,7 +2846,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-07T07:08:12+00:00"
+            "time": "2018-12-12T07:20:32+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

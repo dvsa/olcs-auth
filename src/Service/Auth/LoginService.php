@@ -58,9 +58,16 @@ class LoginService implements FactoryInterface
      */
     public function login($token, Response $response)
     {
-        $this->cookieService->createTokenCookie($response, $token);
-
         $gotoUrl = $this->request->getQuery('goto', false);
+
+        $expireAtMidnight = false;
+
+        if (strpos($gotoUrl, 'ms-ofba-authentication-successful') !== false) {
+            $expireAtMidnight = true;
+        }
+
+        $this->cookieService->createTokenCookie($response, $token, $expireAtMidnight);
+
         // The "goto" URL added by openAm is always http, if we are running https, then need to change it
         if ($this->request->getUri()->getScheme() === 'https') {
             $gotoUrl = str_replace('http://', 'https://', $gotoUrl);

@@ -3,6 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use DateInterval;
+use DateTime;
 use DateTimeImmutable;
 use Exception;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
@@ -76,7 +77,7 @@ class CookieService implements FactoryInterface
             try {
                 $now = new DateTimeImmutable('now');
                 $tomorrow = $now->add(new DateInterval("P1D"));
-                $expires = DateTimeImmutable::createFromFormat("Y-m-d H:i:s", $tomorrow->format("Y-m-d") . " 00:00:00");
+                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $tomorrow->format("Y-m-d") . " 00:00:00");
             } catch (Exception $e) {
                 //Couldn't calculate date, leave $expires as null - end of session
             }

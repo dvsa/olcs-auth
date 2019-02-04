@@ -7,6 +7,8 @@
  */
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
+use DateTime;
+use DateTimeImmutable;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
 use Mockery as m;
@@ -81,7 +83,32 @@ class CookieServiceTest extends MockeryTestCase
                 }
             );
 
-        $this->sut->createTokenCookie($response, 'some-token');
+        $this->sut->createTokenCookie($response, 'some-token', false);
+    }
+
+    public function testCreateTokenCookieThatExpiresAtMidnightForDocumentStoreLogin()
+    {
+        $response = m::mock(Response::class);
+        $response->shouldReceive('getHeaders->addHeader')
+            ->with(m::type(SetCookie::class))
+            ->andReturnUsing(
+                function (SetCookie $setCookie) {
+                    $midnight = (new DateTimeImmutable('tomorrow'))->setTime(0, 0, 0);
+
+                    //Date Format pasted from Zend's SetCookie::getExpires. It isn't the same as DateTime::COOKIE.
+                    $midnightString = $midnight->format('D, d-M-Y H:i:s \G\M\T');
+
+                    $this->assertEquals('secureToken', $setCookie->getName());
+                    $this->assertEquals('.olcs.com', $setCookie->getDomain());
+                    $this->assertEquals('some-token', $setCookie->getValue());
+                    $this->assertEquals('/', $setCookie->getPath());
+                    $this->assertEquals($midnightString, $setCookie->getExpires());
+                    $this->assertFalse($setCookie->isSecure());
+                    $this->assertTrue($setCookie->isHttponly());
+                }
+            );
+
+        $this->sut->createTokenCookie($response, 'some-token', true);
     }
 
     public function testCreateTokenCookieWithoutHost()

@@ -14,7 +14,7 @@ use Zend\ServiceManager\ServiceManager;
  * Class ControllerFactoryTest
  * @covers \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory
  */
-class LogoutControllerFactoryTest extends \PHPunit\Framework\TestCase
+class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /** @var ServiceManager */
     private $serviceManager;

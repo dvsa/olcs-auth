@@ -17,6 +17,9 @@ return [
     => 'Rhaid i\'ch cyfrinair gynnwys o leiaf un llythyren fach',
     'auth.change-password.failed.reason.Old password is incorrect.' => 'Mae\'r cyfrinair cyfredol yn anghywir',
 
+    'auth.forgot-password.email.subject' => 'Ailosod eich cyfrinair',
+    'auth.forgot-password.email.message' => 'Dilynwch y ddolen isod i ailosod eich cyfrinair',
+
     //  Zend Error Messages
     'The two given tokens do not match' => 'Nid yw\'r ddau gyfrinair yr un peth',
 ];

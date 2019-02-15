@@ -57,7 +57,7 @@ class LoginServiceTest extends MockeryTestCase
         $response = m::mock(Response::class);
 
         $this->cookie->shouldReceive('createTokenCookie')
-            ->with($response, 'some-token');
+            ->with($response, 'some-token', false);
 
         $this->redirect->shouldReceive('toUrl')->with('/')->andReturn('REDIRECT');
         $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn(false);
@@ -77,7 +77,7 @@ class LoginServiceTest extends MockeryTestCase
         $tokenId = 'some-token';
         $response = m::mock(Response::class);
 
-        $this->cookie->shouldReceive('createTokenCookie')->with($response, 'some-token')->once();
+        $this->cookie->shouldReceive('createTokenCookie')->with($response, 'some-token', false)->once();
 
         $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn($gotoUrl);
         $this->request->shouldReceive('getUri->getScheme')->with()->atLeast()->times(1)->andReturn('https');
@@ -88,6 +88,24 @@ class LoginServiceTest extends MockeryTestCase
         } else {
             $this->redirect->shouldReceive('toUrl')->with('/')->andReturn('REDIRECT');
         }
+
+        $this->assertEquals('REDIRECT', $this->sut->login($tokenId, $response));
+    }
+
+    public function testLoginToDocumentStoreSetsCookieExpiryToMidnight()
+    {
+        $tokenId = 'some-token';
+        $gotoUrl = "https://foo.com/ms-ofba-authentication-successful";
+
+        $response = m::mock(Response::class);
+
+        $this->cookie->shouldReceive('createTokenCookie')->with($response, 'some-token', true)->once();
+
+        $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn($gotoUrl);
+        $this->request->shouldReceive('getUri->getScheme')->with()->atLeast()->times(1)->andReturn('https');
+        $this->request->shouldReceive('getUri->getHost')->with()->once()->andReturn('foo.com');
+
+        $this->redirect->shouldReceive('toUrl')->with($gotoUrl)->andReturn('REDIRECT');
 
         $this->assertEquals('REDIRECT', $this->sut->login($tokenId, $response));
     }

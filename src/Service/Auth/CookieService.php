@@ -2,6 +2,11 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
+use DateInterval;
+use DateTime;
+use DateTimeImmutable;
+use Exception;
+use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
 use Zend\Http\Header\SetCookie;
 use Zend\Http\Request;
 use Zend\Http\Response;
@@ -36,7 +41,7 @@ class CookieService implements FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator Service locator
      *
      * @return $this
-     * @throws Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -44,7 +49,7 @@ class CookieService implements FactoryInterface
         $this->request = $serviceLocator->get('Request');
 
         if (empty($config['openam']['cookie']['name'])) {
-            throw new Exception\RuntimeException('openam/cookie is required but missing from config');
+            throw new RuntimeException('openam/cookie is required but missing from config');
         }
 
         $this->cookieName = $config['openam']['cookie']['name'];
@@ -64,9 +69,21 @@ class CookieService implements FactoryInterface
      *
      * @return void
      */
-    public function createTokenCookie(Response $response, $token)
+    public function createTokenCookie(Response $response, $token, $expireAtMidnight = false)
     {
-        $cookie = new SetCookie($this->cookieName, $token, null, '/', $this->getCookieDomain(), false, true);
+        $expires = null;
+
+        if ($expireAtMidnight) {
+            try {
+                $now = new DateTimeImmutable('now');
+                $tomorrow = $now->add(new DateInterval("P1D"));
+                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $tomorrow->format("Y-m-d") . " 00:00:00");
+            } catch (Exception $e) {
+                //Couldn't calculate date, leave $expires as null - end of session
+            }
+        }
+
+        $cookie = new SetCookie($this->cookieName, $token, $expires, '/', $this->getCookieDomain(), false, true);
         $headers = $response->getHeaders();
         $headers->addHeader($cookie);
     }

@@ -7,31 +7,24 @@
             "packagist": false
         },
         {
-            "url": "http://devrepo.shd.ci.nonprod.dvsa.aws",
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/OLCS",
             "type": "composer"
         },
         {
-            "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-devtools.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-common.git"
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/Packagist-Proxy",
+            "type": "composer"
         }
     ],
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "~2.4.0",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "dev-develop",
-        "olcs/OlcsCommon": "dev-develop"
+        "olcs/olcs-transfer": "^4.203",
+        "olcs/olcscommon": "^4.203",
+        "elendev/nexus-composer-push": "^0.0.4"
     },
     "require-dev": {
-        "olcs/olcs-devtools": "dev-master",
+        "olcs/olcs-devtools": "^4.203",
         "phpstan/phpstan-shim": "^0.10.5",
         "phpstan/phpstan-mockery": "^0.10.2",
         "mockery/mockery": "^1.2.0",
@@ -52,6 +45,16 @@
         "cs": "phpcs --severity=1 --standard=vendor/olcs/coding-standards/Profiles/DVSA/CS/ruleset.xml",
         "coverage": "phpunit -c test/phpunit.xml --coverage-html ./test/coverage/html",
         "sonar": "phpunit -c test/phpunit.xml --coverage-clover ./test/coverage/coverage-report.clover --log-junit ./test/coverage/log.junit",
-        "update-syms": "composer-update-syms"
+        "update-syms": "composer-update-syms",
+        "release": "release"
+    },
+    "extra": {
+        "nexus-push": {
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/olcs-auth",
+            "ignore-dirs": [
+                "test",
+                "composer.phar"
+            ]
+        }
     }
 }

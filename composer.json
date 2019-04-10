@@ -20,8 +20,8 @@
         "zendframework/zendframework": "~2.4.0",
         "doctrine/annotations": "^1.2.3",
         "olcs/olcs-transfer": "^4.203",
-        "olcs/olcscommon": "^4.203",
-        "elendev/nexus-composer-push": "^0.0.4"
+        "elendev/nexus-composer-push": "^0.0.4",
+        "olcs/olcs-common": "^4.204"
     },
     "require-dev": {
         "olcs/olcs-devtools": "^4.203",

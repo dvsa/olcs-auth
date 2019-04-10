@@ -51,10 +51,6 @@
     "extra": {
         "nexus-push": {
             "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/olcs-auth",
-            "ignore-dirs": [
-                "test",
-                "composer.phar"
-            ]
         }
     }
 }

@@ -19,12 +19,12 @@
         "php": ">=5.4",
         "zendframework/zendframework": "~2.4.0",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "^4.203",
-        "elendev/nexus-composer-push": "^0.0.4",
-        "olcs/olcs-common": "^4.204"
+        "olcs/olcs-transfer": "^4.205",
+        "elendev/nexus-composer-push": "^0.1",
+        "olcs/olcs-common": "^4.205"
     },
     "require-dev": {
-        "olcs/olcs-devtools": "^4.203",
+        "olcs/olcs-devtools": "^4.205",
         "phpstan/phpstan-shim": "^0.10.5",
         "phpstan/phpstan-mockery": "^0.10.2",
         "mockery/mockery": "^1.2.0",
@@ -51,6 +51,10 @@
     "extra": {
         "nexus-push": {
             "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/olcs-auth",
+            "ignore": [
+                "test/",
+                "composer.phar"
+            ]
         }
     }
 }

@@ -76,8 +76,10 @@ class CookieService implements FactoryInterface
         if ($expireAtMidnight) {
             try {
                 $now = new DateTimeImmutable('now');
-                $tomorrow = $now->add(new DateInterval("P1D"));
-                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $tomorrow->format("Y-m-d") . " 00:00:00");
+               // $tomorrow = $now->add(new DateInterval("P1D"));
+                //customised to test
+                $alteredCookieTime = $now->add(new DateInterval("PT30S"));
+                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $alteredCookieTime->format("Y-m-d H:i:s") . " 00:00:00");
             } catch (Exception $e) {
                 //Couldn't calculate date, leave $expires as null - end of session
             }

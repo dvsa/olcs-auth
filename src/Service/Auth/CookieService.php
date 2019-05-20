@@ -79,7 +79,7 @@ class CookieService implements FactoryInterface
                // $tomorrow = $now->add(new DateInterval("P1D"));
                 //customised to test
                 $alteredCookieTime = $now->add(new DateInterval("PT30S"));
-                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $alteredCookieTime->format("Y-m-d H:i:s") . " 00:00:00");
+                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $alteredCookieTime->format("Y-m-d H:i:s"));
             } catch (Exception $e) {
                 //Couldn't calculate date, leave $expires as null - end of session
             }

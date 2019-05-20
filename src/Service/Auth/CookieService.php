@@ -76,15 +76,22 @@ class CookieService implements FactoryInterface
         if ($expireAtMidnight) {
             try {
                 $now = new DateTimeImmutable('now');
+<<<<<<< Updated upstream
                // $tomorrow = $now->add(new DateInterval("P1D"));
                 //customised to test
                 $alteredCookieTime = $now->add(new DateInterval("PT30S"));
                 $expires = DateTime::createFromFormat("Y-m-d H:i:s", $alteredCookieTime->format("Y-m-d H:i:s"));
+=======
+                $tomorrow = $now->add(new DateInterval("P1D"));
+                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $tomorrow->format("Y-m-d") . " 00:00:00");
+                $expires = $expires->format("Y-m-d H:i:s");
+>>>>>>> Stashed changes
             } catch (Exception $e) {
                 //Couldn't calculate date, leave $expires as null - end of session
             }
         }
-
+        var_dump($expires);
+        var_dump("0000000");
         $cookie = new SetCookie($this->cookieName, $token, $expires, '/', $this->getCookieDomain(), false, true);
         $headers = $response->getHeaders();
         $headers->addHeader($cookie);

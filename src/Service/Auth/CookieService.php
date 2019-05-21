@@ -5,6 +5,7 @@ namespace Dvsa\Olcs\Auth\Service\Auth;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
 use Zend\Http\Header\SetCookie;
@@ -69,29 +70,22 @@ class CookieService implements FactoryInterface
      *
      * @return void
      */
-    public function createTokenCookie(Response $response, $token, $expireAtMidnight = false)
+    public function createTokenCookie(Response $response, $token, $expireWithinHour = false)
     {
         $expires = null;
 
-        if ($expireAtMidnight) {
+        if ($expireWithinHour) {
             try {
                 $now = new DateTimeImmutable('now');
-<<<<<<< Updated upstream
-               // $tomorrow = $now->add(new DateInterval("P1D"));
-                //customised to test
-                $alteredCookieTime = $now->add(new DateInterval("PT30S"));
-                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $alteredCookieTime->format("Y-m-d H:i:s"));
-=======
-                $tomorrow = $now->add(new DateInterval("P1D"));
-                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $tomorrow->format("Y-m-d") . " 00:00:00");
-                $expires = $expires->format("Y-m-d H:i:s");
->>>>>>> Stashed changes
+                $nextHour = $now->add(new DateInterval("PT1H"));
+                $gmtTimezone = new DateTimeZone('GMT');
+                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $nextHour->format("Y-m-d H:i:s"),$gmtTimezone);
+                $expires = gmdate('D, d-M-Y H:i:s', $expires->getTimestamp()) . ' GMT';
+
             } catch (Exception $e) {
                 //Couldn't calculate date, leave $expires as null - end of session
             }
         }
-        var_dump($expires);
-        var_dump("0000000");
         $cookie = new SetCookie($this->cookieName, $token, $expires, '/', $this->getCookieDomain(), false, true);
         $headers = $response->getHeaders();
         $headers->addHeader($cookie);

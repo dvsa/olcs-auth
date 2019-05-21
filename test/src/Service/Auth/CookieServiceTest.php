@@ -7,8 +7,10 @@
  */
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
+use DateInterval;
 use DateTime;
 use DateTimeImmutable;
+use DateTimeZone;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
 use Mockery as m;
@@ -93,19 +95,19 @@ class CookieServiceTest extends MockeryTestCase
             ->with(m::type(SetCookie::class))
             ->andReturnUsing(
                 function (SetCookie $setCookie) {
-                    $midnight = (new DateTimeImmutable('tomorrow'))->setTime(0, 0, 0);
 
-                    //Date Format pasted from Zend's SetCookie::getExpires. It isn't the same as DateTime::COOKIE.
-                    $midnightString = $midnight->format('D, d-M-Y H:i:s \G\M\T');
+                    $now = new DateTimeImmutable('now');
+                    $nextHour = $now->add(new DateInterval("PT1H"));
+                    $gmtTimezone = new DateTimeZone('GMT');
+                    $expires = DateTime::createFromFormat("Y-m-d H:i:s", $nextHour->format("Y-m-d H:i:s"),$gmtTimezone);
+                    $expires = gmdate('D, d-M-Y H:i:s', $expires->getTimestamp()) . ' GMT';
 
                     $this->assertEquals('secureToken', $setCookie->getName());
                     $this->assertEquals('.olcs.com', $setCookie->getDomain());
                     $this->assertEquals('some-token', $setCookie->getValue());
                     $this->assertEquals('/', $setCookie->getPath());
 
-                    // Commented out to allow work to continue with common package name change
-                    // TODO: Investiage why getExpires is coming back incorrectly
-                    //$this->assertEquals($midnightString, $setCookie->getExpires());
+                    $this->assertEquals($expires, $setCookie->getExpires());
                     $this->assertFalse($setCookie->isSecure());
                     $this->assertTrue($setCookie->isHttponly());
                 }

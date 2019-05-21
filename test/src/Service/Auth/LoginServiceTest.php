@@ -10,6 +10,7 @@ namespace Dvsa\OlcsTest\Auth\Service\Auth;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Http\Header\SetCookie;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\ServiceManager\ServiceManager;
@@ -92,7 +93,7 @@ class LoginServiceTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $this->sut->login($tokenId, $response));
     }
 
-    public function testLoginToDocumentStoreSetsCookieExpiryToMidnight()
+    public function testLoginToDocumentStoreSetsCookieExpiryToHour()
     {
         $tokenId = 'some-token';
         $gotoUrl = "https://foo.com/ms-ofba-authentication-successful";
@@ -100,6 +101,28 @@ class LoginServiceTest extends MockeryTestCase
         $response = m::mock(Response::class);
 
         $this->cookie->shouldReceive('createTokenCookie')->with($response, 'some-token', true)->once();
+
+        $response->shouldReceive('getHeaders->addHeader')
+            ->with(m::type(SetCookie::class))
+            ->andReturnUsing(
+                function (SetCookie $setCookie) {
+                    $midnight = (new DateTimeImmutable('tomorrow'))->setTime(0, 0, 0);
+
+                    //Date Format pasted from Zend's SetCookie::getExpires. It isn't the same as DateTime::COOKIE.
+                    $midnightString = $midnight->format('D, d-M-Y H:i:s \G\M\T');
+
+                    $this->assertEquals('secureToken', $setCookie->getName());
+                    $this->assertEquals('.olcs.com', $setCookie->getDomain());
+                    $this->assertEquals('some-token', $setCookie->getValue());
+                    $this->assertEquals('/', $setCookie->getPath());
+
+
+                    $this->assertEquals($midnightString, $setCookie->getExpires());
+                    $this->assertFalse($setCookie->isSecure());
+                    $this->assertTrue($setCookie->isHttponly());
+                }
+            );
+
 
         $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn($gotoUrl);
         $this->request->shouldReceive('getUri->getScheme')->with()->atLeast()->times(1)->andReturn('https');

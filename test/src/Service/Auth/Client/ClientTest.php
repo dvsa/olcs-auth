@@ -61,9 +61,9 @@ class ClientTest extends MockeryTestCase
 
     public function testPost()
     {
-        $uri = 'foo/bar';
+        $uri = 'http://hostname:123/foo/bar';
 
-        $this->uriBuilder->shouldReceive('build')->with($uri)->andReturn('/' . $uri);
+        $this->uriBuilder->shouldReceive('build')->with($uri)->andReturn($uri);
         $response = $this->sut->post($uri, ['foo' => 'bar']);
         $this->assertInstanceOf(Response::class, $response);
 
@@ -73,7 +73,7 @@ class ClientTest extends MockeryTestCase
             "\r\n",
             [
                 'POST /foo/bar HTTP/1.1',
-                'Host: :80',
+                'Host: hostname:123',
                 'Connection: close',
                 'Accept-Encoding: gzip, deflate',
                 'User-Agent: Zend\Http\Client',
@@ -89,13 +89,13 @@ class ClientTest extends MockeryTestCase
 
     public function testPostWithHeaders()
     {
-        $uri = 'foo/bar';
+        $uri = 'http://hostname:123/foo/bar';
 
         $headers = new Headers();
         $headers->addHeaderLine('X-Username', 'bob');
         $headers->addHeaderLine('X-Password', 'password');
 
-        $this->uriBuilder->shouldReceive('build')->with($uri)->andReturn('/' . $uri);
+        $this->uriBuilder->shouldReceive('build')->with($uri)->andReturn($uri);
         $response = $this->sut->post($uri, ['foo' => 'bar'], $headers);
         $this->assertInstanceOf(Response::class, $response);
 
@@ -105,7 +105,7 @@ class ClientTest extends MockeryTestCase
             "\r\n",
             [
                 'POST /foo/bar HTTP/1.1',
-                'Host: :80',
+                'Host: hostname:123',
                 'Connection: close',
                 'Accept-Encoding: gzip, deflate',
                 'User-Agent: Zend\Http\Client',
@@ -125,9 +125,9 @@ class ClientTest extends MockeryTestCase
     {
         $this->expectException(Exception\RuntimeException::class);
 
-        $uri = 'foo/bar';
+        $uri = 'http://hostname:123/foo/bar';
 
-        $this->uriBuilder->shouldReceive('build')->with($uri)->andReturn('/' . $uri);
+        $this->uriBuilder->shouldReceive('build')->with($uri)->andReturn($uri);
         $response = $this->sut->post($uri, ['foo' => "foo\x92"]);
         $this->assertInstanceOf(Response::class, $response);
     }

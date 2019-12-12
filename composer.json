@@ -19,9 +19,9 @@
         "php": ">=5.4",
         "zendframework/zendframework": "~2.4.0",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "~4.206.0",
+        "olcs/olcs-transfer": "dev-companies-house",
         "elendev/nexus-composer-push": "^0.1",
-        "olcs/olcs-common": "~4.206.0"
+        "olcs/olcs-common": "dev-companies-house"
     },
     "require-dev": {
         "olcs/olcs-devtools": "~4.206.0",

@@ -55,7 +55,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $this->serviceManager->setService('request', $mockRequest);
 
         // Create controller config
-        $controllerConfig = new \Zend\Servicemanager\Config(Bootstrap::getConfig());
+        $controllerConfig = new \Zend\ServiceManager\Config(Bootstrap::getConfig());
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);
@@ -103,7 +103,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $this->serviceManager->setService('config', $config);
 
         // Create controller config
-        $controllerConfig = new \Zend\Servicemanager\Config(Bootstrap::getConfig());
+        $controllerConfig = new \Zend\ServiceManager\Config(Bootstrap::getConfig());
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);

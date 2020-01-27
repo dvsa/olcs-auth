@@ -18,3 +18,4 @@ node_modules
 Common/data
 test/coverage
 .scannerwork
+composer.lock

@@ -19,7 +19,16 @@ return [
 
     'auth.forgot-password.email.subject' => 'Ailosod eich cyfrinair',
     'auth.forgot-password.email.message' => 'Dilynwch y ddolen isod i ailosod eich cyfrinair',
-
+    'auth.login.title' => 'Mewngofnodi',
+    'auth.login.button' => 'Mewngofnodi',
+    'auth.login.username' => 'Enw defnyddiwr',
+    'auth.login.password' => 'Cyfrinair',
+    'auth.forgot-password.button' => 'Cyflwyno',
+    'auth.forgot-username.label' => 'Wedi anghofio eich enw defnyddiwr?',
+    'auth.forgot-password.title' => 'Ailosod eich cyfrinair',
+    'auth.forgot-password.username' => 'Rhowch eich enw defnyddiwr',
+    
+    
     //  Zend Error Messages
     'The two given tokens do not match' => 'Nid yw\'r ddau gyfrinair yr un peth',
 ];

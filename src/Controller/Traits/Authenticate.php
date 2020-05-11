@@ -31,7 +31,7 @@ trait Authenticate
 
         if (isset($result['tokenId'])) {
             return $this->getLoginService()
-                ->login($result['tokenId'], $this->getResponse());
+                ->login($result['tokenId'], $username, $this->getResponse());
         }
 
         return $this->redirect()->toRoute('auth/expired-password', ['authId' => $result['authId']]);

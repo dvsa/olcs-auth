@@ -2,6 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
+use Common\Service\User\LastLoginService;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\Plugin\Redirect;
@@ -19,6 +20,11 @@ class LoginService implements FactoryInterface
      * @var CookieService
      */
     private $cookieService;
+
+    /**
+     * @var LastLoginService
+     */
+    private $lastLoginService;
 
     /**
      * @var Redirect
@@ -41,6 +47,8 @@ class LoginService implements FactoryInterface
     {
         $this->cookieService = $serviceLocator->get('Auth\CookieService');
 
+        $this->lastLoginService = $serviceLocator->get('Common\Service\User\LastLoginService');
+
         $cpm = $serviceLocator->get('ControllerPluginManager');
         $this->request = $serviceLocator->get('Request');
         $this->redirect = $cpm->get('redirect');
@@ -56,7 +64,7 @@ class LoginService implements FactoryInterface
      *
      * @return Response
      */
-    public function login($token, Response $response)
+    public function login($token, $username, Response $response)
     {
         $gotoUrl = $this->request->getQuery('goto', false);
 
@@ -67,6 +75,8 @@ class LoginService implements FactoryInterface
         }
 
         $this->cookieService->createTokenCookie($response, $token, $expireInHour);
+
+        $this->lastLoginService->updateLastLogin($username);
 
         // The "goto" URL added by openAm is always http, if we are running https, then need to change it
         if ($this->request->getUri()->getScheme() === 'https') {

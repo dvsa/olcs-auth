@@ -76,7 +76,7 @@ class LoginService implements FactoryInterface
 
         $this->cookieService->createTokenCookie($response, $token, $expireInHour);
 
-        $this->lastLoginService->updateLastLogin($username);
+        $this->lastLoginService->updateLastLogin($username, $token);
 
         // The "goto" URL added by openAm is always http, if we are running https, then need to change it
         if ($this->request->getUri()->getScheme() === 'https') {

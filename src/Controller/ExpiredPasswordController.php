@@ -47,7 +47,7 @@ class ExpiredPasswordController extends AbstractActionController
 
         if (isset($result['tokenId'])) {
             return $this->getLoginService()
-                ->login($result['tokenId'], $result['authId'], $this->getResponse(), $this->params()->fromQuery('goto'));
+                ->login($result['tokenId'], $this->getResponse(), $this->params()->fromQuery('goto'));
         }
 
         $failureReason = preg_replace('/(Change Password\<BR\>\<\/BR\>)/', '', $result['header']);

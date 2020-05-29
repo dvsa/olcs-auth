@@ -59,7 +59,7 @@ class LoginService implements FactoryInterface
     /**
      * Login and redirect
      *
-     * @param string   $token    Token
+     * @param string $token Token
      * @param Response $response Response
      *
      * @return Response
@@ -104,7 +104,7 @@ class LoginService implements FactoryInterface
         }
 
         // Check that the goto URL is valid, ie it begins with the server name from the request
-        $serverUrl = $this->request->getUri()->getScheme() .'://'. $this->request->getUri()->getHost() .'/';
+        $serverUrl = $this->request->getUri()->getScheme() . '://' . $this->request->getUri()->getHost() . '/';
         return strpos($gotoUrl, $serverUrl) === 0;
     }
 }

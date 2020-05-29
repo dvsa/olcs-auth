@@ -29,7 +29,7 @@ class LoginServiceTest extends MockeryTestCase
     private $sut;
 
     /**
-     * @var array|m\LegacyMockInterface|m\MockInterface 
+     * @var array|m\LegacyMockInterface|m\MockInterface
      */
     private $cookie;
 

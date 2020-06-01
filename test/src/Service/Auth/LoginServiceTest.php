@@ -7,6 +7,7 @@
  */
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
+use Common\Service\User\LastLoginService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -27,9 +28,20 @@ class LoginServiceTest extends MockeryTestCase
      */
     private $sut;
 
+    /**
+     * @var array|m\LegacyMockInterface|m\MockInterface
+     */
     private $cookie;
 
+    /**
+     * @var array|m\LegacyMockInterface|m\MockInterface
+     */
     private $redirect;
+
+    /**
+     * @var LastLoginService|m\LegacyMockInterface|m\MockInterface
+     */
+    private $lastLoginService;
 
     /**
      * @var m\Mock
@@ -41,10 +53,12 @@ class LoginServiceTest extends MockeryTestCase
         $this->cookie = m::mock();
         $this->redirect = m::mock();
         $this->request = m::mock(Request::class);
+        $this->lastLoginService = m::mock(LastLoginService::class);
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Auth\CookieService', $this->cookie);
         $sm->setService('ControllerPluginManager', $sm);
+        $sm->setService('Common\Service\User\LastLoginService', $this->lastLoginService);
         $sm->setService('Request', $this->request);
         $sm->setService('redirect', $this->redirect);
 
@@ -56,6 +70,8 @@ class LoginServiceTest extends MockeryTestCase
     {
         $tokenId = 'some-token';
         $response = m::mock(Response::class);
+
+        $this->lastLoginService->shouldReceive('updateLastLogin')->once()->andReturns();
 
         $this->cookie->shouldReceive('createTokenCookie')
             ->with($response, 'some-token', false);
@@ -78,6 +94,8 @@ class LoginServiceTest extends MockeryTestCase
         $tokenId = 'some-token';
         $response = m::mock(Response::class);
 
+        $this->lastLoginService->shouldReceive('updateLastLogin')->once()->andReturns();
+
         $this->cookie->shouldReceive('createTokenCookie')->with($response, 'some-token', false)->once();
 
         $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn($gotoUrl);
@@ -99,6 +117,8 @@ class LoginServiceTest extends MockeryTestCase
         $gotoUrl = "https://foo.com/ms-ofba-authentication-successful";
 
         $response = m::mock(Response::class);
+
+        $this->lastLoginService->shouldReceive('updateLastLogin')->once()->andReturns();
 
         $this->cookie->shouldReceive('createTokenCookie')->with($response, 'some-token', true)->once();
 

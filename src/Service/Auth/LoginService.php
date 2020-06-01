@@ -2,6 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
+use Common\Service\User\LastLoginService;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\Plugin\Redirect;
@@ -19,6 +20,11 @@ class LoginService implements FactoryInterface
      * @var CookieService
      */
     private $cookieService;
+
+    /**
+     * @var LastLoginService
+     */
+    private $lastLoginService;
 
     /**
      * @var Redirect
@@ -41,6 +47,8 @@ class LoginService implements FactoryInterface
     {
         $this->cookieService = $serviceLocator->get('Auth\CookieService');
 
+        $this->lastLoginService = $serviceLocator->get('Common\Service\User\LastLoginService');
+
         $cpm = $serviceLocator->get('ControllerPluginManager');
         $this->request = $serviceLocator->get('Request');
         $this->redirect = $cpm->get('redirect');
@@ -51,7 +59,7 @@ class LoginService implements FactoryInterface
     /**
      * Login and redirect
      *
-     * @param string   $token    Token
+     * @param string $token Token
      * @param Response $response Response
      *
      * @return Response
@@ -67,6 +75,8 @@ class LoginService implements FactoryInterface
         }
 
         $this->cookieService->createTokenCookie($response, $token, $expireInHour);
+
+        $this->lastLoginService->updateLastLogin($token);
 
         // The "goto" URL added by openAm is always http, if we are running https, then need to change it
         if ($this->request->getUri()->getScheme() === 'https') {
@@ -94,7 +104,7 @@ class LoginService implements FactoryInterface
         }
 
         // Check that the goto URL is valid, ie it begins with the server name from the request
-        $serverUrl = $this->request->getUri()->getScheme() .'://'. $this->request->getUri()->getHost() .'/';
+        $serverUrl = $this->request->getUri()->getScheme() . '://' . $this->request->getUri()->getHost() . '/';
         return strpos($gotoUrl, $serverUrl) === 0;
     }
 }

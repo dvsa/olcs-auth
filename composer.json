@@ -13,6 +13,10 @@
         {
             "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/Packagist-Proxy",
             "type": "composer"
+        },
+        {
+            "url": "git@repo.olcs.dev-dvsacloud.uk:olcs/olcs-transfer.git",
+            "type": "vcs"
         }
     ],
     "require": {
@@ -30,7 +34,7 @@
         "zendframework/zend-validator": "^2.5",
         "zendframework/zend-view": "^2.5",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "~4.206.0",
+        "olcs/olcs-transfer": "dev-feature/OLCS-27754-citrix-exit",
         "elendev/nexus-composer-push": "^0.1",
         "olcs/olcs-common": "~4.206.0"
     },

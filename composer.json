@@ -7,11 +7,11 @@
             "packagist": false
         },
         {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/OLCS",
+            "url": "http://nexus.olcs.dev-dvsacloud.uk/repository/OLCS",
             "type": "composer"
         },
         {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
+            "url": "http://nexus.olcs.dev-dvsacloud.uk/repository/Packagist-Proxy",
             "type": "composer"
         }
     ],
@@ -58,7 +58,7 @@
     },
     "extra": {
         "nexus-push": {
-            "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/olcs-auth",
+            "url": "http://nexus.olcs.dev-dvsacloud.uk/repository/olcs-auth",
             "ignore": [
                 "test/",
                 "composer.phar"

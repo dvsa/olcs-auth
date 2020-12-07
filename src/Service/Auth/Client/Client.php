@@ -3,13 +3,13 @@
 namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Header\ContentType;
-use Zend\Http\Headers;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Header\ContentType;
+use Laminas\Http\Headers;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Client

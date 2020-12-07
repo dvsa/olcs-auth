@@ -7,9 +7,9 @@ use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\OpenAmResetPasswordFailedException;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\UserCannotResetPasswordException;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\UserNotFoundException;
-use Zend\Form\Form;
-use Zend\Http\Request;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\Form;
+use Laminas\Http\Request;
+use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService;
 
 /**
@@ -22,7 +22,7 @@ class ForgotPasswordController extends AbstractController
     /**
      * Forgot password page
      *
-     * @return ViewModel|\Zend\Http\Response
+     * @return ViewModel|\Laminas\Http\Response
      */
     public function indexAction()
     {

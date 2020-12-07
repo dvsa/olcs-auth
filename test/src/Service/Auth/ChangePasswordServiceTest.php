@@ -9,10 +9,10 @@ use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Headers;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Headers;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Change Password Service Test
@@ -30,7 +30,7 @@ class ChangePasswordServiceTest extends MockeryTestCase
 
     private $responseDecoder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->cookie = m::mock();
         $this->client = m::mock();

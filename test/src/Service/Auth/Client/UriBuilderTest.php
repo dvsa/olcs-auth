@@ -11,7 +11,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Client\UriBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Uri Builder Test

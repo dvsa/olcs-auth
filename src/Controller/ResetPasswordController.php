@@ -3,8 +3,8 @@
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Controller\Traits\Authenticate;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Form\ResetPasswordForm;
 use Dvsa\Olcs\Auth\Service\Auth\ResetPasswordService;
 
@@ -20,7 +20,7 @@ class ResetPasswordController extends AbstractActionController
     /**
      * Reset password
      *
-     * @return \Zend\Http\Response|ViewModel
+     * @return \Laminas\Http\Response|ViewModel
      */
     public function indexAction()
     {
@@ -73,13 +73,13 @@ class ResetPasswordController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form          Form
+     * @param \Laminas\Form\Form $form          Form
      * @param bool            $failed        Failed
      * @param string          $failureReason Failure reason
      *
      * @return ViewModel
      */
-    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    private function renderView(\Laminas\Form\Form $form, $failed = false, $failureReason = null)
     {
         $this->layout('auth/layout');
         $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);

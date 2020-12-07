@@ -11,7 +11,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
 use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Response Decoder Service Test

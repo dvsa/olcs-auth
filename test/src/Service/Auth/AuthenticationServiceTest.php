@@ -12,8 +12,8 @@ use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
 use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Authentication Service Test
@@ -31,7 +31,7 @@ class AuthenticationServiceTest extends MockeryTestCase
 
     private $responseDecoder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = m::mock();
         $this->responseDecoder = new ResponseDecoderService();

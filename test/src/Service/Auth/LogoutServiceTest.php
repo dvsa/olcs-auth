@@ -10,9 +10,9 @@ namespace Dvsa\OlcsTest\Auth\Service\Auth;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Headers;
-use Zend\Http\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Headers;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Logout Service Test
@@ -32,7 +32,7 @@ class LogoutServiceTest extends MockeryTestCase
 
     private $responseDecoder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->cookie = m::mock();
         $this->client = m::mock();

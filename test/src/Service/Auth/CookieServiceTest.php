@@ -15,10 +15,10 @@ use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Header\SetCookie;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Header\SetCookie;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Cookie Service Test
@@ -32,7 +32,7 @@ class CookieServiceTest extends MockeryTestCase
      */
     private $sut;
 
-    public function setUp()
+    public function setUp(): void
     {
         $request = m::mock();
         $request->shouldReceive('getUri->getHost')->andReturn('foo.olcs.com');
@@ -99,7 +99,7 @@ class CookieServiceTest extends MockeryTestCase
                     $now = new DateTimeImmutable('now');
                     $nextHour = $now->add(new DateInterval("PT1H"));
                     $gmtTimezone = new DateTimeZone('GMT');
-                    $expires = DateTime::createFromFormat("Y-m-d H:i:s", $nextHour->format("Y-m-d H:i:s"),$gmtTimezone);
+                    $expires = DateTime::createFromFormat("Y-m-d H:i:s", $nextHour->format("Y-m-d H:i:s"), $gmtTimezone);
                     $expires = gmdate('D, d-M-Y H:i:s', $expires->getTimestamp()) . ' GMT';
 
                     $this->assertEquals('secureToken', $setCookie->getName());

@@ -3,8 +3,8 @@
 namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Uri Builder

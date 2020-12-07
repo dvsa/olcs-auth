@@ -2,9 +2,9 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
@@ -77,13 +77,13 @@ class ExpiredPasswordController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form          Form
+     * @param \Laminas\Form\Form $form          Form
      * @param bool            $failed        Failed
      * @param string          $failureReason Failure reason
      *
      * @return ViewModel
      */
-    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    private function renderView(\Laminas\Form\Form $form, $failed = false, $failureReason = null)
     {
         $this->layout('auth/layout');
         $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);

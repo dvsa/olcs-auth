@@ -5,10 +5,10 @@ use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Dvsa\OlcsTest\Auth\Bootstrap;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
-use Zend\Mvc\Controller\ControllerManager;
+use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
-use Zend\Http\PhpEnvironment\Request;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\PhpEnvironment\Request;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Class ControllerFactoryTest
@@ -19,7 +19,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
     /** @var ServiceManager */
     private $serviceManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         // Get service manager
         $serviceManager = Bootstrap::getServiceManager();
@@ -55,7 +55,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $this->serviceManager->setService('request', $mockRequest);
 
         // Create controller config
-        $controllerConfig = new \Zend\ServiceManager\Config(Bootstrap::getConfig());
+        $controllerConfig = new \Laminas\ServiceManager\Config(Bootstrap::getConfig());
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);
@@ -103,7 +103,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $this->serviceManager->setService('config', $config);
 
         // Create controller config
-        $controllerConfig = new \Zend\ServiceManager\Config(Bootstrap::getConfig());
+        $controllerConfig = new \Laminas\ServiceManager\Config(Bootstrap::getConfig());
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);

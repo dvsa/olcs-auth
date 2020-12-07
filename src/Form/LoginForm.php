@@ -2,7 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Form;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("login-form")
@@ -21,7 +21,7 @@ class LoginForm
      * @Form\Attributes({
      *     "id": "auth.login.username"
      * })
-     * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Filter({"name": "Common\Filter\StripSpaces"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Username"})
      * @Form\Type("Text")
@@ -39,7 +39,7 @@ class LoginForm
      * @Form\Attributes({
      *     "id": "auth.login.password"
      * })
-     * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Type("Password")
      */
     public $password = null;

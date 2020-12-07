@@ -8,11 +8,11 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
-use Zend\Http\Header\SetCookie;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Header\SetCookie;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Cookie Service
@@ -32,7 +32,7 @@ class CookieService implements FactoryInterface
     private $cookieDomain;
 
     /**
-     * @var \Zend\Http\Request
+     * @var \Laminas\Http\Request
      */
     private $request;
 
@@ -79,9 +79,8 @@ class CookieService implements FactoryInterface
                 $now = new DateTimeImmutable('now');
                 $nextHour = $now->add(new DateInterval("PT1H"));
                 $gmtTimezone = new DateTimeZone('GMT');
-                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $nextHour->format("Y-m-d H:i:s"),$gmtTimezone);
+                $expires = DateTime::createFromFormat("Y-m-d H:i:s", $nextHour->format("Y-m-d H:i:s"), $gmtTimezone);
                 $expires = gmdate('D, d-M-Y H:i:s', $expires->getTimestamp()) . ' GMT';
-
             } catch (Exception $e) {
                 //Couldn't calculate date, leave $expires as null - end of session
             }

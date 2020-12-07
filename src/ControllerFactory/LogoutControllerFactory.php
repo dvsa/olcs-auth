@@ -2,13 +2,13 @@
 
 namespace Dvsa\Olcs\Auth\ControllerFactory;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\Http\PhpEnvironment\Request;
-use Zend\Http\Response;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Http\Response;
 
 /**
  * Class LogoutControllerFactory

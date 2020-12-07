@@ -9,12 +9,12 @@ use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Form;
-use Zend\Http\Request as HttpRequest;
-use Zend\Mvc\Controller\Plugin\Redirect;
-use Zend\Mvc\Controller\PluginManager;
-use Zend\ServiceManager\ServiceManager;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\Form;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Mvc\Controller\Plugin\Redirect;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Change Password Controller Test
@@ -34,7 +34,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
     private $redirect;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->formHelper = m::mock();
         $this->changePasswordService = m::mock();
@@ -90,7 +90,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
-        $request->setPost(new \Zend\Stdlib\Parameters($post));
+        $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
         $result = $this->sut->indexAction();
 
@@ -112,7 +112,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
-        $request->setPost(new \Zend\Stdlib\Parameters($post));
+        $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
         $this->redirect->shouldReceive('toRouteAjax')->with('my-account')->andReturn('REDIRECT');
 
@@ -137,7 +137,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
-        $request->setPost(new \Zend\Stdlib\Parameters($post));
+        $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
         $this->changePasswordService->shouldReceive('updatePassword')
             ->with($request, $post['oldPassword'], $post['newPassword'])
@@ -170,7 +170,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
-        $request->setPost(new \Zend\Stdlib\Parameters($post));
+        $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
         $this->changePasswordService->shouldReceive('updatePassword')
             ->with($request, $post['oldPassword'], $post['newPassword'])

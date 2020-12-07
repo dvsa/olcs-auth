@@ -61,7 +61,7 @@ return [
                         ],
                     ],
                     'validate' => [
-                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'type' => \Laminas\Mvc\Router\Http\Segment::class,
                         'options' => [
                             'route' => 'validate[/]',
                             'defaults' => [
@@ -150,7 +150,7 @@ return [
         ],
         'client' => [
             'options' => [
-                'adapter' => \Zend\Http\Client\Adapter\Curl::class,
+                'adapter' => \Laminas\Http\Client\Adapter\Curl::class,
                 'timeout' => 60,
             ]
         ]

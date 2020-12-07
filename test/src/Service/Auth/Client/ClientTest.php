@@ -10,11 +10,11 @@ namespace Dvsa\OlcsTest\Auth\Service\Auth\Client;
 use Dvsa\Olcs\Auth\Service\Auth\Client\Client;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Client\Adapter\Test;
-use Zend\Http\Headers;
-use Zend\Http\Response;
+use Laminas\Http\Client\Adapter\Test;
+use Laminas\Http\Headers;
+use Laminas\Http\Response;
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Client Test
@@ -35,7 +35,7 @@ class ClientTest extends MockeryTestCase
      */
     private $adapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->uriBuilder = m::mock();
         $this->adapter = new Test();
@@ -76,7 +76,7 @@ class ClientTest extends MockeryTestCase
                 'Host: hostname:123',
                 'Connection: close',
                 'Accept-Encoding: gzip, deflate',
-                'User-Agent: Zend\Http\Client',
+                'User-Agent: Laminas\Http\Client',
                 'Content-Type: application/json',
                 'Content-Length: 13',
                 '',
@@ -108,7 +108,7 @@ class ClientTest extends MockeryTestCase
                 'Host: hostname:123',
                 'Connection: close',
                 'Accept-Encoding: gzip, deflate',
-                'User-Agent: Zend\Http\Client',
+                'User-Agent: Laminas\Http\Client',
                 'Content-Type: application/json',
                 'Content-Length: 13',
                 'X-Username: bob',

@@ -3,11 +3,11 @@
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Common\Service\User\LastLoginService;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\Plugin\Redirect;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\Plugin\Redirect;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Login Service

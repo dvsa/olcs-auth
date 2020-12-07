@@ -2,12 +2,12 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Zend\Stdlib\RequestInterface;
-use Zend\Http\Response;
-use Zend\Http\Request;
+use Laminas\Stdlib\RequestInterface;
+use Laminas\Http\Response;
+use Laminas\Http\Request;
 
 /**
  * Class LogoutController
@@ -73,7 +73,7 @@ class LogoutController extends AbstractActionController
     /**
      * Logout the user, and redirect to index or Gov site
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function indexAction()
     {

@@ -19,7 +19,7 @@ trait Authenticate
      * @param string   $password        Password
      * @param callable $failureCallback Failure callback
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function authenticate($username, $password, $failureCallback)
     {

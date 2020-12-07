@@ -4,13 +4,13 @@ namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 
 /**
  * ValidateController have action to validate is user session is active
@@ -25,7 +25,7 @@ class ValidateController extends AbstractActionController implements FactoryInte
     /**
      * Create an instance
      *
-     * @param \Zend\Mvc\Controller\ControllerManager $serviceLocator Service Locator
+     * @param \Laminas\Mvc\Controller\ControllerManager $serviceLocator Service Locator
      *
      * @return $this
      */
@@ -46,7 +46,7 @@ class ValidateController extends AbstractActionController implements FactoryInte
      */
     public function indexAction()
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $token = $this->cookieSrv->getCookie($request);

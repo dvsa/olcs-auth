@@ -2,7 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
  * Abstract Controller
@@ -18,7 +18,7 @@ class AbstractController extends AbstractActionController
      */
     protected function isButtonPressed($button)
     {
-        /** @var \Zend\Http\Request $request */
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {

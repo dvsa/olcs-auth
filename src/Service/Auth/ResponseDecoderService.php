@@ -2,7 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
-use Zend\Http\Response;
+use Laminas\Http\Response;
 
 /**
  * Response Decoder Service

@@ -9,8 +9,8 @@ use Dvsa\Olcs\Auth\Service\Auth\Exception\OpenAmResetPasswordFailedException;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\UserCannotResetPasswordException;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\UserNotFoundException;
 use Dvsa\Olcs\Transfer\Query\User\Pid;
-use Zend\Mvc\I18n\Translator;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Forgot Password Service

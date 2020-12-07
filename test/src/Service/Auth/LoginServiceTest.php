@@ -11,10 +11,10 @@ use Common\Service\User\LastLoginService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Header\SetCookie;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Header\SetCookie;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Login Service Test
@@ -48,7 +48,7 @@ class LoginServiceTest extends MockeryTestCase
      */
     private $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->cookie = m::mock();
         $this->redirect = m::mock();

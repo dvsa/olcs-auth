@@ -2,11 +2,11 @@
 
 namespace Dvsa\OlcsTest\Auth;
 
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
-use Zend\I18n\Translator\Translator;
-use Zend\Loader\AutoloaderFactory;
-use Zend\Console\Console;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Loader\AutoloaderFactory;
+use Laminas\Console\Console;
 use RuntimeException;
 
 date_default_timezone_set('Europe/London');
@@ -85,7 +85,7 @@ class Bootstrap
             include $vendorPath . '/autoload.php';
         }
 
-        if (! class_exists('Zend\Loader\AutoloaderFactory')) {
+        if (! class_exists('Laminas\Loader\AutoloaderFactory')) {
             throw new RuntimeException(
                 'Unable to load ZF2. Run `php composer.phar install`'
             );
@@ -93,7 +93,7 @@ class Bootstrap
 
         AutoloaderFactory::factory(
             [
-                'Zend\Loader\StandardAutoloader' => [
+                'Laminas\Loader\StandardAutoloader' => [
                     'autoregister_zf' => true,
                     'namespaces' => [
                         __NAMESPACE__ => __DIR__ . DIRECTORY_SEPARATOR . __NAMESPACE__,

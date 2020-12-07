@@ -3,7 +3,7 @@
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 
 /**
@@ -56,7 +56,7 @@ class ChangePasswordController extends AbstractController
     /**
      * Redirect to My Account page
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     private function redirectToMyAccount()
     {
@@ -85,13 +85,13 @@ class ChangePasswordController extends AbstractController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form          Form
+     * @param \Laminas\Form\Form $form          Form
      * @param bool            $failed        Failed
      * @param string          $failureReason Failure reason
      *
      * @return ViewModel
      */
-    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    private function renderView(\Laminas\Form\Form $form, $failed = false, $failureReason = null)
     {
         $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);
         $view->setTemplate('auth/change-password');

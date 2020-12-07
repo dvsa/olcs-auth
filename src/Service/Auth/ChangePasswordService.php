@@ -2,9 +2,9 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
-use Zend\Http\Headers;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\RequestInterface as Request;
+use Laminas\Http\Headers;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Stdlib\RequestInterface as Request;
 
 /**
  * Change Password Service

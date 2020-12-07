@@ -34,7 +34,7 @@ class AuthenticationService extends AbstractRestService
      * @param string $username Username
      * @param string $password Password
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     private function sendRequest($username, $password)
     {

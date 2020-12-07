@@ -6,9 +6,9 @@ use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
 use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Http\Headers;
-use Zend\Http\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Headers;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @covers Dvsa\Olcs\Auth\Service\Auth\ValidateService
@@ -23,7 +23,7 @@ class ValidateServiceTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockCookieSrv;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockCookieSrv = m::mock();
         $this->client = m::mock();

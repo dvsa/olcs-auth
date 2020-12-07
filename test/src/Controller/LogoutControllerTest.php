@@ -5,9 +5,9 @@ namespace Dvsa\OlcsTest\Auth\Controller;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Zend\Mvc\Controller\Plugin\Redirect;
-use Zend\Mvc\Controller\PluginManager;
-use Zend\Di\ServiceLocatorInterface;
+use Laminas\Mvc\Controller\Plugin\Redirect;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\Di\ServiceLocatorInterface;
 use Dvsa\OlcsTest\Auth\Bootstrap;
 use Mockery as m;
 
@@ -28,7 +28,7 @@ class LogoutControllerTest extends \PHPunit\Framework\TestCase
      */
     private $serviceManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->serviceManager = Bootstrap::getServiceManager();
         $this->serviceManager->setAllowOverride(true);

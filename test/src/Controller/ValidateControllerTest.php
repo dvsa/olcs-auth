@@ -6,8 +6,8 @@ use Dvsa\Olcs\Auth\Controller\ValidateController;
 use Dvsa\Olcs\Auth\Service;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\View\Model\JsonModel;
-use Zend\View\Variables;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Variables;
 
 class ValidateControllerTest extends MockeryTestCase
 {
@@ -19,19 +19,19 @@ class ValidateControllerTest extends MockeryTestCase
     /** @var  m\MockInterface */
     private $mockValidateSrv;
 
-    public function setUp()
+    public function setUp(): void
     {
         /** @var m\MockInterface mockCookieSrv */
         $this->mockCookieSrv = m::mock(Service\Auth\CookieService::class);
         $this->mockValidateSrv = m::mock();
 
-        /** @var \Zend\ServiceManager\ServiceManager $sm */
-        $sm = m::mock(\Zend\ServiceManager\ServiceManager::class)->makePartial();
+        /** @var \Laminas\ServiceManager\ServiceManager $sm */
+        $sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)->makePartial();
         $sm->setService('Auth\CookieService', $this->mockCookieSrv);
         $sm->setService(Service\Auth\ValidateService::class, $this->mockValidateSrv);
 
-        /** @var \Zend\ServiceManager\ServiceLocatorInterface $sl */
-        $sl = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class)
+        /** @var \Laminas\ServiceManager\ServiceLocatorInterface $sl */
+        $sl = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class)
             ->shouldReceive('getServiceLocator')->once()->andReturn($sm)
             ->getMock();
 

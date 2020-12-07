@@ -4,10 +4,10 @@ namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Controller\Traits\Authenticate;
 use Dvsa\Olcs\Auth\Form\LoginForm;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Login Controller
@@ -65,13 +65,13 @@ class LoginController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Zend\Form\Form $form          Form
+     * @param \Laminas\Form\Form $form          Form
      * @param bool            $failed        Failed
      * @param string          $failureReason Failure reason
      *
      * @return ViewModel
      */
-    private function renderView(\Zend\Form\Form $form, $failed = false, $failureReason = null)
+    private function renderView(\Laminas\Form\Form $form, $failed = false, $failureReason = null)
     {
         $this->layout('auth/layout');
         $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);

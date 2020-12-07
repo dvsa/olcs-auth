@@ -39,7 +39,7 @@ class ExpiredPasswordService extends AbstractRestService
      * @param string $newPassword     New password
      * @param string $confirmPassword Confirm password
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     private function sendRequest($authId, $oldPassword, $newPassword, $confirmPassword)
     {

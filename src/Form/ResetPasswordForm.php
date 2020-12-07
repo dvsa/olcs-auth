@@ -2,7 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Form;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("reset-password-form")
@@ -16,7 +16,7 @@ class ResetPasswordForm
      *     "short-label": "auth.reset-password.new-password"
      * })
      * @Form\Attributes({"id": "auth.reset-password.new-password"})
-     * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Type("Password")
      */
     public $newPassword = null;
@@ -27,8 +27,8 @@ class ResetPasswordForm
      *     "short-label": "auth.reset-password.confirm-password"
      * })
      * @Form\Attributes({"id": "auth.reset-password.confirm-password"})
-     * @Form\Filter({"name": "Zend\Filter\StringTrim"})
-     * @Form\Validator({"name": "Zend\Validator\Identical", "options": {"token": "newPassword"}})
+     * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
+     * @Form\Validator({"name": "Laminas\Validator\Identical", "options": {"token": "newPassword"}})
      * @Form\Type("Password")
      */
     public $confirmPassword = null;

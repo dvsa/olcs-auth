@@ -21,8 +21,8 @@ use Dvsa\Olcs\Transfer\Query\User\Pid;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use ReflectionMethod;
-use Zend\Http\Response;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Http\Response;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * Forgot Password Service Test
@@ -48,7 +48,7 @@ class ForgotPasswordServiceTest extends MockeryTestCase
      */
     private $querySender;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = m::mock();
         $this->responseDecoder = new ResponseDecoderService();

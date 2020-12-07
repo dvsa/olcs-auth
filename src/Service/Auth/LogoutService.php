@@ -2,8 +2,8 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
-use Zend\Http\Headers;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Http\Headers;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Logout Service

@@ -2,7 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Form;
 
-use Zend\Form\Annotation as Form;
+use Laminas\Form\Annotation as Form;
 
 /**
  * @Form\Name("change-password-form")
@@ -17,7 +17,7 @@ class ChangePasswordForm
      *     "error-message": "auth.change-password.old-password.error"
      * })
      * @Form\Attributes({"id": "auth.change-password.old-password"})
-     * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Type("Password")
      */
     public $oldPassword = null;
@@ -29,8 +29,8 @@ class ChangePasswordForm
      *     "error-message": "auth.change-password.new-password.error"
      * })
      * @Form\Attributes({"id": "auth.change-password.new-password"})
-     * @Form\Filter({"name": "Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":8, "max":160}})
+     * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":8, "max":160}})
      * @Form\Validator({"name":"Common\Form\Elements\Validators\PasswordConfirm","options":{"token":"confirmPassword"}})
      * @Form\Type("Password")
      */
@@ -43,7 +43,7 @@ class ChangePasswordForm
      *     "error-message": "auth.change-password.confirm-password.error"
      * })
      * @Form\Attributes({"id": "auth.change-password.confirm-password"})
-     * @Form\Filter({"name": "Zend\Filter\StringTrim"})
+     * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Type("Password")
      */
     public $confirmPassword = null;

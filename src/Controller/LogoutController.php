@@ -47,8 +47,8 @@ class LogoutController extends AbstractActionController
     /**
      * LogoutController constructor.
      *
-     * @param Request       $requestService       Zend request service
-     * @param Response      $responseService      Zend response service
+     * @param Request       $requestService       Laminas request service
+     * @param Response      $responseService      Laminas response service
      * @param CookieService $cookieService        Cookie service
      * @param LogoutService $logoutService        Logout service
      * @param bool          $isSelfServe          Is the current user selfserve?

@@ -128,7 +128,7 @@ class LoginServiceTest extends MockeryTestCase
                 function (SetCookie $setCookie) {
                     $midnight = (new DateTimeImmutable('tomorrow'))->setTime(0, 0, 0);
 
-                    //Date Format pasted from Zend's SetCookie::getExpires. It isn't the same as DateTime::COOKIE.
+                    //Date Format pasted from SetCookie::getExpires. It isn't the same as DateTime::COOKIE.
                     $midnightString = $midnight->format('D, d-M-Y H:i:s \G\M\T');
 
                     $this->assertEquals('secureToken', $setCookie->getName());

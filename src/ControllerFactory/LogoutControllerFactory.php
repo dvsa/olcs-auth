@@ -58,7 +58,7 @@ class LogoutControllerFactory implements FactoryInterface
     /**
      * Check if the current session is self serve
      *
-     * @param Request $requestService Zend request service
+     * @param Request $requestService Laminas request service
      *
      * @return bool
      */

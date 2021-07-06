@@ -7,6 +7,14 @@
             "packagist": false
         },
         {
+            "url": "git@repo.olcs.dev-dvsacloud.uk:olcs/olcs-common.git",
+            "type": "vcs"
+        },
+        {
+            "url": "git@repo.olcs.dev-dvsacloud.uk:olcs/olcs-transfer.git",
+            "type": "vcs"
+        },
+        {
             "url": "https://nexus.olcs.dev-dvsacloud.uk/repository/OLCS",
             "type": "composer"
         },
@@ -31,9 +39,9 @@
         "laminas/laminas-validator": "^2.5",
         "laminas/laminas-view": "^2.5",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "~4.206.0",
+        "olcs/olcs-transfer": "dev-project/lgv",
         "elendev/nexus-composer-push": "^0.1",
-        "olcs/olcs-common": "~4.206.0",
+        "olcs/olcs-common": "dev-project/lgv",
         "laminas/laminas-dependency-plugin": "^2.0"
     },
     "require-dev": {

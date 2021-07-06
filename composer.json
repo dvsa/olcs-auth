@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": ">=7.2",
+        "laminas/laminas-authentication": "^2.5",
         "laminas/laminas-console": "^2.5",
         "laminas/laminas-di": "^2.5",
         "laminas/laminas-filter": "^2.5",

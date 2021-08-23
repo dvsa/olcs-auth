@@ -91,6 +91,6 @@ class LogoutController extends AbstractActionController
             );
         }
 
-        return $this->redirect()->toRoute('auth/login');
+        return $this->redirect()->toRoute('auth/login/GET');
     }
 }

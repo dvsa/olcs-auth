@@ -42,7 +42,7 @@ class ExpiredPasswordController extends AbstractActionController
 
         if ($result['status'] != 200) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
-            return $this->redirect()->toRoute('auth/login');
+            return $this->redirect()->toRoute('auth/login/GET');
         }
 
         if (isset($result['tokenId'])) {

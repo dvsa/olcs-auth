@@ -27,7 +27,7 @@ class ForgotPasswordController extends AbstractController
     public function indexAction()
     {
         if ($this->isButtonPressed('cancel')) {
-            return $this->redirect()->toRoute('auth/login');
+            return $this->redirect()->toRoute('auth/login/GET');
         }
 
         /** @var Request $request */

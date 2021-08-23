@@ -62,7 +62,7 @@ class ResetPasswordController extends AbstractActionController
                 $result['username'],
                 $data['newPassword'],
                 function () {
-                    return $this->redirect()->toRoute('auth/login');
+                    return $this->redirect()->toRoute('auth/login/GET');
                 }
             );
         }

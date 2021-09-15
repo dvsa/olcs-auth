@@ -85,7 +85,7 @@ class LogoutControllerTest extends \PHPunit\Framework\TestCase
         $controller->setPluginManager($pm);
 
         $this->redirect->shouldReceive('toRoute')
-            ->with('auth/login')
+            ->with('auth/login/GET')
             ->andReturn('REDIRECT');
 
         $this->assertEquals('REDIRECT', $controller->indexAction());

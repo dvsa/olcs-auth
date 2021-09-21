@@ -9,6 +9,7 @@ use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\PluginManager;
 use Laminas\Di\ServiceLocatorInterface;
 use Dvsa\OlcsTest\Auth\Bootstrap;
+use Laminas\Session\Container;
 use Mockery as m;
 
 /**
@@ -51,7 +52,8 @@ class LogoutControllerTest extends \PHPunit\Framework\TestCase
             $this->serviceManager->get('Auth\CookieService'),
             $this->serviceManager->get('Auth\LogoutService'),
             true,
-            self::REDIRECT_URL
+            self::REDIRECT_URL,
+            $this->createMock(Container::class)
         );
 
         // Mock redirect service
@@ -75,7 +77,8 @@ class LogoutControllerTest extends \PHPunit\Framework\TestCase
             $this->serviceManager->get('Auth\CookieService'),
             $this->serviceManager->get('Auth\LogoutService'),
             false,
-            self::REDIRECT_URL
+            self::REDIRECT_URL,
+            $this->createMock(Container::class)
         );
 
         // Mock redirect service

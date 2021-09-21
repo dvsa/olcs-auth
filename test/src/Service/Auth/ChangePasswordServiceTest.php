@@ -1,95 +1,61 @@
 <?php
 
-/**
- * Change Password Service Test
- */
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
+use Common\Service\Cqrs\Command\CommandSender;
+use Common\Service\Cqrs\Response as CqrsResponse;
 use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
+use Dvsa\Olcs\Transfer\Command\Auth\ChangePassword;
+use Laminas\Http\Response as LaminasResponse;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\Http\Headers;
-use Laminas\Http\Request;
-use Laminas\Http\Response;
-use Laminas\ServiceManager\ServiceManager;
 
 /**
- * Change Password Service Test
+ * @see ChangePasswordService
  */
 class ChangePasswordServiceTest extends MockeryTestCase
 {
-    /**
-     * @var ChangePasswordService
-     */
-    private $sut;
-
-    private $cookie;
-
-    private $client;
-
-    private $responseDecoder;
-
-    public function setUp(): void
-    {
-        $this->cookie = m::mock();
-        $this->client = m::mock();
-        $this->responseDecoder = new ResponseDecoderService();
-
-        $sm = m::mock(ServiceManager::class)->makePartial();
-        $sm->setService('Auth\CookieService', $this->cookie);
-        $sm->setService('Auth\Client', $this->client);
-        $sm->setService('Auth\ResponseDecoderService', $this->responseDecoder);
-
-        $this->sut = new ChangePasswordService();
-        $this->sut->createService($sm);
-    }
-
     public function testUpdatePassword()
     {
-        $data = [
-            'currentpassword' => 'old-password',
-            'userpassword' => 'new-password',
+        $realm = 'the-realm';
+        $oldPassword = 'old-password';
+        $newPassword = 'new-password';
+
+        $config = [
+            'auth' => [
+                'realm' => $realm,
+            ],
         ];
 
-        $request = new Request();
+        $data = [
+            'realm' => $realm,
+            'password' => $oldPassword,
+            'newPassword' => $newPassword,
+        ];
 
-        $this->cookie
-            ->shouldReceive('getCookieName')->andReturn('cookie-name')
-            ->shouldReceive('getCookie')->with($request)->andReturn('some-token');
+        $laminasResponse = m::mock(LaminasResponse::class);
 
-        $this->client->shouldReceive('post')
-            ->with('json/users/?_action=idFromSession', [], m::type(Headers::class))
-            ->andReturnUsing(
-                function ($url, $data, Headers $headers) {
-                    $this->assertEquals('some-token', $headers->get('cookie-name')->getFieldValue());
+        $cqrsResponse = m::mock(CqrsResponse::class);
+        $cqrsResponse->expects('getHttpResponse')->withNoArgs()->andReturn($laminasResponse);
 
-                    $response = new Response();
-                    $response->setStatusCode(200);
-                    $response->setContent('{"id": "my-username"}');
-                    return $response;
-                }
-            );
-
-        $this->client->shouldReceive('post')
-            ->with('json/users/my-username?_action=changePassword', $data, m::type(Headers::class))
-            ->andReturnUsing(
-                function ($url, $data, Headers $headers) {
-                    $this->assertEquals('some-token', $headers->get('cookie-name')->getFieldValue());
-
-                    $response = new Response();
-                    $response->setStatusCode(200);
-                    $response->setContent('{}');
-                    return $response;
-                }
-            );
-
-        $result = $this->sut->updatePassword($request, 'old-password', 'new-password');
+        $commandSender = m::mock(CommandSender::class);
+        $commandSender->expects('send')->with(m::type(ChangePassword::class))->andReturnUsing(
+            function (ChangePassword $changePasswordCmd) use ($data, $cqrsResponse) {
+                $this->assertEquals($changePasswordCmd->getArrayCopy(), $data);
+                return $cqrsResponse;
+            }
+        );
 
         $expected = [
             'status' => 200
         ];
 
+        $responseDecoder = m::mock(ResponseDecoderService::class);
+        $responseDecoder->expects('decode')->with($laminasResponse)->andReturn($expected);
+
+        $sut = new ChangePasswordService($commandSender, $responseDecoder, $realm);
+        $result = $sut->updatePassword($oldPassword, $newPassword);
         $this->assertEquals($expected, $result);
     }
 }

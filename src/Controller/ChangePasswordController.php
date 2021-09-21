@@ -42,7 +42,7 @@ class ChangePasswordController extends AbstractController
 
         $result = $this->updatePassword($form->getData());
 
-        if ($result['status'] == 200) {
+        if ($result['flags']['success']) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')
                 ->addSuccessMessage('auth.change-password.success');
 
@@ -50,7 +50,7 @@ class ChangePasswordController extends AbstractController
             return $this->redirectToMyAccount();
         }
 
-        return $this->renderView($form, true, $result['message']);
+        return $this->renderView($form, true, $result['messages'][0] ?? '');
     }
 
     /**
@@ -76,7 +76,6 @@ class ChangePasswordController extends AbstractController
     private function updatePassword(array $data)
     {
         return $this->getChangePasswordService()->updatePassword(
-            $this->getRequest(),
             $data['oldPassword'],
             $data['newPassword']
         );
@@ -104,8 +103,8 @@ class ChangePasswordController extends AbstractController
      *
      * @return ChangePasswordService
      */
-    private function getChangePasswordService()
+    private function getChangePasswordService(): ChangePasswordService
     {
-        return $this->getServiceLocator()->get('Auth\ChangePasswordService');
+        return $this->getServiceLocator()->get(ChangePasswordService::class);
     }
 }

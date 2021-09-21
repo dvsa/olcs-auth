@@ -7,6 +7,7 @@ namespace Dvsa\OlcsTest\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
+use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Form;
@@ -37,13 +38,13 @@ class ChangePasswordControllerTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock();
-        $this->changePasswordService = m::mock();
+        $this->changePasswordService = m::mock(ChangePasswordService::class);
         $this->flashMessenger = m::mock();
         $this->redirect = m::mock(Redirect::class)->makePartial();
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Helper\Form', $this->formHelper);
-        $sm->setService('Auth\ChangePasswordService', $this->changePasswordService);
+        $sm->setService(ChangePasswordService::class, $this->changePasswordService);
         $sm->setService('Helper\FlashMessenger', $this->flashMessenger);
 
         $config = [
@@ -140,8 +141,8 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
         $this->changePasswordService->shouldReceive('updatePassword')
-            ->with($request, $post['oldPassword'], $post['newPassword'])
-            ->andReturn(['status' => 200, 'message' => 'error message']);
+            ->with($post['oldPassword'], $post['newPassword'])
+            ->andReturn($this->backendResponse(true));
 
         $this->flashMessenger->shouldReceive('addSuccessMessage')
             ->with('auth.change-password.success')
@@ -173,14 +174,26 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
         $this->changePasswordService->shouldReceive('updatePassword')
-            ->with($request, $post['oldPassword'], $post['newPassword'])
-            ->andReturn(['status' => 401, 'message' => 'error message']);
+            ->with($post['oldPassword'], $post['newPassword'])
+            ->andReturn($this->backendResponse(false));
 
         $result = $this->sut->indexAction();
 
         $this->assertInstanceOf(ViewModel::class, $result);
         $this->assertEquals('auth/change-password', $result->getTemplate());
         $this->assertEquals(true, $result->getVariable('failed'));
-        $this->assertEquals('error message', $result->getVariable('failureReason'));
+        $this->assertEquals('returned message', $result->getVariable('failureReason'));
+    }
+
+    private function backendResponse($success): array
+    {
+        return [
+            'messages' => [
+                0 => 'returned message',
+            ],
+            'flags' => [
+                'success' => $success,
+            ],
+        ];
     }
 }

@@ -2,9 +2,12 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Laminas\Authentication\Storage\Session;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
+use Laminas\Session\Container;
+use Laminas\Session\SessionManager;
 use Laminas\Stdlib\RequestInterface;
 use Laminas\Http\Response;
 use Laminas\Http\Request;
@@ -43,6 +46,10 @@ class LogoutController extends AbstractActionController
      * @var string
      */
     private $selfServeRedirectUrl;
+    /**
+     * @var Container
+     */
+    private $session;
 
     /**
      * LogoutController constructor.
@@ -60,7 +67,8 @@ class LogoutController extends AbstractActionController
         CookieService $cookieService,
         LogoutService $logoutService,
         $isSelfServe,
-        $selfServeRedirectUrl
+        $selfServeRedirectUrl,
+        Container $session
     ) {
         $this->requestService = $requestService;
         $this->responseService = $responseService;
@@ -68,6 +76,7 @@ class LogoutController extends AbstractActionController
         $this->logoutService = $logoutService;
         $this->isSelfServe = $isSelfServe;
         $this->selfServeRedirectUrl = $selfServeRedirectUrl;
+        $this->session = $session;
     }
 
     /**
@@ -77,6 +86,8 @@ class LogoutController extends AbstractActionController
      */
     public function indexAction()
     {
+        $this->session->exchangeArray([]);
+
         $token = $this->cookieService->getCookie($this->requestService);
 
         if (!empty($token)) {
@@ -90,7 +101,6 @@ class LogoutController extends AbstractActionController
                 $this->selfServeRedirectUrl
             );
         }
-
         return $this->redirect()->toRoute('auth/login/GET');
     }
 }

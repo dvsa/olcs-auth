@@ -54,6 +54,10 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
         $this->serviceManager->setService('request', $mockRequest);
 
+        $config = $this->serviceManager->get('config');
+        $config['auth']['session_name'] = 'session_name';
+        $this->serviceManager->setService('config', $config);
+
         // Create controller config
         $controllerConfig = new \Laminas\ServiceManager\Config(Bootstrap::getConfig());
         $controllerManager = new ControllerManager($controllerConfig);

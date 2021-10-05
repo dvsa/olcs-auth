@@ -112,7 +112,8 @@ return [
             \Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService::class =>
                 \Dvsa\Olcs\Auth\Service\Auth\ForgotPasswordService::class,
             'Auth\ResetPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ResetPasswordService::class,
-            'Auth\ChangePasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService::class,
+            \Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService::class =>
+                \Dvsa\Olcs\Auth\Service\Auth\ChangePasswordServiceFactory::class,
             'Auth\LoginService' => \Dvsa\Olcs\Auth\Service\Auth\LoginService::class,
             'Auth\LogoutService' => \Dvsa\Olcs\Auth\Service\Auth\LogoutService::class,
             'Auth\CookieService' => \Dvsa\Olcs\Auth\Service\Auth\CookieService::class,
@@ -141,9 +142,11 @@ return [
             ]
         ]
     ],
+    'auth' => [
+        'realm' => null, //@note this is implemented by selfserve and internal
+    ],
     'openam' => [
         'url' => null, // @NOTE This must be implemented
-        'realm' => null,
         'cookie' => [
             'name' => 'secureToken',
             'domain' => null, // @NOTE This must be implemented

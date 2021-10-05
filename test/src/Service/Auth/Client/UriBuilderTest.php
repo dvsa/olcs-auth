@@ -55,8 +55,10 @@ class UriBuilderTest extends MockeryTestCase
         $config = [
             'openam' => [
                 'url' => 'olcs.openam',
-                'realm' => 'foo'
-            ]
+            ],
+            'auth' => [
+                'realm' => 'foo',
+            ],
         ];
 
         $sm = m::mock(ServiceManager::class)->makePartial();
@@ -73,8 +75,10 @@ class UriBuilderTest extends MockeryTestCase
         $config = [
             'openam' => [
                 'url' => 'olcs.openam',
-                'realm' => 'foo'
-            ]
+            ],
+            'auth' => [
+                'realm' => 'foo',
+            ],
         ];
 
         $sm = m::mock(ServiceManager::class)->makePartial();

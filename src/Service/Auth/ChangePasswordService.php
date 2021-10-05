@@ -2,76 +2,42 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
-use Laminas\Http\Headers;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\Stdlib\RequestInterface as Request;
+use Common\Service\Cqrs\Command\CommandSender;
+use Dvsa\Olcs\Transfer\Command\Auth\ChangePassword;
 
-/**
- * Change Password Service
- */
-class ChangePasswordService extends AbstractRestService
+class ChangePasswordService
 {
-    /**
-     * @var CookieService
-     */
-    private $cookieService;
+    private CommandSender $commandSender;
+    private ResponseDecoderService $responseDecoder;
+    private string $realm;
 
-    /**
-     * Create the change password service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __construct(CommandSender $commandSender, ResponseDecoderService $responseDecoder, string $realm)
     {
-        $this->cookieService = $serviceLocator->get('Auth\CookieService');
-
-        return parent::createService($serviceLocator);
+        $this->commandSender = $commandSender;
+        $this->responseDecoder = $responseDecoder;
+        $this->realm = $realm;
     }
 
     /**
      * Update password
      *
-     * @param Request $request     Request
      * @param string  $oldPassword Old password
      * @param string  $newPassword New password
      *
      * @return array
      */
-    public function updatePassword(Request $request, $oldPassword, $newPassword)
+    public function updatePassword($oldPassword, $newPassword): array
     {
-        $token = $this->cookieService->getCookie($request);
-
-        $username = $this->getIdFromSession($token);
-
         $data = [
-            'currentpassword' => $oldPassword,
-            'userpassword' => $newPassword
+            'realm' => $this->realm,
+            'password' => $oldPassword,
+            'newPassword' => $newPassword,
         ];
 
-        $uri = sprintf('json/users/%s?_action=changePassword', $username);
+        $command = ChangePassword::create($data);
 
-        $headers = new Headers();
-        $headers->addHeaderLine($this->cookieService->getCookieName(), $token);
-
-        return $this->decodeContent($this->post($uri, $data, $headers));
-    }
-
-    /**
-     * Get OpenAM Id from the session
-     *
-     * @param string $token Token
-     *
-     * @return string
-     */
-    private function getIdFromSession($token)
-    {
-        $headers = new Headers();
-        $headers->addHeaderLine($this->cookieService->getCookieName(), $token);
-
-        $data = $this->decodeContent($this->post('json/users/?_action=idFromSession', [], $headers));
-
-        return !empty($data['id']) ? $data['id'] : null;
+        return $this->responseDecoder->decode(
+            $this->commandSender->send($command)->getHttpResponse()
+        );
     }
 }

@@ -39,8 +39,8 @@
         "laminas/laminas-validator": "^2.5",
         "laminas/laminas-view": "^2.5",
         "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "dev-project/lgv-v2",
-        "olcs/olcs-common": "dev-project/lgv-v2",
+        "olcs/olcs-transfer": "dev-project/lgv-post-legislation",
+        "olcs/olcs-common": "dev-project/lgv-post-legislation",
         "laminas/laminas-dependency-plugin": "^2.0"
     },
     "require-dev": {

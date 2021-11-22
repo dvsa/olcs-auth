@@ -123,7 +123,7 @@ class ExpiredPasswordController extends AbstractActionController
      */
     private function updatePasswordOpenAm(string $oldPassword, string $newPassword, string $confirmPassword)
     {
-        $authId = $this->params('authToken');
+        $authId = $this->params('authId');
 
         $result = $this->getExpiredPasswordService()->updatePassword(
             $authId,

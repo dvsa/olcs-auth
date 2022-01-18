@@ -4,13 +4,8 @@ namespace Dvsa\Olcs\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 use Laminas\View\Model\ViewModel;
-use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
+use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 
-/**
- * Change Password Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ChangePasswordController extends AbstractController
 {
     /**
@@ -101,10 +96,10 @@ class ChangePasswordController extends AbstractController
     /**
      * Get change password service
      *
-     * @return ChangePasswordService
+     * @return PasswordService
      */
-    private function getChangePasswordService(): ChangePasswordService
+    private function getChangePasswordService(): PasswordService
     {
-        return $this->getServiceLocator()->get(ChangePasswordService::class);
+        return $this->getServiceLocator()->get(PasswordService::class);
     }
 }

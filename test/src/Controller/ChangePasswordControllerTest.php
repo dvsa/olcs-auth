@@ -1,13 +1,12 @@
 <?php
 
-/**
- * Change Password Controller Test
- */
+declare(strict_types=1);
+
 namespace Dvsa\OlcsTest\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
-use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
+use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Form;
@@ -18,7 +17,7 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Model\ViewModel;
 
 /**
- * Change Password Controller Test
+ * @see ChangePasswordController
  */
 class ChangePasswordControllerTest extends MockeryTestCase
 {
@@ -38,13 +37,13 @@ class ChangePasswordControllerTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock();
-        $this->changePasswordService = m::mock(ChangePasswordService::class);
+        $this->changePasswordService = m::mock(PasswordService::class);
         $this->flashMessenger = m::mock();
         $this->redirect = m::mock(Redirect::class)->makePartial();
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Helper\Form', $this->formHelper);
-        $sm->setService(ChangePasswordService::class, $this->changePasswordService);
+        $sm->setService(PasswordService::class, $this->changePasswordService);
         $sm->setService('Helper\FlashMessenger', $this->flashMessenger);
 
         $config = [

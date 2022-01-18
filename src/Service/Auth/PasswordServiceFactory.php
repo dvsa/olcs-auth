@@ -9,7 +9,7 @@ use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
 
-class ChangePasswordServiceFactory implements FactoryInterface
+class PasswordServiceFactory implements FactoryInterface
 {
     const MSG_MISSING_REALM = 'Auth config is missing the realm';
 
@@ -18,10 +18,10 @@ class ChangePasswordServiceFactory implements FactoryInterface
      * @param $requestedName
      * @param array|null $options
      *
-     * @return ChangePasswordService
+     * @return PasswordService
      * @throws RuntimeException
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ChangePasswordService
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PasswordService
     {
         $config = $container->get('Config');
 
@@ -32,7 +32,7 @@ class ChangePasswordServiceFactory implements FactoryInterface
         $commandSender = $container->get('CommandSender');
         $responseDecoder = $container->get('Auth\ResponseDecoderService');
 
-        return new ChangePasswordService($commandSender, $responseDecoder, $config['auth']['realm']);
+        return new PasswordService($commandSender, $responseDecoder, $config['auth']['realm']);
     }
 
     /**
@@ -40,11 +40,11 @@ class ChangePasswordServiceFactory implements FactoryInterface
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return ChangePasswordService
+     * @return PasswordService
      * @throws RuntimeException
      */
-    public function createService(ServiceLocatorInterface $serviceLocator): ChangePasswordService
+    public function createService(ServiceLocatorInterface $serviceLocator): PasswordService
     {
-        return $this($serviceLocator, ChangePasswordService::class);
+        return $this($serviceLocator, PasswordService::class);
     }
 }

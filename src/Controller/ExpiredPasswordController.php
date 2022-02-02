@@ -29,7 +29,7 @@ class ExpiredPasswordController extends AbstractActionController
     const MESSAGE_IDENTITY_MISSING= 'Result is missing new identity';
     const MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED = 'Expected challenge name to be NEW_PASSWORD_REQUIRED';
 
-    const ROUTE_INDEX = 'index';
+    const ROUTE_INDEX = 'dashboard';
     const ROUTE_LOGIN = 'auth/login/GET';
 
     protected Form $form;

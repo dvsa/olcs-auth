@@ -2,6 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\ControllerFactory;
 
+use Common\Rbac\PidIdentityProvider;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
@@ -53,6 +54,8 @@ class LogoutControllerFactory implements FactoryInterface
         }
         $session = new Container($sessionName);
 
+        $isOpenAmEnabled = ($config['auth']['identity_provider'] === PidIdentityProvider::class);
+
         return new LogoutController(
             $requestService,
             $responseService,
@@ -60,7 +63,8 @@ class LogoutControllerFactory implements FactoryInterface
             $logoutService,
             $this->isSelfServeUser($requestService),
             $this->getSelfServeLogoutUrl($config),
-            $session
+            $session,
+            $isOpenAmEnabled
         );
     }
 

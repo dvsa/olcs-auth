@@ -55,7 +55,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $this->serviceManager->setService('request', $mockRequest);
 
         $config = $this->serviceManager->get('config');
-        $config['auth']['session_name'] = 'session_name';
+        $config['auth'] = ['session_name' => 'session_name', 'identity_provider' => 'identity_provider'];
         $this->serviceManager->setService('config', $config);
 
         // Create controller config

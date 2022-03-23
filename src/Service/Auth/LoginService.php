@@ -27,11 +27,6 @@ class LoginService implements FactoryInterface
     private $lastLoginService;
 
     /**
-     * @var Redirect
-     */
-    private $redirect;
-
-    /**
      * @var Request
      */
     private $request;
@@ -46,12 +41,8 @@ class LoginService implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $this->cookieService = $serviceLocator->get('Auth\CookieService');
-
         $this->lastLoginService = $serviceLocator->get('Common\Service\User\LastLoginService');
-
-        $cpm = $serviceLocator->get('ControllerPluginManager');
         $this->request = $serviceLocator->get('Request');
-        $this->redirect = $cpm->get('redirect');
 
         return $this;
     }
@@ -62,9 +53,9 @@ class LoginService implements FactoryInterface
      * @param string $token Token
      * @param Response $response Response
      *
-     * @return Response
+     * @return string
      */
-    public function login($token, Response $response)
+    public function login($token, Response $response): string
     {
         $gotoUrl = $this->request->getQuery('goto', false);
 
@@ -84,10 +75,10 @@ class LoginService implements FactoryInterface
         }
 
         if ($this->validateGotoUrl($gotoUrl)) {
-            return $this->redirect->toUrl($gotoUrl);
+            return $gotoUrl;
         }
 
-        return $this->redirect->toUrl('/');
+        return '/';
     }
 
     /**

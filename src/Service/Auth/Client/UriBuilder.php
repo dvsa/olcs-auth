@@ -41,8 +41,8 @@ class UriBuilder implements FactoryInterface
 
         $this->baseUrl = $config['openam']['url'];
 
-        if (isset($config['auth']['realm'])) {
-            $this->realm = $config['auth']['realm'];
+        if (isset($config['openam']['realm'])) {
+            $this->realm = $config['openam']['realm'];
         }
 
         return $this;

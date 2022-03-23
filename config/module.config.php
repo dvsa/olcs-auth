@@ -1,5 +1,12 @@
 <?php
 
+use Dvsa\Olcs\Auth\Controller\ExpiredPasswordController;
+use Dvsa\Olcs\Auth\ControllerFactory\ExpiredPasswordControllerFactory;
+use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
+use Dvsa\Olcs\Auth\Service\Auth\LoginService;
+use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
+use Dvsa\Olcs\Auth\Service\Auth\PasswordServiceFactory;
+
 return [
     'router' => [
         'routes' => [
@@ -23,9 +30,9 @@ return [
                     'expired-password' => [
                         'type' => 'segment',
                         'options' => [
-                            'route' => 'expired-password[/:authId][/]',
+                            'route' => 'expired-password[/:authId]',
                             'defaults' => [
-                                'controller' => 'Auth\ExpiredPasswordController',
+                                'controller' => ExpiredPasswordController::class,
                                 'action' => 'index'
                             ]
                         ]
@@ -87,7 +94,6 @@ return [
     'controllers' => [
         'invokables' => [
             'Auth\LoginController' => \Dvsa\Olcs\Auth\Controller\LoginController::class,
-            'Auth\ExpiredPasswordController' => \Dvsa\Olcs\Auth\Controller\ExpiredPasswordController::class,
             'Auth\ForgotPasswordController' => \Dvsa\Olcs\Auth\Controller\ForgotPasswordController::class,
             'Auth\ChangePasswordController' => \Dvsa\Olcs\Auth\Controller\ChangePasswordController::class,
             'Auth\ResetPasswordController' => \Dvsa\Olcs\Auth\Controller\ResetPasswordController::class,
@@ -100,18 +106,24 @@ return [
                 \Dvsa\Olcs\Auth\Controller\ValidateController::class,
             \Dvsa\Olcs\Auth\Controller\LogoutController::class =>
                 \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory::class,
+            ExpiredPasswordController::class => ExpiredPasswordControllerFactory::class
         ]
     ],
     'service_manager' => [
         'invokables' => [
             'Auth\ResponseDecoderService' => \Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService::class,
         ],
+        'aliases' => [
+            'Auth\ExpiredPasswordService' => ExpiredPasswordService::class,
+        ],
         'factories' => [
             'Auth\AuthenticationService' => \Dvsa\Olcs\Auth\Service\Auth\AuthenticationService::class,
-            'Auth\ExpiredPasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService::class,
+            ExpiredPasswordService::class => ExpiredPasswordService::class,
             \Dvsa\Olcs\Auth\Service\Auth\PasswordService::class =>
                 \Dvsa\Olcs\Auth\Service\Auth\PasswordServiceFactory::class,
-            'Auth\LoginService' => \Dvsa\Olcs\Auth\Service\Auth\LoginService::class,
+            'Auth\ChangePasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService::class,
+            'Auth\LoginService' => LoginService::class,
+            LoginService::class => LoginService::class,
             'Auth\LogoutService' => \Dvsa\Olcs\Auth\Service\Auth\LogoutService::class,
             'Auth\CookieService' => \Dvsa\Olcs\Auth\Service\Auth\CookieService::class,
             \Dvsa\Olcs\Auth\Service\Auth\ValidateService::class =>
@@ -139,11 +151,9 @@ return [
             ]
         ]
     ],
-    'auth' => [
-        'realm' => null, //@note this is implemented by selfserve and internal
-    ],
     'openam' => [
         'url' => null, // @NOTE This must be implemented
+        'realm' => null,
         'cookie' => [
             'name' => 'secureToken',
             'domain' => null, // @NOTE This must be implemented

@@ -2,8 +2,9 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Common\Rbac\JWTIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Container\AuthChallengeContainer;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
@@ -16,7 +17,7 @@ use Laminas\Form\Form;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
-use Laminas\View\View;
+use RuntimeException;
 
 /**
  * Expired Password Controller
@@ -34,7 +35,34 @@ class ExpiredPasswordController extends AbstractActionController
 
     protected Form $form;
 
+    private AuthChallengeContainer $authChallengeContainer;
     protected CommandSender $commandSender;
+    private FormHelperService $formHelper;
+    private FlashMessengerHelperService $flashMessenger;
+    private ExpiredPasswordService $expiredPasswordService;
+    private LoginService $loginService;
+    private bool $isOpenAM;
+    private Session $sessionContainer;
+
+    public function __construct(
+        AuthChallengeContainer $authChallengeContainer,
+        CommandSender $commandSender,
+        ExpiredPasswordService $expiredPasswordService,
+        FlashMessengerHelperService $flashMessenger,
+        FormHelperService $formHelper,
+        LoginService $loginService,
+        Session $sessionContainer,
+        bool $isOpenAM
+    ) {
+        $this->authChallengeContainer = $authChallengeContainer;
+        $this->commandSender = $commandSender;
+        $this->expiredPasswordService = $expiredPasswordService;
+        $this->flashMessenger = $flashMessenger;
+        $this->formHelper = $formHelper;
+        $this->loginService = $loginService;
+        $this->sessionContainer = $sessionContainer;
+        $this->isOpenAM = $isOpenAM;
+    }
 
     /**
      * Expired password page
@@ -43,29 +71,32 @@ class ExpiredPasswordController extends AbstractActionController
      */
     public function indexAction()
     {
-        $this->commandSender = $this->getServiceLocator()->get('CommandSender');
-
         $request = $this->getRequest();
 
-        $this->form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest(ChangePasswordForm::class, $request);
+        $this->form = $this->formHelper->createForm(ChangePasswordForm::class);
+
+        /**
+         * TODO: VOL:2661 - Remove field from form class instead
+         */
+        if (!$this->isOpenAM) {
+            $this->form->remove('oldPassword');
+            $this->form->getInputFilter()->remove('oldPassword');
+        }
 
         if ($request->isPost() === false) {
-            return $this->renderView($this->form);
+            return $this->renderView();
         }
 
         $this->form->setData($request->getPost());
 
         if ($this->form->isValid() === false) {
-            return $this->renderView($this->form);
+            return $this->renderView();
         }
 
         $data = $this->form->getData();
 
-        $config = $this->serviceLocator->get('Config');
-
         // TODO: Remove check and use updatePasswordCommand once OpenAM support is dropped
-        if ($config['auth']['identity_provider'] !== JWTIdentityProvider::class) {
+        if ($this->isOpenAM) {
             return $this->updatePasswordOpenAm(
                 $data['oldPassword'],
                 $data['newPassword'],
@@ -79,39 +110,23 @@ class ExpiredPasswordController extends AbstractActionController
     /**
      * Render the view
      *
-     * @param \Laminas\Form\Form $form          Form
-     * @param bool            $failed        Failed
-     * @param string          $failureReason Failure reason
+     * @param bool $failed Failed
+     * @param string|null $failureReason Failure reason
      *
      * @return ViewModel
      */
-    private function renderView(\Laminas\Form\Form $form, $failed = false, $failureReason = null)
+    private function renderView(bool $failed = false, ?string $failureReason = null): ViewModel
     {
         $this->layout('auth/layout');
-        $view = new ViewModel(['form' => $form, 'failed' => $failed, 'failureReason' => $failureReason]);
+        $view = new ViewModel([
+            'form' => $this->form,
+            'failed' => $failed,
+            'failureReason' => $failureReason,
+            'isOpenAM' => $this->isOpenAM
+        ]);
         $view->setTemplate('auth/expired-password');
 
         return $view;
-    }
-
-    /**
-     * Get expired password service
-     *
-     * @return ExpiredPasswordService
-     */
-    private function getExpiredPasswordService()
-    {
-        return $this->getServiceLocator()->get('Auth\ExpiredPasswordService');
-    }
-
-    /**
-     * Get the login service
-     *
-     * @return LoginService
-     */
-    private function getLoginService()
-    {
-        return $this->getServiceLocator()->get('Auth\LoginService');
     }
 
     /**
@@ -125,7 +140,7 @@ class ExpiredPasswordController extends AbstractActionController
     {
         $authId = $this->params('authId');
 
-        $result = $this->getExpiredPasswordService()->updatePassword(
+        $result = $this->expiredPasswordService->updatePassword(
             $authId,
             $oldPassword,
             $newPassword,
@@ -133,17 +148,18 @@ class ExpiredPasswordController extends AbstractActionController
         );
 
         if ($result['status'] != 200) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            $this->flashMessenger->addUnknownError();
             return $this->redirect()->toRoute(static::ROUTE_LOGIN);
         }
 
         if (isset($result['tokenId'])) {
-            return $this->getLoginService()
-                ->login($result['tokenId'], $this->getResponse(), $this->params()->fromQuery('goto'));
+            $url =  $this->loginService
+                ->login($result['tokenId'], $this->getResponse());
+            return $this->redirect()->toUrl($url);
         }
 
         $failureReason = preg_replace('/(Change Password\<BR\>\<\/BR\>)/', '', $result['header']);
-        return $this->renderView($this->form, true, $failureReason);
+        return $this->renderView(true, $failureReason);
     }
 
     /**
@@ -152,22 +168,21 @@ class ExpiredPasswordController extends AbstractActionController
      */
     private function updatePasswordCommand(string $newPassword)
     {
-        $authChallengeContainer = new AuthChallengeContainer();
-        if ($authChallengeContainer->getChallengeName() !== AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED) {
-            throw new Exception(sprintf(static::MESSAGE_BASE, static::MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED));
+        if ($this->authChallengeContainer->getChallengeName() !== AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED) {
+            throw new RuntimeException(sprintf(static::MESSAGE_BASE, static::MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED));
         }
 
         $command = ChangeExpiredPassword::create([
             'newPassword' => $newPassword,
-            'challengeSession' => $authChallengeContainer->getChallengeSession(),
-            'username' => $authChallengeContainer->getChallengedIdentity()
+            'challengeSession' => $this->authChallengeContainer->getChallengeSession(),
+            'username' => $this->authChallengeContainer->getChallengedIdentity()
         ]);
 
         $result = $this->commandSender->send($command);
 
         // We OK?
         if (!$result->isOk()) {
-            throw new Exception(sprintf(static::MESSAGE_BASE, static::MESSAGE_RESULT_NOT_OK));
+            throw new RuntimeException(sprintf(static::MESSAGE_BASE, static::MESSAGE_RESULT_NOT_OK));
         }
 
         $result = ChangeExpiredPasswordResult::fromArray($result->getResult()['flags']);
@@ -175,10 +190,8 @@ class ExpiredPasswordController extends AbstractActionController
             return $this->handleInvalidResponse($result);
         }
 
-        $sessionContainer = $this->getServiceLocator()->get(Session::class);
-        assert($sessionContainer instanceof Session, 'Expected $sessionContainer to be instance of ' . Session::class);
-        $sessionContainer->write($result->getIdentity());
-        $authChallengeContainer->clear();
+        $this->sessionContainer->write($result->getIdentity());
+        $this->authChallengeContainer->clear();
 
         return $this->redirect()->toRoute(static::ROUTE_INDEX);
     }
@@ -193,14 +206,20 @@ class ExpiredPasswordController extends AbstractActionController
             $element = $this->form->get('newPassword');
             $element->setOption('error-message', null); //TODO: Remove once we drop OpenAM support
             $element->setMessages($result->getMessages());
-            return $this->renderView($this->form);
+            return $this->renderView();
         }
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NOT_AUTHORIZED) {
             foreach ($result->getMessages() as $message) {
-                $this->flashMessenger()->addErrorMessage($message);
+                $this->flashMessenger->addErrorMessage($message);
             }
             return $this->redirect()->toRoute(static::ROUTE_LOGIN);
         }
-        throw new Exception(sprintf("Invalid response from ChangeExpiredPassword Command: %s", implode('. ', $result->getMessages())));
+        if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD) {
+            $element = $this->form->get('newPassword');
+            $element->setOption('error-message', null);
+            $element->setMessages(['auth.expired-password.new-password-same-as-previous']);
+            return $this->renderView($this->form);
+        }
+        throw new RuntimeException(sprintf("Invalid response from ChangeExpiredPassword Command: %s", implode('. ', $result->getMessages())));
     }
 }

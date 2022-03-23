@@ -1,12 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
+/**
+ * Change Password Controller Test
+ */
 namespace Dvsa\OlcsTest\Auth\Controller;
 
+use Common\Rbac\JWTIdentityProvider;
+use Common\Rbac\PidIdentityProvider;
+use Common\Service\Cqrs\Command\CommandSender;
+use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
-use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
+use Dvsa\Olcs\Transfer\Result\Auth\ChangePasswordResult;
+use Laminas\Http\Response as HttpResponse;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Form;
@@ -15,9 +21,10 @@ use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\PluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Model\ViewModel;
+use RuntimeException;
 
 /**
- * @see ChangePasswordController
+ * Change Password Controller Test
  */
 class ChangePasswordControllerTest extends MockeryTestCase
 {
@@ -34,22 +41,34 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
     private $redirect;
 
+    /**
+     * @var CommandSender|m\LegacyMockInterface|m\MockInterface
+     */
+    private $commandSender;
+
+    private array $config;
+
     public function setUp(): void
     {
         $this->formHelper = m::mock();
-        $this->changePasswordService = m::mock(PasswordService::class);
+        $this->changePasswordService = m::mock();
         $this->flashMessenger = m::mock();
         $this->redirect = m::mock(Redirect::class)->makePartial();
+        $this->commandSender = m::mock(CommandSender::class);
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Helper\Form', $this->formHelper);
-        $sm->setService(PasswordService::class, $this->changePasswordService);
+        $sm->setService('Auth\ChangePasswordService', $this->changePasswordService);
         $sm->setService('Helper\FlashMessenger', $this->flashMessenger);
+        $sm->setService('CommandSender', $this->commandSender);
 
-        $config = [
-            'my_account_route' => 'my-account'
+        $this->config = [
+            'my_account_route' => 'my-account',
+            'auth' => [
+                'identity_provider' => JWTIdentityProvider::class
+            ]
         ];
-        $sm->setService('Config', $config);
+        $sm->setService('Config', $this->config);
 
         $pm = m::mock(PluginManager::class)->makePartial();
         $pm->setService('redirect', $this->redirect);
@@ -139,9 +158,16 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $request->setMethod('POST');
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
-        $this->changePasswordService->shouldReceive('updatePassword')
-            ->with($post['oldPassword'], $post['newPassword'])
-            ->andReturn($this->backendResponse(true));
+        $response = new HttpResponse();
+        $response->setStatusCode(HttpResponse::STATUS_CODE_200);
+        $result = new Response($response);
+        $result->setResult([
+            'flags' => [
+                'code' => ChangePasswordResult::SUCCESS
+            ]
+        ]);
+
+        $this->commandSender->shouldReceive('send')->andReturn($result);
 
         $this->flashMessenger->shouldReceive('addSuccessMessage')
             ->with('auth.change-password.success')
@@ -172,27 +198,55 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $request->setMethod('POST');
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
 
-        $this->changePasswordService->shouldReceive('updatePassword')
-            ->with($post['oldPassword'], $post['newPassword'])
-            ->andReturn($this->backendResponse(false));
+        $response = new HttpResponse();
+        $response->setStatusCode(HttpResponse::STATUS_CODE_200);
+        $result = new Response($response);
+        $result->setResult([
+            'flags' => [
+                'code' => ChangePasswordResult::FAILURE_OLD_PASSWORD_INVALID,
+                'message' => 'error message'
+            ]
+        ]);
+
+        $this->commandSender->shouldReceive('send')->andReturn($result);
 
         $result = $this->sut->indexAction();
 
         $this->assertInstanceOf(ViewModel::class, $result);
         $this->assertEquals('auth/change-password', $result->getTemplate());
         $this->assertEquals(true, $result->getVariable('failed'));
-        $this->assertEquals('returned message', $result->getVariable('failureReason'));
+        $this->assertEquals('error message', $result->getVariable('failureReason'));
     }
 
-    private function backendResponse($success): array
+    public function testIndexActionForPostWithValidDataBadResult()
     {
-        return [
-            'messages' => [
-                0 => 'returned message',
-            ],
-            'flags' => [
-                'success' => $success,
-            ],
+        $post = [
+            'oldPassword' => 'old-password',
+            'newPassword' => 'new-password',
         ];
+
+        $form = m::mock(Form::class);
+        $form->shouldReceive('setData')->once();
+        $form->shouldReceive('isValid')->once()->andReturn(true);
+        $form->shouldReceive('getData')->once()->andReturn($post);
+
+        $this->formHelper->shouldReceive('createFormWithRequest')
+            ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
+            ->andReturn($form);
+
+        $request = $this->sut->getRequest();
+        $request->setMethod('POST');
+        $request->setPost(new \Laminas\Stdlib\Parameters($post));
+
+        $response = new HttpResponse();
+        $response->setStatusCode(HttpResponse::STATUS_CODE_500);
+        $result = new Response($response);
+
+        $this->commandSender->shouldReceive('send')->andReturn($result);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(sprintf(ChangePasswordController::MESSAGE_BASE, ChangePasswordController::MESSAGE_RESULT_NOT_OK));
+
+        $this->sut->indexAction();
     }
 }

@@ -59,7 +59,6 @@ class PasswordServiceTest extends MockeryTestCase
         $newPassword = 'new-password';
 
         $data = [
-            'realm' => $realm,
             'password' => $oldPassword,
             'newPassword' => $newPassword,
         ];

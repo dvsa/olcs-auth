@@ -1,61 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Common\Rbac\PidIdentityProvider;
+use Dvsa\Olcs\Auth\ControllerFactory\ValidateControllerFactory;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
-use Laminas\Http\Request;
-use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
+use ZfcRbac\Identity\IdentityProviderInterface;
 
 /**
+ * @see ValidateControllerFactory
  * ValidateController have action to validate is user session is active
  */
-class ValidateController extends AbstractActionController implements FactoryInterface
+class ValidateController extends AbstractActionController
 {
-    /** @var  CookieService */
-    private $cookieSrv;
-    /** @var  ValidateService */
-    private $tokenValidateSrv;
+    private CookieService $cookieSrv;
+    private ValidateService $tokenValidateSrv;
+    private IdentityProviderInterface $identityProvider;
 
-    /**
-     * Create an instance
-     *
-     * @param \Laminas\Mvc\Controller\ControllerManager $serviceLocator Service Locator
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $sm = $serviceLocator->getServiceLocator();
-
-        $this->cookieSrv =  $sm->get('Auth\CookieService');
-        $this->tokenValidateSrv =  $sm->get(ValidateService::class);
-
-        return $this;
+    public function __construct(
+        CookieService $cookieService,
+        ValidateService $validateService,
+        IdentityProviderInterface $identityProvider
+    ) {
+        $this->cookieSrv =  $cookieService;
+        $this->tokenValidateSrv =  $validateService;
+        $this->identityProvider = $identityProvider;
     }
 
     /**
      * Validate is user session (token) is valid (active)
-     *
-     * @return JsonModel
      */
-    public function indexAction()
+    public function indexAction(): JsonModel
     {
-        /** @var \Laminas\Http\Request $request */
-        $request = $this->getRequest();
+        if ($this->identityProvider instanceof PidIdentityProvider) {
+            $request = $this->getRequest();
 
-        $token = $this->cookieSrv->getCookie($request);
+            $token = $this->cookieSrv->getCookie($request);
 
-        $respBody = null;
-        if (!empty($token)) {
-            $respBody = $this->tokenValidateSrv->validate($token);
+            $respBody = null;
+            if (!empty($token)) {
+                $respBody = $this->tokenValidateSrv->validate($token);
+            }
+
+            return new JsonModel($respBody);
         }
 
+        $respBody = $this->identityProvider->validateToken();
         return new JsonModel($respBody);
     }
 }

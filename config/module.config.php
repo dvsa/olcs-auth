@@ -2,10 +2,10 @@
 
 use Dvsa\Olcs\Auth\Controller\ExpiredPasswordController;
 use Dvsa\Olcs\Auth\ControllerFactory\ExpiredPasswordControllerFactory;
+use Dvsa\Olcs\Auth\Controller\ValidateController;
+use Dvsa\Olcs\Auth\ControllerFactory\ValidateControllerFactory;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
-use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
-use Dvsa\Olcs\Auth\Service\Auth\PasswordServiceFactory;
 
 return [
     'router' => [
@@ -72,7 +72,7 @@ return [
                         'options' => [
                             'route' => 'validate[/]',
                             'defaults' => [
-                                'controller' => \Dvsa\Olcs\Auth\Controller\ValidateController::class,
+                                'controller' => ValidateController::class,
                                 'action' => 'index',
                             ]
                         ],
@@ -102,8 +102,7 @@ return [
             'Auth\LogoutController' => \Dvsa\Olcs\Auth\Controller\LogoutController::class,
         ],
         'factories' => [
-            \Dvsa\Olcs\Auth\Controller\ValidateController::class =>
-                \Dvsa\Olcs\Auth\Controller\ValidateController::class,
+            ValidateController::class => ValidateControllerFactory::class,
             \Dvsa\Olcs\Auth\Controller\LogoutController::class =>
                 \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory::class,
             ExpiredPasswordController::class => ExpiredPasswordControllerFactory::class

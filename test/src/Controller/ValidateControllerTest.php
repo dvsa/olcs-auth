@@ -1,14 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dvsa\OlcsTest\Auth\Controller;
 
+use Common\Rbac\PidIdentityProvider;
 use Dvsa\Olcs\Auth\Controller\ValidateController;
 use Dvsa\Olcs\Auth\Service;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Variables;
+use ZfcRbac\Identity\IdentityProviderInterface;
 
+/**
+ * @see ValidateController
+ */
 class ValidateControllerTest extends MockeryTestCase
 {
     /** @var  ValidateController */
@@ -23,27 +30,27 @@ class ValidateControllerTest extends MockeryTestCase
     {
         /** @var m\MockInterface mockCookieSrv */
         $this->mockCookieSrv = m::mock(Service\Auth\CookieService::class);
-        $this->mockValidateSrv = m::mock();
+        $this->mockValidateSrv = m::mock(Service\Auth\ValidateService::class);
+    }
 
-        /** @var \Laminas\ServiceManager\ServiceManager $sm */
-        $sm = m::mock(\Laminas\ServiceManager\ServiceManager::class)->makePartial();
-        $sm->setService('Auth\CookieService', $this->mockCookieSrv);
-        $sm->setService(Service\Auth\ValidateService::class, $this->mockValidateSrv);
+    public function testIndexAction(): void
+    {
+        $returnedArray = ['response' => 'content'];
+        $identityProvider = m::mock(IdentityProviderInterface::class);
+        $identityProvider->expects('validateToken')->withNoArgs()->andReturn($returnedArray);
 
-        /** @var \Laminas\ServiceManager\ServiceLocatorInterface $sl */
-        $sl = m::mock(\Laminas\ServiceManager\ServiceLocatorInterface::class)
-            ->shouldReceive('getServiceLocator')->once()->andReturn($sm)
-            ->getMock();
+        $sut = new ValidateController($this->mockCookieSrv, $this->mockValidateSrv, $identityProvider);
 
-        $this->sut = new ValidateController();
-        $this->sut->createService($sl);
+        static::assertEquals($returnedArray, $sut->indexAction()->getVariables());
     }
 
     /**
-     * @dataProvider  dpTestIndexAction
+     * @dataProvider  dpTestIndexActionOpenAm
      */
-    public function testIndexAction($token, $expect)
+    public function testIndexActionOpenAm($token, $expect): void
     {
+        $identityProvider = m::mock(PidIdentityProvider::class);
+        $this->sut = new ValidateController($this->mockCookieSrv, $this->mockValidateSrv, $identityProvider);
         $request = $this->sut->getRequest();
 
         $this->mockCookieSrv->shouldReceive('getCookie')->with($request)->once()->andReturn($token);
@@ -52,14 +59,13 @@ class ValidateControllerTest extends MockeryTestCase
             ->times(empty($token) ? 0 : 1)
             ->andReturn(['unit_key' => 'EXPECT']);
 
-        /** @var JsonModel $action */
         $action = $this->sut->indexAction();
 
         static::assertInstanceOf(JsonModel::class, $action);
         static::assertEquals($expect, $action->getVariables());
     }
 
-    public function dpTestIndexAction()
+    public function dpTestIndexActionOpenAm(): array
     {
         return [
             [

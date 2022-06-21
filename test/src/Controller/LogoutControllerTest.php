@@ -7,7 +7,7 @@ use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\PluginManager;
-use Laminas\Di\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Dvsa\OlcsTest\Auth\Bootstrap;
 use Laminas\Session\Container;
 use Mockery as m;

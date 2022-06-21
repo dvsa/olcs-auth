@@ -19,7 +19,6 @@
         "php": ">=7.4",
         "laminas/laminas-authentication": "^2.5",
         "laminas/laminas-console": "^2.5",
-        "laminas/laminas-di": "^2.5",
         "laminas/laminas-filter": "^2.5",
         "laminas/laminas-form": "^2.5",
         "laminas/laminas-http": "^2.5",

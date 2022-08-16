@@ -15,7 +15,6 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Interop\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -98,8 +97,12 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
         // Setup
         $this->setUpSut();
 
+        $mockContainer = m::mock(ContainerInterface::class);
+        $mockContainer->expects('getServiceLocator')
+            ->andReturn($this->serviceManager());
+
         // Execute
-        $result = $this->sut->__invoke($this->serviceManager(), null);
+        $result = $this->sut->__invoke($mockContainer, null);
 
         // Assert
         $this->assertInstanceOf(ExpiredPasswordController::class, $result);
@@ -114,7 +117,7 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
         // Setup
         $this->setUpSut();
 
-        $mockContainer = m::mock(ServiceLocatorAwareInterface::class, ContainerInterface::class);
+        $mockContainer = m::mock(ContainerInterface::class);
         $mockContainer->expects('getServiceLocator')
             ->andReturn($this->serviceManager());
 

@@ -3,6 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
+use Interop\Container\ContainerInterface;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Header\ContentType;
 use Laminas\Http\Headers;
@@ -23,26 +24,32 @@ class Client extends HttpClient implements FactoryInterface
      */
     private $uriBuilder;
 
-    /**
-     * Configure the client
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): Client
     {
-        $config = $serviceLocator->get('Config');
+        $config = $container->get('Config');
 
         $clientOptions = null;
         if (isset($config['openam']['client']['options'])) {
             $clientOptions = $config['openam']['client']['options'];
         }
 
-        $this->uriBuilder = $serviceLocator->get('Auth\Client\UriBuilder');
+        $this->uriBuilder = $container->get('Auth\Client\UriBuilder');
         $this->setOptions($clientOptions);
 
         return $this;
+    }
+
+    /**
+     * Configure the client
+     *
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return $this
+     * @deprecated No longer needed in Laminas 3
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): Client
+    {
+        return $this($serviceLocator, Client::class);
     }
 
     /**

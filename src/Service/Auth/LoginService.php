@@ -3,6 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Common\Service\User\LastLoginService;
+use Interop\Container\ContainerInterface;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\Plugin\Redirect;
@@ -31,20 +32,26 @@ class LoginService implements FactoryInterface
      */
     private $request;
 
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LoginService
+    {
+        $this->cookieService = $container->get('Auth\CookieService');
+        $this->lastLoginService = $container->get('Common\Service\User\LastLoginService');
+        $this->request = $container->get('Request');
+
+        return $this;
+    }
+
     /**
      * Create the login service
      *
      * @param ServiceLocatorInterface $serviceLocator Service locator
      *
      * @return $this
+     * @deprecated No longer needed in Laminas 3
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): LoginService
     {
-        $this->cookieService = $serviceLocator->get('Auth\CookieService');
-        $this->lastLoginService = $serviceLocator->get('Common\Service\User\LastLoginService');
-        $this->request = $serviceLocator->get('Request');
-
-        return $this;
+        return $this($serviceLocator, LoginService::class);
     }
 
     /**

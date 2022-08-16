@@ -2,8 +2,6 @@
 
 namespace Dvsa\Olcs\Auth\ControllerFactory;
 
-use Common\Controller\Dispatcher;
-use Common\Controller\Plugin\Redirect;
 use Common\Rbac\PidIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
@@ -15,7 +13,6 @@ use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Interop\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface as NotFoundExceptionInterfaceAlias;
@@ -37,9 +34,7 @@ class ExpiredPasswordControllerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ExpiredPasswordController
     {
-        if ($container instanceof ServiceLocatorAwareInterface) {
-            $container = $container->getServiceLocator();
-        }
+        $container = $container->getServiceLocator();
 
         /** @var array $config */
         $config = $container->get('config');
@@ -63,6 +58,7 @@ class ExpiredPasswordControllerFactory implements FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator ZF Service locator
      *
      * @return ExpiredPasswordController
+     * @deprecated No longer needed in Laminas 3
      */
     public function createService(ServiceLocatorInterface $serviceLocator): ExpiredPasswordController
     {

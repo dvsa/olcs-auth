@@ -47,7 +47,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider realmDataProvider
      */
-    public function testLogoutControllerFactoryWithNoRealm($realm)
+    public function testLogoutControllerFactoryWithRealm($realm)
     {
         // Set realm defined in data provider
         $mockRequest = $this->createMock(Request::class);
@@ -70,7 +70,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         // Assert factory returns controller unless exception expected
         self::assertInstanceOf(
             LogoutController::class,
-            $factory->createService($controllerManager)
+            $factory->__invoke($controllerManager, LogoutController::class)
         );
     }
 

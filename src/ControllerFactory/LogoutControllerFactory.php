@@ -6,6 +6,7 @@ use Common\Rbac\PidIdentityProvider;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
+use Interop\Container\ContainerInterface;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\FactoryInterface;
@@ -21,17 +22,10 @@ class LogoutControllerFactory implements FactoryInterface
 {
     const OPENAM_HEADER_REALM_KEY = 'HTTP_X_REALM';
 
-    /**
-     * Create LogoutController
-     *
-     * @param ServiceLocatorInterface $serviceLocator ZF Service locator
-     *
-     * @return LogoutController
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LogoutController
     {
         /** @var ServiceLocatorInterface $sm */
-        $sm = $serviceLocator->getServiceLocator();
+        $sm = $container->getServiceLocator();
 
         /** @var array $config */
         $config = $sm->get('config');
@@ -66,6 +60,19 @@ class LogoutControllerFactory implements FactoryInterface
             $session,
             $isOpenAmEnabled
         );
+    }
+
+    /**
+     * Create LogoutController
+     *
+     * @param ServiceLocatorInterface $serviceLocator ZF Service locator
+     *
+     * @return LogoutController
+     * @deprecated No longer needed in Laminas 3
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): LogoutController
+    {
+        return $this($serviceLocator, LogoutController::class);
     }
 
     /**

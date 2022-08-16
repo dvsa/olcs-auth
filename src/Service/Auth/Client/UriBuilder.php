@@ -3,6 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
+use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -23,17 +24,9 @@ class UriBuilder implements FactoryInterface
      */
     private $realm = null;
 
-    /**
-     * Configure the uri builder
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     * @throws Exception\RuntimeException
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): UriBuilder
     {
-        $config = $serviceLocator->get('Config');
+        $config = $container->get('Config');
 
         if (empty($config['openam']['url'])) {
             throw new Exception\RuntimeException('openam/url is required but missing from config');
@@ -46,6 +39,20 @@ class UriBuilder implements FactoryInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Configure the uri builder
+     *
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return $this
+     * @throws Exception\RuntimeException
+     * @deprecated No longer needed in Laminas 3
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): UriBuilder
+    {
+        return $this($serviceLocator, UriBuilder::class);
     }
 
     /**

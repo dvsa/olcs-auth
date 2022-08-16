@@ -3,6 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\Client\Client;
+use Interop\Container\ContainerInterface;
 use Laminas\Http\Headers;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\FactoryInterface;
@@ -25,19 +26,25 @@ abstract class AbstractRestService implements FactoryInterface
      */
     private $responseDecoder;
 
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        $this->client = $container->get('Auth\Client');
+        $this->responseDecoder = $container->get('Auth\ResponseDecoderService');
+
+        return $this;
+    }
+
     /**
      * Configure a restful service
      *
      * @param ServiceLocatorInterface $serviceLocator Service locator
      *
      * @return $this
+     * @deprecated No longer needed in Laminas 3
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->client = $serviceLocator->get('Auth\Client');
-        $this->responseDecoder = $serviceLocator->get('Auth\ResponseDecoderService');
-
-        return $this;
+        return $this($serviceLocator, null);
     }
 
     /**

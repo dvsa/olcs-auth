@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
+use Interop\Container\ContainerInterface;
 use Laminas\Http\Header\SetCookie;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
@@ -36,18 +37,10 @@ class CookieService implements FactoryInterface
      */
     private $request;
 
-    /**
-     * Create the cookie service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     * @throws RuntimeException
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): CookieService
     {
-        $config = $serviceLocator->get('Config');
-        $this->request = $serviceLocator->get('Request');
+        $config = $container->get('Config');
+        $this->request = $container->get('Request');
 
         if (empty($config['openam']['cookie']['name'])) {
             throw new RuntimeException('openam/cookie is required but missing from config');
@@ -60,6 +53,20 @@ class CookieService implements FactoryInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Create the cookie service
+     *
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return $this
+     * @throws RuntimeException
+     * @deprecated No longer needed in Laminas 3
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator): CookieService
+    {
+        return $this($serviceLocator, CookieService::class);
     }
 
     /**

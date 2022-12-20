@@ -48,7 +48,7 @@ class LoginForm
      * @Form\Attributes({
      *     "id": "auth.login.button",
      *     "value": "auth.login.button",
-     *     "class": "action--primary large"
+     *     "class": "govuk-button",
      * })
      * @Form\Type("Submit")
      */

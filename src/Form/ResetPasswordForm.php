@@ -37,7 +37,7 @@ class ResetPasswordForm
      * @Form\Attributes({
      *     "id": "auth.reset-password.button",
      *     "value": "auth.reset-password.button",
-     *     "class": "action--primary large"
+     *     "class": "govuk-button",
      * })
      * @Form\Type("Submit")
      */

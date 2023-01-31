@@ -17,26 +17,11 @@
     ],
     "require": {
         "php": ">=7.4",
-        "laminas/laminas-authentication": "^2.5",
-        "laminas/laminas-console": "^2.5",
-        "laminas/laminas-filter": "^2.5",
-        "laminas/laminas-form": "^2.5",
-        "laminas/laminas-http": "^2.5",
-        "laminas/laminas-i18n": "^2.5",
-        "laminas/laminas-loader": "^2.5",
-        "laminas/laminas-mvc": "^2.5",
-        "laminas/laminas-servicemanager": "^2.5",
-        "laminas/laminas-stdlib": "^2.5",
-        "laminas/laminas-validator": "^2.5",
-        "laminas/laminas-view": "^2.5",
-        "doctrine/annotations": "^1.2.3",
-        "olcs/olcs-transfer": "~4.206.0",
-        "olcs/olcs-common": "~4.206.0",
-        "laminas/laminas-dependency-plugin": "^2.0"
+        "olcs/olcs-laminas": "~2.5.0 || ~3.0.0"
     },
     "require-dev": {
         "olcs/olcs-devtools": "~4.206.0",
-        "olcs/olcs-testhelpers": "~4.206.0"
+        "olcs/olcs-common": "~4.206.0"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +30,12 @@
     },
     "config": {
         "preferred-install": "dist",
-        "secure-http": false
+        "secure-http": false,
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": true,
+            "elendev/composer-push": true,
+            "phpstan/extension-installer": true
+        }
     },
     "scripts": {
         "ut": "phpunit -c test/phpunit.xml --stop-on-failure",

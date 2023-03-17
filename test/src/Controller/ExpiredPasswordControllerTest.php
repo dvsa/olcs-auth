@@ -15,7 +15,9 @@ use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangeExpiredPasswordResult;
 use Laminas\Authentication\Storage\Session;
+use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\Controller\PluginManager;
@@ -92,8 +94,6 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->authChallengeContainer = m::mock(AuthChallengeContainer::class);
         $this->sessionContainer = m::mock(Session::class);
 
-        $sm = m::mock(ServiceManager::class)->makePartial();
-
         $pm = m::mock(PluginManager::class)->makePartial();
         $pm->setService('redirect', $this->redirect);
 
@@ -107,7 +107,6 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             $this->sessionContainer,
             false
         );
-        $this->sut->setServiceLocator($sm);
         $this->sut->setPluginManager($pm);
     }
 
@@ -116,7 +115,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form = m::mock(Form::class);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
@@ -129,7 +128,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
         $result = $this->sut->indexAction();
 
-        $this->assertInstanceOf(ViewModel::class, $result);
+        $this->assertInstanceOf(ViewModel::class, $resulInputFilterInterfacet);
         $this->assertEquals('auth/expired-password', $result->getTemplate());
     }
 
@@ -142,7 +141,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form->shouldReceive('isValid')->once()->andReturn(false);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
@@ -174,7 +173,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form->shouldReceive('getData')->once()->andReturn($post);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
@@ -241,12 +240,12 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form->shouldReceive('getData')->once()->andReturn($post);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
         $this->formHelper->shouldReceive('createForm')
-            ->with(ChangePasswordForm::class,)
+            ->with(ChangePasswordForm::class)
             ->andReturn($form);
 
         $this->authChallengeContainer
@@ -276,7 +275,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form->shouldReceive('getData')->once()->andReturn($post);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
@@ -328,11 +327,11 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form->shouldReceive('getData')->once()->andReturn($post);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
-        $element = m::mock();
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('setOption')
             ->once()
             ->with('error-message', null);
@@ -400,7 +399,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form->shouldReceive('getData')->once()->andReturn($post);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
@@ -477,7 +476,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $form->shouldReceive('getData')->once()->andReturn($post);
         $form->shouldReceive('remove')->once()->with('oldPassword');
 
-        $inputFilter = m::mock();
+        $inputFilter = m::mock(InputFilterInterface::class);
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 

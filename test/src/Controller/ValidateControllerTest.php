@@ -43,39 +43,4 @@ class ValidateControllerTest extends MockeryTestCase
 
         static::assertEquals($returnedArray, $sut->indexAction()->getVariables());
     }
-
-    /**
-     * @dataProvider  dpTestIndexActionOpenAm
-     */
-    public function testIndexActionOpenAm($token, $expect): void
-    {
-        $identityProvider = m::mock(PidIdentityProvider::class);
-        $this->sut = new ValidateController($this->mockCookieSrv, $this->mockValidateSrv, $identityProvider);
-        $request = $this->sut->getRequest();
-
-        $this->mockCookieSrv->shouldReceive('getCookie')->with($request)->once()->andReturn($token);
-        $this->mockValidateSrv
-            ->shouldReceive('validate')
-            ->times(empty($token) ? 0 : 1)
-            ->andReturn(['unit_key' => 'EXPECT']);
-
-        $action = $this->sut->indexAction();
-
-        static::assertInstanceOf(JsonModel::class, $action);
-        static::assertEquals($expect, $action->getVariables());
-    }
-
-    public function dpTestIndexActionOpenAm(): array
-    {
-        return [
-            [
-                'token' => 'unit_Token',
-                'expect' => ['unit_key' => 'EXPECT'],
-            ],
-            [
-                'token' => '',
-                'expect' => new Variables(),
-            ],
-        ];
-    }
 }

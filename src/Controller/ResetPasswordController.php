@@ -2,6 +2,8 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Form\ResetPasswordForm;
@@ -9,6 +11,36 @@ use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 
 class ResetPasswordController extends AbstractActionController
 {
+    /**
+     * @var FormHelperService
+     */
+    private FormHelperService $formHelperService;
+
+    /**
+     * @var FlashMessengerHelperService
+     */
+    private FlashMessengerHelperService $flashMessenger;
+
+    /**
+     * @var PasswordService
+     */
+    private PasswordService $passwordService;
+
+    /**
+     * @param FormHelperService $formHelperService
+     * @param FlashMessengerHelperService $flashMessenger
+     * @param PasswordService $passwordService
+     */
+    public function __construct(
+        FormHelperService $formHelperService,
+        FlashMessengerHelperService $flashMessenger,
+        PasswordService $passwordService
+    ) {
+        $this->formHelperService = $formHelperService;
+        $this->flashMessenger = $flashMessenger;
+        $this->passwordService = $passwordService;
+    }
+
     /**
      * Reset password
      *
@@ -18,8 +50,7 @@ class ResetPasswordController extends AbstractActionController
     {
         $request = $this->getRequest();
 
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest(ResetPasswordForm::class, $request);
+        $form = $this->formHelperService->createFormWithRequest(ResetPasswordForm::class, $request);
 
         if ($request->isPost() === false) {
             return $this->renderView($form);
@@ -37,11 +68,10 @@ class ResetPasswordController extends AbstractActionController
         $tokenId = $this->params()->fromQuery('tokenId');
         $username = $this->params()->fromQuery('username');
 
-        $result = $this->getResetPasswordService()
-            ->resetPassword($username, $confirmationId, $tokenId, $data['newPassword']);
+        $result = $this->passwordService->resetPassword($username, $confirmationId, $tokenId, $data['newPassword']);
 
         if ($result['flags']['success']) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('auth.reset-password.success');
+            $this->flashMessenger->addSuccessMessage('auth.reset-password.success');
             return $this->redirect()->toRoute('auth/login/GET');
         }
 
@@ -64,15 +94,5 @@ class ResetPasswordController extends AbstractActionController
         $view->setTemplate('auth/reset-password');
 
         return $view;
-    }
-
-    /**
-     * Get reset password service
-     *
-     * @return PasswordService
-     */
-    private function getResetPasswordService(): PasswordService
-    {
-        return $this->getServiceLocator()->get(PasswordService::class);
     }
 }

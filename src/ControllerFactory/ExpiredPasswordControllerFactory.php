@@ -2,7 +2,6 @@
 
 namespace Dvsa\Olcs\Auth\ControllerFactory;
 
-use Common\Rbac\PidIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
@@ -23,7 +22,6 @@ use Psr\Container\NotFoundExceptionInterface as NotFoundExceptionInterfaceAlias;
  */
 class ExpiredPasswordControllerFactory implements FactoryInterface
 {
-
     /**
      * @param ContainerInterface $container
      * @param $requestedName
@@ -36,10 +34,6 @@ class ExpiredPasswordControllerFactory implements FactoryInterface
     {
         $container = $container->getServiceLocator();
 
-        /** @var array $config */
-        $config = $container->get('config');
-        $isOpenAmEnabled = ($config['auth']['identity_provider'] === PidIdentityProvider::class);
-
         return new ExpiredPasswordController(
             new AuthChallengeContainer(),
             $container->get(CommandSender::class),
@@ -47,8 +41,7 @@ class ExpiredPasswordControllerFactory implements FactoryInterface
             $container->get(FlashMessengerHelperService::class),
             $container->get(FormHelperService::class),
             $container->get(LoginService::class),
-            $container->get(Session::class),
-            $isOpenAmEnabled
+            $container->get(Session::class)
         );
     }
 

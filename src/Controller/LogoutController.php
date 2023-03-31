@@ -53,11 +53,6 @@ class LogoutController extends AbstractActionController
     private $session;
 
     /**
-     * @var bool
-     */
-    private $isOpenAmEnabled;
-
-    /**
      * LogoutController constructor.
      *
      * @param Request       $requestService       Laminas request service
@@ -74,8 +69,7 @@ class LogoutController extends AbstractActionController
         LogoutService $logoutService,
         $isSelfServe,
         $selfServeRedirectUrl,
-        Container $session,
-        bool $isOpenAmEnabled
+        Container $session
     ) {
         $this->requestService = $requestService;
         $this->responseService = $responseService;
@@ -84,7 +78,6 @@ class LogoutController extends AbstractActionController
         $this->isSelfServe = $isSelfServe;
         $this->selfServeRedirectUrl = $selfServeRedirectUrl;
         $this->session = $session;
-        $this->isOpenAmEnabled = $isOpenAmEnabled;
     }
 
     /**
@@ -96,8 +89,6 @@ class LogoutController extends AbstractActionController
     {
         $this->session->exchangeArray([]);
 
-        $this->purgeOpenAmSessionIfExists();
-
         if ($this->isSelfServe) {
             // No need to add to config is it is only used once.
             return $this->redirect()->toUrl(
@@ -105,22 +96,5 @@ class LogoutController extends AbstractActionController
             );
         }
         return $this->redirect()->toRoute('auth/login/GET');
-    }
-
-    /**
-     * @return void
-     */
-    protected function purgeOpenAmSessionIfExists(): void
-    {
-        if (!$this->isOpenAmEnabled) {
-            return;
-        }
-
-        $token = $this->cookieService->getCookie($this->requestService);
-
-        if (!empty($token)) {
-            $this->logoutService->logout($token);
-            $this->cookieService->destroyCookie($this->responseService);
-        }
     }
 }

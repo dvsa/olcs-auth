@@ -4,6 +4,8 @@ namespace Dvsa\Olcs\Auth\Controller;
 
 use Common\Rbac\JWTIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 use Dvsa\Olcs\Transfer\Command\Auth\ChangePassword;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangePasswordResult;
@@ -17,6 +19,30 @@ class ChangePasswordController extends AbstractController
     public const MESSAGE_BASE = "Expired Password Change Failed: %s";
     public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
 
+    private ChangePasswordService $changePasswordService;
+
+    private FormHelperService $formHelperService;
+
+    private FlashMessengerHelperService $flashMessenger;
+
+    private array $config;
+
+    private CommandSender $commandSender;
+
+    public function __construct(
+        ChangePasswordService $changePasswordService,
+        FormHelperService $formHelperService,
+        FlashMessengerHelperService $flashMessenger,
+        array $config,
+        CommandSender $commandSender
+    ) {
+        $this->changePasswordService = $changePasswordService;
+        $this->formHelperService = $formHelperService;
+        $this->flashMessenger = $flashMessenger;
+        $this->config = $config;
+        $this->commandSender = $commandSender;
+    }
+
     /**
      * Forgot password page
      *
@@ -27,8 +53,7 @@ class ChangePasswordController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest(ChangePasswordForm::class, $request);
+        $form = $this->formHelperService->createFormWithRequest(ChangePasswordForm::class, $request);
 
         if ($request->isPost() === false) {
             return $this->renderView($form);
@@ -45,22 +70,12 @@ class ChangePasswordController extends AbstractController
             return $this->renderView($form);
         }
 
-        $config = $this->serviceLocator->get('Config');
         $data = $form->getData();
 
-        // TODO: VOL-2661 - Remove check and use updatePasswordCommand once OpenAM support is dropped
-        if ($config['auth']['identity_provider'] !== JWTIdentityProvider::class) {
-            $result =  $this->updatePasswordOpenAm(
-                $data['oldPassword'],
-                $data['newPassword']
-            );
-        } else {
-            $result = $this->updatePasswordCommand($data['oldPassword'], $data['newPassword']);
-        }
+        $result = $this->updatePasswordCommand($data['oldPassword'], $data['newPassword']);
 
         if ($result->isValid()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
-                ->addSuccessMessage('auth.change-password.success');
+            $this->flashMessenger->addSuccessMessage('auth.change-password.success');
 
             // redir to my account
             return $this->redirectToMyAccount();
@@ -76,33 +91,8 @@ class ChangePasswordController extends AbstractController
      */
     private function redirectToMyAccount()
     {
-        $config = $this->getServiceLocator()->get('Config');
-
         // redir to my account
-        return $this->redirect()->toRouteAjax($config['my_account_route']);
-    }
-
-    /**
-     * Update password
-     *
-     * @param string $oldPassword
-     * @param string $newPassword
-     * @return ChangePasswordResult
-     * @deprecated
-     */
-    private function updatePasswordOpenAM(string $oldPassword, string $newPassword): ChangePasswordResult
-    {
-        $result = $this->getChangePasswordService()->updatePassword(
-            $this->getRequest(),
-            $oldPassword,
-            $newPassword
-        );
-
-        if ($result['status'] !== 200) {
-            return new ChangePasswordResult(ChangePasswordResult::FAILURE, $result['message']);
-        }
-
-        return new ChangePasswordResult(ChangePasswordResult::SUCCESS);
+        return $this->redirect()->toRouteAjax($this->config['my_account_route']);
     }
 
     /**
@@ -115,10 +105,7 @@ class ChangePasswordController extends AbstractController
             'newPassword' => $newPassword
         ]);
 
-        $commandSender = $this->getServiceLocator()->get('CommandSender');
-        assert($commandSender instanceof CommandSender);
-
-        $result = $commandSender->send($command);
+        $result = $this->commandSender->send($command);
 
         if (!$result->isOk()) {
             throw new RuntimeException(sprintf(static::MESSAGE_BASE, static::MESSAGE_RESULT_NOT_OK));
@@ -142,15 +129,5 @@ class ChangePasswordController extends AbstractController
         $view->setTemplate('auth/change-password');
 
         return $view;
-    }
-
-    /**
-     * Get change password service
-     *
-     * @return ChangePasswordService
-     */
-    private function getChangePasswordService()
-    {
-        return $this->getServiceLocator()->get('Auth\ChangePasswordService');
     }
 }

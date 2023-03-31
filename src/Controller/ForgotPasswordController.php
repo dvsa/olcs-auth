@@ -3,7 +3,11 @@
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Common\Service\Cqrs;
+use Common\Service\Cqrs\Command\CommandSender;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
+use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Laminas\Form\Form;
 use Laminas\Http\Request;
 use Laminas\View\Model\ViewModel;
@@ -11,6 +15,21 @@ use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 
 class ForgotPasswordController extends AbstractController
 {
+    private FormHelperService $formHelperService;
+    private PasswordService $passwordService;
+
+    /**
+     * @param FormHelperService $formHelperService
+     * @param PasswordService $passwordService
+     */
+    public function __construct(
+        FormHelperService $formHelperService,
+        PasswordService $passwordService
+    ) {
+        $this->formHelperService = $formHelperService;
+        $this->passwordService = $passwordService;
+    }
+
     /**
      * Forgot password page
      *
@@ -21,13 +40,11 @@ class ForgotPasswordController extends AbstractController
         if ($this->isButtonPressed('cancel')) {
             return $this->redirect()->toRoute('auth/login/GET');
         }
-
         /** @var Request $request */
         $request = $this->getRequest();
 
         /** @var Form $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest(ForgotPasswordForm::class, $request);
+        $form = $this->formHelperService->createFormWithRequest(ForgotPasswordForm::class, $request);
 
         $form->setData($request->getPost());
 
@@ -37,9 +54,7 @@ class ForgotPasswordController extends AbstractController
 
         try {
             $formData = $form->getData();
-            $passwordService = $this->getServiceLocator()->get(PasswordService::class);
-            assert($passwordService instanceof PasswordService);
-            $result = $passwordService->forgotPassword($formData['username']);
+            $result = $this->passwordService->forgotPassword($formData['username']);
         } catch (Cqrs\Exception $e) {
             return $this->renderFormView($form, true, 'unknown-error');
         }

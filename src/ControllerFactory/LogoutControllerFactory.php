@@ -20,7 +20,7 @@ use RuntimeException;
  */
 class LogoutControllerFactory implements FactoryInterface
 {
-    const OPENAM_HEADER_REALM_KEY = 'HTTP_X_REALM';
+    protected const HEADER_REALM_KEY = 'HTTP_X_REALM';
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LogoutController
     {
@@ -48,8 +48,6 @@ class LogoutControllerFactory implements FactoryInterface
         }
         $session = new Container($sessionName);
 
-        $isOpenAmEnabled = ($config['auth']['identity_provider'] === PidIdentityProvider::class);
-
         return new LogoutController(
             $requestService,
             $responseService,
@@ -57,8 +55,7 @@ class LogoutControllerFactory implements FactoryInterface
             $logoutService,
             $this->isSelfServeUser($requestService),
             $this->getSelfServeLogoutUrl($config),
-            $session,
-            $isOpenAmEnabled
+            $session
         );
     }
 
@@ -84,7 +81,7 @@ class LogoutControllerFactory implements FactoryInterface
      */
     private function isSelfServeUser(Request $requestService)
     {
-        $realmName = $requestService->getServer(self::OPENAM_HEADER_REALM_KEY);
+        $realmName = $requestService->getServer(self::HEADER_REALM_KEY);
         return ($realmName === 'selfserve' || empty($realmName));
     }
 

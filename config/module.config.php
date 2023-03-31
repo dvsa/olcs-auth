@@ -1,8 +1,16 @@
 <?php
 
+use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Controller\ExpiredPasswordController;
-use Dvsa\Olcs\Auth\ControllerFactory\ExpiredPasswordControllerFactory;
+use Dvsa\Olcs\Auth\Controller\ForgotPasswordController;
+use Dvsa\Olcs\Auth\Controller\LogoutController;
+use Dvsa\Olcs\Auth\Controller\ResetPasswordController;
 use Dvsa\Olcs\Auth\Controller\ValidateController;
+use Dvsa\Olcs\Auth\ControllerFactory\ChangePasswordControllerFactory;
+use Dvsa\Olcs\Auth\ControllerFactory\ExpiredPasswordControllerFactory;
+use Dvsa\Olcs\Auth\ControllerFactory\ForgotPasswordControllerFactory;
+use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
+use Dvsa\Olcs\Auth\ControllerFactory\ResetPasswordControllerFactory;
 use Dvsa\Olcs\Auth\ControllerFactory\ValidateControllerFactory;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
@@ -17,16 +25,6 @@ return [
                 ],
                 'may_terminate' => false,
                 'child_routes' => [
-                    'login' => [
-                        'type' => 'segment',
-                        'options' => [
-                            'route' => 'login[/]',
-                            'defaults' => [
-                                'controller' => 'Auth\LoginController',
-                                'action' => 'index'
-                            ]
-                        ]
-                    ],
                     'expired-password' => [
                         'type' => 'segment',
                         'options' => [
@@ -42,7 +40,7 @@ return [
                         'options' => [
                             'route' => 'forgot-password[/]',
                             'defaults' => [
-                                'controller' => 'Auth\ForgotPasswordController',
+                                'controller' => ForgotPasswordController::class,
                                 'action' => 'index'
                             ],
                         ],
@@ -52,7 +50,7 @@ return [
                         'options' => [
                             'route' => 'reset-password[/]',
                             'defaults' => [
-                                'controller' => 'Auth\ResetPasswordController',
+                                'controller' => ResetPasswordController::class,
                                 'action' => 'index'
                             ],
                         ],
@@ -62,7 +60,7 @@ return [
                         'options' => [
                             'route' => 'logout[/]',
                             'defaults' => [
-                                'controller' => 'Auth\LogoutController',
+                                'controller' => LogoutController::class,
                                 'action' => 'index'
                             ]
                         ],
@@ -84,7 +82,7 @@ return [
                 'options' => [
                     'route' => '/change-password[/]',
                     'defaults' => [
-                        'controller' => 'Auth\ChangePasswordController',
+                        'controller' => ChangePasswordController::class,
                         'action' => 'index'
                     ],
                 ],
@@ -93,19 +91,16 @@ return [
     ],
     'controllers' => [
         'invokables' => [
-            'Auth\LoginController' => \Dvsa\Olcs\Auth\Controller\LoginController::class,
-            'Auth\ForgotPasswordController' => \Dvsa\Olcs\Auth\Controller\ForgotPasswordController::class,
-            'Auth\ChangePasswordController' => \Dvsa\Olcs\Auth\Controller\ChangePasswordController::class,
-            'Auth\ResetPasswordController' => \Dvsa\Olcs\Auth\Controller\ResetPasswordController::class,
         ],
         'aliases' => [
-            'Auth\LogoutController' => \Dvsa\Olcs\Auth\Controller\LogoutController::class,
         ],
         'factories' => [
             ValidateController::class => ValidateControllerFactory::class,
-            \Dvsa\Olcs\Auth\Controller\LogoutController::class =>
-                \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory::class,
-            ExpiredPasswordController::class => ExpiredPasswordControllerFactory::class
+            LogoutController::class => LogoutControllerFactory::class,
+            ExpiredPasswordController::class => ExpiredPasswordControllerFactory::class,
+            ForgotPasswordController::class => ForgotPasswordControllerFactory::class,
+            ChangePasswordController::class => ChangePasswordControllerFactory::class,
+            ResetPasswordController::class => ResetPasswordControllerFactory::class
         ]
     ],
     'service_manager' => [

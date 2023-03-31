@@ -1,4 +1,5 @@
 <?php
+
 namespace Dvsa\OlcsTest\Auth\ControllerFactory;
 
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
@@ -21,10 +22,6 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
 
     public function setUp(): void
     {
-        // Get service manager
-        $serviceManager = Bootstrap::getServiceManager();
-        $serviceManager->setAllowOverride(true);
-
         // Mock coockie service
         $cookieService = $this->createMock(CookieService::class);
         $serviceManager->setService('Auth\CookieService', $cookieService);

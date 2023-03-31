@@ -1,16 +1,15 @@
 <?php
 
-/**
- * Change Password Controller Test
- */
 namespace Dvsa\OlcsTest\Auth\Controller;
 
 use Common\Rbac\JWTIdentityProvider;
-use Common\Rbac\PidIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Response;
+use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
+use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangePasswordResult;
 use Laminas\Http\Response as HttpResponse;
 use Mockery as m;
@@ -50,9 +49,9 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->formHelper = m::mock();
-        $this->changePasswordService = m::mock();
-        $this->flashMessenger = m::mock();
+        $this->formHelper = m::mock(FormHelperService::class);
+        $this->changePasswordService = m::mock(ChangePasswordService::class);
+        $this->flashMessenger = m::mock(FlashMessengerHelperService::class);
         $this->redirect = m::mock(Redirect::class)->makePartial();
         $this->commandSender = m::mock(CommandSender::class);
 
@@ -73,8 +72,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $pm = m::mock(PluginManager::class)->makePartial();
         $pm->setService('redirect', $this->redirect);
 
-        $this->sut = new ChangePasswordController();
-        $this->sut->setServiceLocator($sm);
+        $this->sut = new ChangePasswordController($this->changePasswordService, $this->formHelper, $this->flashMessenger, $this->config, $this->commandSender);
         $this->sut->setPluginManager($pm);
     }
 

@@ -27,14 +27,19 @@ class ForgotPasswordForm
      * @Form\Attributes({
      *     "id": "auth.forgot-password.button",
      *     "value": "auth.forgot-password.button",
-     *     "class": "action--primary large"
+     *     "class": "govuk-button",
      * })
      * @Form\Type("Submit")
      */
     public $submit = null;
 
     /**
-     * @Form\Attributes({"id":"cancel","type":"submit","class":"action--secondary large"})
+     * @Form\Attributes({
+     *     "data-module": "govuk-button",
+     *     "type": "submit",
+     *     "class": "govuk-button govuk-button--secondary",
+     *     "id":"cancel",
+     * })
      * @Form\Options({
      *     "label": "cancel.button",
      * })

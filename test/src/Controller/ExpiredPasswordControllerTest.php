@@ -128,7 +128,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
         $result = $this->sut->indexAction();
 
-        $this->assertInstanceOf(ViewModel::class, $resulInputFilterInterfacet);
+        $this->assertInstanceOf(ViewModel::class, $result);
         $this->assertEquals('auth/expired-password', $result->getTemplate());
     }
 
@@ -331,16 +331,74 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
         $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
-        $element = m::mock(ElementInterface::class);
-        $element->shouldReceive('setOption')
+        $this->formHelper->shouldReceive('createForm')
             ->once()
-            ->with('error-message', null);
+            ->with(ChangePasswordForm::class)
+            ->andReturn($form);
+
+        $this->authChallengeContainer
+            ->shouldReceive('getChallengeName')
+            ->once()
+            ->andReturn(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED);
+        $this->authChallengeContainer
+            ->shouldReceive('getChallengeSession')
+            ->once()
+            ->andReturn('challenge-session');
+        $this->authChallengeContainer
+            ->shouldReceive('getChallengedIdentity')
+            ->once()
+            ->andReturn('identity');
+
+        $mockResponse = m::mock(Response::class);
+        $mockResponse->shouldReceive('isOk')
+            ->once()
+            ->andReturnTrue();
+
+        $mockResponse->shouldReceive('getResult')
+            ->once()
+            ->andReturn([
+                'flags' => [
+                    'code' => ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID
+                ]
+            ]);
+
+        $this->commandSender->shouldReceive('send')
+            ->once()
+            ->andReturn($mockResponse);
+
+        $element = m::mock(ElementInterface::class);
         $element->shouldReceive('setMessages')
             ->once();
         $form->shouldReceive('get')
             ->once()
             ->with('newPassword')
             ->andReturn($element);
+
+        $request = $this->sut->getRequest();
+        $request->setMethod('POST');
+        $request->setPost(new Parameters($post));
+
+        $result = $this->sut->indexAction();
+
+        $this->assertInstanceOf(ViewModel::class, $result);
+        $this->assertEquals('auth/expired-password', $result->getTemplate());
+    }
+    public function testIndexActionForPostWithValidDataNewPasswordMatchesOld()
+    {
+        $post = [
+            'newPassword' => 'new-password',
+            'confirmPassword' => 'confirm-password'
+        ];
+
+        $form = m::mock(Form::class);
+        $form->shouldReceive('setData')->once();
+        $form->shouldReceive('isValid')->once()->andReturn(true);
+        $form->shouldReceive('getData')->once()->andReturn($post);
+        $form->shouldReceive('remove')->once()->with('oldPassword');
+
+        $inputFilter = m::mock(InputFilterInterface::class);
+        $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
+        $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
 
         $this->formHelper->shouldReceive('createForm')
             ->once()
@@ -364,17 +422,29 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $mockResponse->shouldReceive('isOk')
             ->once()
             ->andReturnTrue();
+
         $mockResponse->shouldReceive('getResult')
             ->once()
             ->andReturn([
                 'flags' => [
-                    'code' => ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID
+                    'code' => ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD
                 ]
             ]);
 
         $this->commandSender->shouldReceive('send')
             ->once()
             ->andReturn($mockResponse);
+
+        $element = m::mock(ElementInterface::class);
+        $element->shouldReceive('setOption')
+            ->once()
+            ->with('error-message', null);
+        $element->shouldReceive('setMessages')
+            ->once();
+        $form->shouldReceive('get')
+            ->once()
+            ->with('newPassword')
+            ->andReturn($element);
 
         $request = $this->sut->getRequest();
         $request->setMethod('POST');

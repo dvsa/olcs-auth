@@ -170,7 +170,7 @@ class ExpiredPasswordController extends AbstractActionController
             $element = $this->form->get('newPassword');
             $element->setOption('error-message', null);
             $element->setMessages(['auth.expired-password.new-password-same-as-previous']);
-            return $this->renderView($this->form);
+            return $this->renderView();
         }
         throw new RuntimeException(sprintf("Invalid response from ChangeExpiredPassword Command: %s", implode('. ', $result->getMessages())));
     }

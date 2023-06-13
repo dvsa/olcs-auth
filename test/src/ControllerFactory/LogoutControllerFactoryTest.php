@@ -9,33 +9,54 @@ use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;
-use Laminas\ServiceManager\ServiceManager;
+use Olcs\TestHelpers\Service\MocksServicesTrait;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Class ControllerFactoryTest
  * @covers \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory
  */
-class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
+class LogoutControllerFactoryTest extends MockeryTestCase
 {
-    /** @var ServiceManager */
-    private $serviceManager;
+    use MocksServicesTrait;
+
+    const CONFIG_VALID = [
+        'selfserve_logout_redirect_url' => 'selfserve_logout_redirect_url',
+        'auth' => [
+            'identity_provider' => JWTIdentityProvider::class,
+            'session_name' => 'session_name',
+            'identity_provider' => 'identity_provider'
+        ]
+    ];
 
     public function setUp(): void
     {
-        // Mock coockie service
+        $this->serviceManager = $this->setUpServiceManager();
+        $this->setUpConfig();
+
+        // Mock cookie service
         $cookieService = $this->createMock(CookieService::class);
-        $serviceManager->setService('Auth\CookieService', $cookieService);
+        $this->serviceManager->setService('Auth\CookieService', $cookieService);
 
         // Mock logout service
         $logoutService = $this->createMock(LogoutService::class);
-        $serviceManager->setService('Auth\LogoutService', $logoutService);
+        $this->serviceManager->setService('Auth\LogoutService', $logoutService);
 
         // Set realm by default, but can be overwritten
         $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn('test');
-        $serviceManager->setService('request', $mockRequest);
+        $this->serviceManager->setService('request', $mockRequest);
+    }
 
-        $this->serviceManager = $serviceManager;
+    protected function setUpConfig(array $config = []): array
+    {
+        if (!$this->serviceManager->has('Config') || !empty($config)) {
+            if (empty($config)) {
+                $config = static::CONFIG_VALID;
+            }
+            $this->serviceManager->setService('Config', $config);
+        }
+        return $this->serviceManager->get('Config');
     }
 
     /**
@@ -52,7 +73,6 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $this->serviceManager->setService('request', $mockRequest);
 
         $config = $this->serviceManager->get('config');
-        $config['auth'] = ['session_name' => 'session_name', 'identity_provider' => 'identity_provider'];
         $this->serviceManager->setService('config', $config);
 
         // Create controller config

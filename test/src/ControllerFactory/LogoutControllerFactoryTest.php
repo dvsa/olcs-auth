@@ -2,15 +2,17 @@
 
 namespace Dvsa\OlcsTest\Auth\ControllerFactory;
 
+use Common\Rbac\JWTIdentityProvider;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Dvsa\OlcsTest\Auth\Bootstrap;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;
 use Olcs\TestHelpers\Service\MocksServicesTrait;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class ControllerFactoryTest
@@ -20,12 +22,11 @@ class LogoutControllerFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
-    const CONFIG_VALID = [
+    private const CONFIG_VALID = [
         'selfserve_logout_redirect_url' => 'selfserve_logout_redirect_url',
         'auth' => [
             'identity_provider' => JWTIdentityProvider::class,
             'session_name' => 'session_name',
-            'identity_provider' => 'identity_provider'
         ]
     ];
 
@@ -50,7 +51,7 @@ class LogoutControllerFactoryTest extends MockeryTestCase
 
     protected function setUpConfig(array $config = []): array
     {
-        if (!$this->serviceManager->has('Config') || !empty($config)) {
+        if (!$this->serviceManager->has('Config')) {
             if (empty($config)) {
                 $config = static::CONFIG_VALID;
             }
@@ -60,9 +61,9 @@ class LogoutControllerFactoryTest extends MockeryTestCase
     }
 
     /**
-     * @param string $realm             Realm name
-     * @param bool   $expectedException Are we expecting an exception?
-     *
+     * @param string $realm Realm name
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      * @dataProvider realmDataProvider
      */
     public function testLogoutControllerFactoryWithRealm($realm)
@@ -76,7 +77,7 @@ class LogoutControllerFactoryTest extends MockeryTestCase
         $this->serviceManager->setService('config', $config);
 
         // Create controller config
-        $controllerConfig = new \Laminas\ServiceManager\Config(Bootstrap::getConfig());
+        $controllerConfig = new \Laminas\ServiceManager\Config(static::CONFIG_VALID);
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);
@@ -124,7 +125,7 @@ class LogoutControllerFactoryTest extends MockeryTestCase
         $this->serviceManager->setService('config', $config);
 
         // Create controller config
-        $controllerConfig = new \Laminas\ServiceManager\Config(Bootstrap::getConfig());
+        $controllerConfig = new \Laminas\ServiceManager\Config(static::CONFIG_VALID);
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);

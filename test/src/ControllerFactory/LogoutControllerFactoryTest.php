@@ -135,7 +135,7 @@ class LogoutControllerFactoryTest extends MockeryTestCase
         // Assert factory returns controller unless exception expected
         self::assertInstanceOf(
             LogoutController::class,
-            $factory->createService($controllerManager)
+            $factory->__invoke($controllerManager, null)
         );
     }
 }

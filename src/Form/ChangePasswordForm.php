@@ -26,7 +26,6 @@ class ChangePasswordForm
      * @Form\Options({
      *     "label": "auth.change-password.new-password",
      *     "short-label": "auth.change-password.new-password",
-     *     "error-message": "auth.change-password.new-password.error"
      * })
      * @Form\Attributes({"id": "auth.change-password.new-password"})
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})

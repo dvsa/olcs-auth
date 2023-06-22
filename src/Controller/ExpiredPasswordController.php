@@ -157,8 +157,9 @@ class ExpiredPasswordController extends AbstractActionController
     {
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID) {
             $element = $this->form->get('newPassword');
-            $element->setMessages($result->getMessages());
-            return $this->renderView();
+              $element->setMessages($result->getMessages());
+            $element->setMessages(['auth.expired-password.failed.reason.New password does not meet the password policy requirements.']);
+            return $this->renderView(true,'auth.expired-password.failed.reason.New password does not meet the password policy requirements.');
         }
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NOT_AUTHORIZED) {
             foreach ($result->getMessages() as $message) {
@@ -168,9 +169,9 @@ class ExpiredPasswordController extends AbstractActionController
         }
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD) {
             $element = $this->form->get('newPassword');
-            $element->setOption('error-message', null);
-            $element->setMessages(['auth.expired-password.new-password-same-as-previous']);
-            return $this->renderView($this->form);
+         $element->setOption('error-message', null);
+            $element->setMessages(['auth.expired-password.failed.reason.The password must be different. Try again.']);
+            return $this->renderView(true, 'auth.expired-password.failed.reason.The password must be different. Try again.');
         }
         throw new RuntimeException(sprintf("Invalid response from ChangeExpiredPassword Command: %s", implode('. ', $result->getMessages())));
     }

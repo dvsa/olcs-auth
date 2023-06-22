@@ -30,7 +30,7 @@ class ChangePasswordForm
      * })
      * @Form\Attributes({"id": "auth.change-password.new-password"})
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":8, "max":160}})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":12, "max":160}})
      * @Form\Validator({"name":"Common\Form\Elements\Validators\PasswordConfirm","options":{"token":"confirmPassword"}})
      * @Form\Type("Password")
      */

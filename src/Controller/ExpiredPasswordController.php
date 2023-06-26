@@ -168,7 +168,6 @@ class ExpiredPasswordController extends AbstractActionController
         }
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD) {
             $element = $this->form->get('newPassword');
-            $element->setOption('error-message', null);
             $element->setMessages(['auth.expired-password.failed.reason.The password must be different. Try again.']);
             return $this->renderView(true, 'auth.expired-password.failed.reason.The password must be different. Try again.');
         }

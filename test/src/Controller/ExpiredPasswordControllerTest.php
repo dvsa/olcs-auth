@@ -270,17 +270,17 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class)
             ->andReturn($form);
 
-        $fred = $this->authChallengeContainer
+        $this->authChallengeContainer
             ->expects('getChallengeName')
             ->andReturn('challenge-name');
-
- //       $this->assertNotEquals(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED, $fred);
 
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
 
         $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(ExpiredPasswordController::MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED);
+
 
         $this->sut->indexAction();
 
@@ -327,9 +327,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
-//again we need to check we are getting the correct exception message here LINE 134
-// static::MESSAGE_BASE, static::MESSAGE_RESULT_NOT_OK));
         $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(ExpiredPasswordController::MESSAGE_RESULT_NOT_OK);
 
         $this->sut->indexAction();
     }

@@ -25,10 +25,10 @@ use RuntimeException;
 class ExpiredPasswordController extends AbstractActionController
 {
     private const MESSAGE_BASE = "Expired Password Change Failed: %s";
-    private const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
+    public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
     private const MESSAGE_AUTH_RESULT_NOT_VALID = 'Result is not valid';
     private const MESSAGE_IDENTITY_MISSING = 'Result is missing new identity';
-    private const MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED = 'Expected challenge name to be NEW_PASSWORD_REQUIRED';
+    public const MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED = 'Expected challenge name to be NEW_PASSWORD_REQUIRED';
 
     public const ROUTE_INDEX = 'dashboard';
     public const ROUTE_LOGIN = 'auth/login/GET';

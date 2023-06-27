@@ -180,7 +180,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->andReturn($form);
 
         $request = $this->sut->getRequest();
-        $request->setMethod('POST');        //  $request->isPost() = true) {
+        $request->setMethod('POST');
         $request->setPost(new Parameters($post));
 
         $result = $this->sut->indexAction();
@@ -250,7 +250,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
     }
 
     public function testIndexActionForPostWithValidDataWrongChallenge()
-    {//LINE 120
+    {
         $post = [
             'newPassword' => 'new-password',
             'confirmPassword' => 'confirm-password'
@@ -329,7 +329,6 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $request->setPost(new Parameters($post));
 //again we need to check we are getting the correct exception message here LINE 134
 // static::MESSAGE_BASE, static::MESSAGE_RESULT_NOT_OK));
-//
         $this->expectException(RuntimeException::class);
 
         $this->sut->indexAction();
@@ -414,143 +413,132 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ];
     }
 
-// //(FAILURE_NOT_AUTHORIZED)
-//    public function testIndexActionForPostWithValidDataNotAuthorizedFailure()
-//    {
-//        $post = [
-//            'newPassword' => 'new-password',
-//            'confirmPassword' => 'confirm-password'
-//        ];
-//
-//        $form = m::mock(Form::class);
-//        $form->shouldReceive('setData')->once();
-//        $form->shouldReceive('isValid')->once()->andReturn(true);
-//        $form->shouldReceive('getData')->once()->andReturn($post);
-//        $form->shouldReceive('remove')->once()->with('oldPassword');
-//
-//        $inputFilter = m::mock(InputFilterInterface::class);
-//        $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
-//        $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
-//
-//        $this->formHelper->shouldReceive('createForm')
-//            ->once()
-//            ->with(ChangePasswordForm::class)
-//            ->andReturn($form);
-//
-//        $this->authChallengeContainer
-//            ->shouldReceive('getChallengeName')
-//            ->once()
-//            ->andReturn(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED);
-//        $this->authChallengeContainer
-//            ->shouldReceive('getChallengeSession')
-//            ->once()
-//            ->andReturn('challenge-session');
-//        $this->authChallengeContainer
-//            ->shouldReceive('getChallengedIdentity')
-//            ->once()
-//            ->andReturn('identity');
-//
-//        $this->flashMessenger
-//            ->shouldReceive('addErrorMessage')
-//            ->once()
-//            ->with('message1');
-//        $this->flashMessenger
-//            ->shouldReceive('addErrorMessage')
-//            ->once()
-//            ->with('message2');
-//
-//        $mockResponse = m::mock(Response::class);
-//        $mockResponse->shouldReceive('isOk')
-//            ->once()
-//            ->andReturnTrue();
-//        $mockResponse->shouldReceive('getResult')
-//            ->once()
-//            ->andReturn([
-//                'flags' => [
-//                    'code' => ChangeExpiredPasswordResult::FAILURE_NOT_AUTHORIZED,
-//                    'messages' => [
-//                        'message1',
-//                        'message2'
-//                    ]
-//                ]
-//            ]);
-//
-//        $this->commandSender->shouldReceive('send')
-//            ->once()
-//            ->andReturn($mockResponse);
-//
-//        $this->redirect
-//            ->shouldReceive('toRoute')
-//            ->once()
-//            ->with(ExpiredPasswordController::ROUTE_LOGIN)
-//            ->andReturn('REDIRECT');
-//
-//        $request = $this->sut->getRequest();
-//        $request->setMethod('POST');
-//        $request->setPost(new Parameters($post));
-//
-//        $this->assertEquals('REDIRECT', $this->sut->indexAction());
-//    }
-//
-//    public function testIndexActionForPostWithValidDataInvalidResponse()
-//    {
-//        $post = [
-//            'newPassword' => 'new-password',
-//            'confirmPassword' => 'confirm-password'
-//        ];
-//
-//        $form = m::mock(Form::class);
-//        $form->shouldReceive('setData')->once();
-//        $form->shouldReceive('isValid')->once()->andReturn(true);
-//        $form->shouldReceive('getData')->once()->andReturn($post);
-//        $form->shouldReceive('remove')->once()->with('oldPassword');
-//
-//        $inputFilter = m::mock(InputFilterInterface::class);
-//        $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
-//        $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
-//
-//        $this->formHelper->shouldReceive('createForm')
-//            ->with(ChangePasswordForm::class)
-//            ->andReturn($form);
-//
-//        $this->authChallengeContainer
-//            ->shouldReceive('getChallengeName')
-//            ->once()
-//            ->andReturn(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED);
-//        $this->authChallengeContainer
-//            ->shouldReceive('getChallengeSession')
-//            ->once()
-//            ->andReturn('challenge-session');
-//        $this->authChallengeContainer
-//            ->shouldReceive('getChallengedIdentity')
-//            ->once()
-//            ->andReturn('identity');
-//
-//        $mockResponse = m::mock(Response::class);
-//        $mockResponse->shouldReceive('isOk')
-//            ->once()
-//            ->andReturnTrue();
-//        $mockResponse->shouldReceive('getResult')
-//            ->once()
-//            ->andReturn([
-//                'flags' => [
-//                    'code' => ChangeExpiredPasswordResult::FAILURE_CLIENT_ERROR,
-//                    'messages' => [
-//                        'message1',
-//                        'message2'
-//                    ]
-//                ]
-//            ]);
-//
-//        $this->commandSender->shouldReceive('send')
-//            ->andReturn($mockResponse);
-//
-//        $request = $this->sut->getRequest();
-//        $request->setMethod('POST');
-//        $request->setPost(new Parameters($post));
-//
-//        $this->expectException(RuntimeException::class);
-//
-//        $this->sut->indexAction();
-//    }
+    public function testIndexActionForPostWithValidDataNotAuthorizedFailure()
+    {
+        $post = [
+            'newPassword' => 'new-password',
+            'confirmPassword' => 'confirm-password'
+        ];
+
+        $form = m::mock(Form::class);
+        $form->expects('setData');
+        $form->expects('isValid')->andReturn(true);
+        $form->expects('getData')->andReturn($post);
+        $form->expects('remove')->with('oldPassword');
+
+        $inputFilter = m::mock(InputFilterInterface::class);
+        $inputFilter->expects('remove')->with('oldPassword');
+        $form->expects('getInputFilter')->andReturn($inputFilter);
+
+        $this->formHelper->expects('createForm')
+            ->with(ChangePasswordForm::class)
+            ->andReturn($form);
+
+        $this->authChallengeContainer
+            ->expects('getChallengeName')
+            ->andReturn(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED);
+        $this->authChallengeContainer
+            ->expects('getChallengeSession')
+            ->andReturn('challenge-session');
+        $this->authChallengeContainer
+            ->expects('getChallengedIdentity')
+            ->andReturn('identity');
+
+        $this->flashMessenger
+            ->expects('addErrorMessage')
+            ->with('message1');
+        $this->flashMessenger
+            ->expects('addErrorMessage')
+            ->with('message2');
+
+        $mockResponse = m::mock(Response::class);
+        $mockResponse->expects('isOk')
+            ->andReturnTrue();
+        $mockResponse->expects('getResult')
+            ->andReturn([
+                'flags' => [
+                    'code' => ChangeExpiredPasswordResult::FAILURE_NOT_AUTHORIZED,
+                    'messages' => [
+                        'message1',
+                        'message2'
+                    ]
+                ]
+            ]);
+
+        $this->commandSender->expects('send')
+            ->andReturn($mockResponse);
+
+        $this->redirect
+            ->expects('toRoute')
+            ->with(ExpiredPasswordController::ROUTE_LOGIN)
+            ->andReturn('REDIRECT');
+
+        $request = $this->sut->getRequest();
+        $request->setMethod('POST');
+        $request->setPost(new Parameters($post));
+
+        $this->assertEquals('REDIRECT', $this->sut->indexAction());
+    }
+
+    public function testIndexActionForPostWithValidDataInvalidResponse()
+    {
+        $post = [
+            'newPassword' => 'new-password',
+            'confirmPassword' => 'confirm-password'
+        ];
+
+        $form = m::mock(Form::class);
+        $form->shouldReceive('setData')->once();
+        $form->shouldReceive('isValid')->once()->andReturn(true);
+        $form->shouldReceive('getData')->once()->andReturn($post);
+        $form->shouldReceive('remove')->once()->with('oldPassword');
+
+        $inputFilter = m::mock(InputFilterInterface::class);
+        $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
+        $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
+
+        $this->formHelper->shouldReceive('createForm')
+            ->with(ChangePasswordForm::class)
+            ->andReturn($form);
+
+        $this->authChallengeContainer
+            ->shouldReceive('getChallengeName')
+            ->once()
+            ->andReturn(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED);
+        $this->authChallengeContainer
+            ->shouldReceive('getChallengeSession')
+            ->once()
+            ->andReturn('challenge-session');
+        $this->authChallengeContainer
+            ->shouldReceive('getChallengedIdentity')
+            ->once()
+            ->andReturn('identity');
+
+        $mockResponse = m::mock(Response::class);
+        $mockResponse->shouldReceive('isOk')
+            ->once()
+            ->andReturnTrue();
+        $mockResponse->shouldReceive('getResult')
+            ->once()
+            ->andReturn([
+                'flags' => [
+                    'code' => ChangeExpiredPasswordResult::FAILURE_CLIENT_ERROR,
+                    'messages' => [
+                        'message1',
+                        'message2'
+                    ]
+                ]
+            ]);
+
+        $this->commandSender->shouldReceive('send')
+            ->andReturn($mockResponse);
+
+        $request = $this->sut->getRequest();
+        $request->setMethod('POST');
+        $request->setPost(new Parameters($post));
+
+        $this->expectException(RuntimeException::class);
+
+        $this->sut->indexAction();
+    }
 }

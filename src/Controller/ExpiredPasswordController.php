@@ -25,10 +25,10 @@ use RuntimeException;
 class ExpiredPasswordController extends AbstractActionController
 {
     private const MESSAGE_BASE = "Expired Password Change Failed: %s";
-    private const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
+    public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
     private const MESSAGE_AUTH_RESULT_NOT_VALID = 'Result is not valid';
     private const MESSAGE_IDENTITY_MISSING = 'Result is missing new identity';
-    private const MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED = 'Expected challenge name to be NEW_PASSWORD_REQUIRED';
+    public const MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED = 'Expected challenge name to be NEW_PASSWORD_REQUIRED';
 
     public const ROUTE_INDEX = 'dashboard';
     public const ROUTE_LOGIN = 'auth/login/GET';
@@ -157,8 +157,8 @@ class ExpiredPasswordController extends AbstractActionController
     {
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID) {
             $element = $this->form->get('newPassword');
-            $element->setMessages($result->getMessages());
-            return $this->renderView();
+            $element->setMessages(['auth.expired-password.failed.reason.New password does not meet the password policy requirements.']);
+            return $this->renderView(true,'auth.expired-password.failed.reason.New password does not meet the password policy requirements.');
         }
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NOT_AUTHORIZED) {
             foreach ($result->getMessages() as $message) {
@@ -168,9 +168,8 @@ class ExpiredPasswordController extends AbstractActionController
         }
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD) {
             $element = $this->form->get('newPassword');
-            $element->setOption('error-message', null);
-            $element->setMessages(['auth.expired-password.new-password-same-as-previous']);
-            return $this->renderView($this->form);
+            $element->setMessages(['auth.expired-password.failed.reason.The password must be different. Try again.']);
+            return $this->renderView(true, 'auth.expired-password.failed.reason.The password must be different. Try again.');
         }
         throw new RuntimeException(sprintf("Invalid response from ChangeExpiredPassword Command: %s", implode('. ', $result->getMessages())));
     }

@@ -25,12 +25,11 @@ class ChangePasswordForm
     /**
      * @Form\Options({
      *     "label": "auth.change-password.new-password",
-     *     "short-label": "auth.change-password.new-password",
-     *     "error-message": "auth.change-password.new-password.error"
+     *     "short-label": "auth.change-password.new-password"
      * })
      * @Form\Attributes({"id": "auth.change-password.new-password"})
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
-     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":8, "max":160}})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":12, "max":160}})
      * @Form\Validator({"name":"Common\Form\Elements\Validators\PasswordConfirm","options":{"token":"confirmPassword"}})
      * @Form\Type("Password")
      */

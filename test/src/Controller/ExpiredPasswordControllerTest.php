@@ -190,24 +190,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
     }
     public function testIndexActionForPostWithValidDataSuccess()
     {
-        $post = [
-            'newPassword' => 'new-password',
-            'confirmPassword' => 'new-password'
-        ];
-
-        $form = m::mock(Form::class);
-        $form->expects('setData');
-        $form->expects('isValid')->andReturn(true);
-        $form->expects('getData')->andReturn($post);
-        $form->expects('remove')->with('oldPassword');
-
-        $inputFilter = m::mock(InputFilterInterface::class);
-        $inputFilter->expects('remove')->with('oldPassword');
-        $form->expects('getInputFilter')->andReturn($inputFilter);
-
-        $this->formHelper->shouldReceive('createForm')
-            ->with(ChangePasswordForm::class)
-            ->andReturn($form);
+        $post = $this->setUpPostData();
+        $form = $this->setUpInitialForm($post);
 
         $this->authChallengeContainer
             ->expects('getChallengeName')
@@ -251,25 +235,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
     public function testIndexActionForPostWithValidDataWrongChallenge()
     {
-        $post = [
-            'newPassword' => 'new-password',
-            'confirmPassword' => 'confirm-password'
-        ];
-
-        $form = m::mock(Form::class);
-        $form->expects('setData');
-        $form->expects('isValid')->andReturn(true);
-        $form->expects('getData')->andReturn($post);
-        $form->expects('remove')->with('oldPassword');
-
-        $inputFilter = m::mock(InputFilterInterface::class);
-        $inputFilter->expects('remove')->with('oldPassword');
-        $form->expects('getInputFilter')->andReturn($inputFilter);
-
-        $this->formHelper->shouldReceive('createForm')
-            ->with(ChangePasswordForm::class)
-            ->andReturn($form);
-
+        $post = $this->setUpPostData();
+        $form = $this->setUpInitialForm($post);
         $this->authChallengeContainer
             ->expects('getChallengeName')
             ->andReturn('challenge-name');
@@ -288,24 +255,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
     public function testIndexActionForPostWithValidDataResultNotOk()
     {
-        $post = [
-            'newPassword' => 'new-password',
-            'confirmPassword' => 'confirm-password'
-        ];
-
-        $form = m::mock(Form::class);
-        $form->expects('setData');
-        $form->expects('isValid')->andReturn(true);
-        $form->expects('getData')->andReturn($post);
-        $form->expects('remove')->with('oldPassword');
-
-        $inputFilter = m::mock(InputFilterInterface::class);
-        $inputFilter->expects('remove')->with('oldPassword');
-        $form->expects('getInputFilter')->andReturn($inputFilter);
-
-        $this->formHelper->shouldReceive('createForm')
-            ->with(ChangePasswordForm::class)
-            ->andReturn($form);
+        $post = $this->setUpPostData();
+        $form = $this->setUpInitialForm($post);
 
         $this->authChallengeContainer
             ->expects('getChallengeName')
@@ -337,36 +288,16 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
      *
      * @dataProvider errorMessagesDataProvider
      */
- public function testIndexActionForPostWithValidDataNewPasswordInvalid($errorMessage)
-    {
-        $post = [
-            'newPassword' => 'new-password',
-            'confirmPassword' => 'confirm-password'
-        ];
-
-        $form = m::mock(Form::class);
-        $form->expects('setData');
-        $form->expects('isValid')->andReturn(true);
-        $form->expects('getData')->andReturn($post);
-        $form->expects('remove')->with('oldPassword');
-
-        $inputFilter = m::mock(InputFilterInterface::class);
-        $inputFilter->expects('remove')
-            ->with('oldPassword');
-        $form->expects('getInputFilter')
-            ->andReturn($inputFilter);
-
+     public function testIndexActionForPostWithValidDataNewPasswordInvalid($errorMessage)
+     {
+        $post = $this->setUpPostData();
+        $form = $this->setUpInitialForm($post);
         $element = m::mock(ElementInterface::class);
 
         $element->expects('setMessages');
         $form->expects('get')
             ->with('newPassword')
             ->andReturn($element);
-
-        $this->formHelper->expects('createForm')
-            ->with(ChangePasswordForm::class)
-            ->andReturn($form);
-
         $this->authChallengeContainer
             ->expects('getChallengeName')
             ->andReturn(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED);
@@ -398,8 +329,45 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->assertInstanceOf(ViewModel::class, $result);
         $this->assertEquals('auth/expired-password', $result->getTemplate());
     }
+    public function setUpPostData()
+    {
+        $post = [
+            'newPassword' => 'new-password',
+            'confirmPassword' => 'confirm-password'
+        ];
+        return $post;
+    }
+    public function getFormMock($post)
+    {
+        $form = m::mock(Form::class);
+        $form->expects('setData');
+        $form->expects('isValid')->andReturn(true);
+        $form->expects('getData')->andReturn($post);
+        $form->expects('remove')->with('oldPassword');
+        return $form;
+    }
 
+    public function getInputFilter()
+    {
+        $inputFilter = m::mock(InputFilterInterface::class);
+        $inputFilter->expects('remove')
+            ->with('oldPassword');
 
+        return $inputFilter;
+    }
+    public function setUpInitialForm($post)
+    {
+        $form = $this->getFormMock($post);
+        $inputFilter = $this->getInputFilter();
+
+        $form->expects('getInputFilter')
+            ->andReturn($inputFilter);
+
+        $this->formHelper->expects('createForm')
+            ->with(ChangePasswordForm::class)
+            ->andReturn($form);
+        return $form;
+    }
     /**
      * @return array[]
      * dataProvider for testIndexActionForPostWithValidDataNewPasswordInvalid
@@ -414,24 +382,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
     public function testIndexActionForPostWithValidDataNotAuthorizedFailure()
     {
-        $post = [
-            'newPassword' => 'new-password',
-            'confirmPassword' => 'confirm-password'
-        ];
-
-        $form = m::mock(Form::class);
-        $form->expects('setData');
-        $form->expects('isValid')->andReturn(true);
-        $form->expects('getData')->andReturn($post);
-        $form->expects('remove')->with('oldPassword');
-
-        $inputFilter = m::mock(InputFilterInterface::class);
-        $inputFilter->expects('remove')->with('oldPassword');
-        $form->expects('getInputFilter')->andReturn($inputFilter);
-
-        $this->formHelper->expects('createForm')
-            ->with(ChangePasswordForm::class)
-            ->andReturn($form);
+        $post = $this->setUpPostData();
+        $form = $this->setUpInitialForm($post);
 
         $this->authChallengeContainer
             ->expects('getChallengeName')
@@ -481,44 +433,23 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
     public function testIndexActionForPostWithValidDataInvalidResponse()
     {
-        $post = [
-            'newPassword' => 'new-password',
-            'confirmPassword' => 'confirm-password'
-        ];
-
-        $form = m::mock(Form::class);
-        $form->shouldReceive('setData')->once();
-        $form->shouldReceive('isValid')->once()->andReturn(true);
-        $form->shouldReceive('getData')->once()->andReturn($post);
-        $form->shouldReceive('remove')->once()->with('oldPassword');
-
-        $inputFilter = m::mock(InputFilterInterface::class);
-        $inputFilter->shouldReceive('remove')->once()->with('oldPassword');
-        $form->shouldReceive('getInputFilter')->once()->andReturn($inputFilter);
-
-        $this->formHelper->shouldReceive('createForm')
-            ->with(ChangePasswordForm::class)
-            ->andReturn($form);
+        $post = $this->setUpPostData();
+        $form = $this->setUpInitialForm($post);
 
         $this->authChallengeContainer
-            ->shouldReceive('getChallengeName')
-            ->once()
+            ->expects('getChallengeName')
             ->andReturn(AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED);
         $this->authChallengeContainer
-            ->shouldReceive('getChallengeSession')
-            ->once()
+            ->expects('getChallengeSession')
             ->andReturn('challenge-session');
         $this->authChallengeContainer
-            ->shouldReceive('getChallengedIdentity')
-            ->once()
+            ->expects('getChallengedIdentity')
             ->andReturn('identity');
 
         $mockResponse = m::mock(Response::class);
-        $mockResponse->shouldReceive('isOk')
-            ->once()
+        $mockResponse->expects('isOk')
             ->andReturnTrue();
-        $mockResponse->shouldReceive('getResult')
-            ->once()
+        $mockResponse->expects('getResult')
             ->andReturn([
                 'flags' => [
                     'code' => ChangeExpiredPasswordResult::FAILURE_CLIENT_ERROR,

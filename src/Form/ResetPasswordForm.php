@@ -22,7 +22,7 @@ class ResetPasswordForm
      * @Form\Validator({
      *     "name":"Laminas\Validator\Regex",
      *     "options":{
-     *         "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{12,}$/",
+     *         "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/",
      *         "message": "auth.expired-password.failed.reason.New password does not meet the password policy requirements."
      *     }
      * })

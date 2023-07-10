@@ -13,10 +13,19 @@ class ResetPasswordForm
     /**
      * @Form\Options({
      *     "label": "auth.reset-password.new-password",
-     *     "short-label": "auth.reset-password.new-password"
+     *     "short-label": "auth.reset-password.new-password",
+     *     "shouldEscapeMessages": false,
      * })
      * @Form\Attributes({"id": "auth.reset-password.new-password"})
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":12}})
+     * @Form\Validator({
+     *     "name":"Laminas\Validator\Regex",
+     *     "options":{
+     *         "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/",
+     *         "message": "auth.expired-password.failed.reason.New password does not meet the password policy requirements."
+     *     }
+     * })
      * @Form\Type("Password")
      */
     public $newPassword = null;
@@ -29,6 +38,7 @@ class ResetPasswordForm
      * @Form\Attributes({"id": "auth.reset-password.confirm-password"})
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Validator({"name": "Laminas\Validator\Identical", "options": {"token": "newPassword"}})
+     * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":12}})
      * @Form\Type("Password")
      */
     public $confirmPassword = null;

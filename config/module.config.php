@@ -66,7 +66,7 @@ return [
                         ],
                     ],
                     'validate' => [
-                        'type' => \Laminas\Mvc\Router\Http\Segment::class,
+                        'type' => \Laminas\Router\Http\Segment::class,
                         'options' => [
                             'route' => 'validate[/]',
                             'defaults' => [
@@ -140,7 +140,7 @@ return [
     ],
     'zfc_rbac' => [
         'guards' => [
-            'ZfcRbac\Guard\RoutePermissionsGuard' => [
+            'LmcRbacMvc\Guard\RoutePermissionsGuard' => [
                 'auth/*' => ['*'],
             ]
         ]

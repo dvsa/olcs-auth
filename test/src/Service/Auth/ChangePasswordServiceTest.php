@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Change Password Service Test
- */
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
@@ -14,9 +11,6 @@ use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\ServiceManager;
 
-/**
- * Change Password Service Test
- */
 class ChangePasswordServiceTest extends MockeryTestCase
 {
     /**
@@ -42,7 +36,7 @@ class ChangePasswordServiceTest extends MockeryTestCase
         $sm->setService('Auth\ResponseDecoderService', $this->responseDecoder);
 
         $this->sut = new ChangePasswordService();
-        $this->sut->createService($sm);
+        $this->sut->__invoke($sm, ChangePasswordService::class);
     }
 
     public function testUpdatePassword()

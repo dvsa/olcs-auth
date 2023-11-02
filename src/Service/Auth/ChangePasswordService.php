@@ -2,13 +2,10 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Http\Headers;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\RequestInterface as Request;
 
-/**
- * Change Password Service
- */
 class ChangePasswordService extends AbstractRestService
 {
     /**
@@ -19,15 +16,13 @@ class ChangePasswordService extends AbstractRestService
     /**
      * Create the change password service
      *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
      * @return $this
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $this->cookieService = $serviceLocator->get('Auth\CookieService');
+        $this->cookieService = $container->get('Auth\CookieService');
 
-        return parent::createService($serviceLocator);
+        return parent::__invoke($container, $requestedName, $options);
     }
 
     /**

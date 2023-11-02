@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Dvsa\OlcsTest\Auth\Controller;
 
-use Common\Rbac\PidIdentityProvider;
 use Dvsa\Olcs\Auth\Controller\ValidateController;
 use Dvsa\Olcs\Auth\Service;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Variables;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * @see ValidateController

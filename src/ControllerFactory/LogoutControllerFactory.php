@@ -2,45 +2,36 @@
 
 namespace Dvsa\Olcs\Auth\ControllerFactory;
 
-use Common\Rbac\PidIdentityProvider;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Interop\Container\ContainerInterface;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Http\Response;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Session\Container;
 use RuntimeException;
 
-/**
- * Class LogoutControllerFactory
- * @package Dvsa\Olcs\Auth\ControllerFactory
- */
 class LogoutControllerFactory implements FactoryInterface
 {
     protected const HEADER_REALM_KEY = 'HTTP_X_REALM';
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LogoutController
     {
-        /** @var ServiceLocatorInterface $sm */
-        $sm = $container->getServiceLocator();
-
         /** @var array $config */
-        $config = $sm->get('config');
+        $config = $container->get('Config');
 
         /** @var Request $requestService */
-        $requestService = $sm->get('request');
+        $requestService = $container->get('Request');
 
         /** @var Response $responseService */
         $responseService = new Response();
 
         /** @var CookieService $cookieService */
-        $cookieService = $sm->get('Auth\CookieService');
+        $cookieService = $container->get('Auth\CookieService');
 
         /** @var LogoutService $logoutService */
-        $logoutService = $sm->get('Auth\LogoutService');
+        $logoutService = $container->get('Auth\LogoutService');
 
         $sessionName = $config['auth']['session_name'] ?? '';
         if (empty($sessionName)) {
@@ -57,19 +48,6 @@ class LogoutControllerFactory implements FactoryInterface
             $this->getSelfServeLogoutUrl($config),
             $session
         );
-    }
-
-    /**
-     * Create LogoutController
-     *
-     * @param ServiceLocatorInterface $serviceLocator ZF Service locator
-     *
-     * @return LogoutController
-     * @deprecated No longer needed in Laminas 3
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): LogoutController
-    {
-        return $this($serviceLocator, LogoutController::class);
     }
 
     /**

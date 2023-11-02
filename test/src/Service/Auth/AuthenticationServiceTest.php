@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Authentication Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\AuthenticationService;
@@ -15,11 +10,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\ServiceManager;
 
-/**
- * Authentication Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class AuthenticationServiceTest extends MockeryTestCase
 {
     /**
@@ -41,7 +31,7 @@ class AuthenticationServiceTest extends MockeryTestCase
         $sm->setService('Auth\ResponseDecoderService', $this->responseDecoder);
 
         $this->sut = new AuthenticationService();
-        $this->sut->createService($sm);
+        $this->sut->__invoke($sm, AuthenticationService::class);
     }
 
     public function testAuthenticateFailedBegin()

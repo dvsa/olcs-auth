@@ -138,7 +138,7 @@ return [
             'ViewJsonStrategy',
         ],
     ],
-    'zfc_rbac' => [
+    'lmc_rbac' => [
         'guards' => [
             'LmcRbacMvc\Guard\RoutePermissionsGuard' => [
                 'auth/*' => ['*'],

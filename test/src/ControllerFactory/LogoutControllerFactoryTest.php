@@ -11,73 +11,58 @@ use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\ServiceManager\Config;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class ControllerFactoryTest
  * @covers \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory
  */
-class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
+class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
 {
-    const CONFIG_VALID = [
-        'auth' => [
-            'identity_provider' => JWTIdentityProvider::class
-        ]
-    ];
-
-    private $serviceManager;
+    private $container;
+    private $mockRequest;
+    private $config;
 
     public function setUp(): void
     {
+        $this->container = m::mock(ContainerInterface::class);
+
         // Mock coockie service
         $cookieService = $this->createMock(CookieService::class);
-
-        $this->serviceManager = m::mock(ServiceManager::class)->makePartial();
-        if ($this->serviceManager !== null) {
-            $this->serviceManager->setService('Auth\CookieService', $cookieService);
-        }
+        $this->container->expects('get')->with('Auth\CookieService')->andReturn($cookieService);
 
         // Mock logout service
         $logoutService = $this->createMock(LogoutService::class);
-        $this->serviceManager->setService('Auth\LogoutService', $logoutService);
+        $this->container->expects('get')->with('Auth\LogoutService')->andReturn($logoutService);
 
         // Set realm by default, but can be overwritten
-        $mockRequest = $this->createMock(Request::class);
-        $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn('test');
-        $this->serviceManager->setService('request', $mockRequest);
+        $this->mockRequest = $this->createMock(Request::class);
 
-        //$this->serviceManager = $serviceManager;
+        $this->config = [
+            'auth' => [
+                'session_name' => 'session_name',
+                'identity_provider' => 'identity_provider',
+            ],
+            'selfserve_logout_redirect_url' => 'test',
+        ];
     }
 
     /**
-     * @param string $realm             Realm name
-     * @param bool   $expectedException Are we expecting an exception?
+     * @param string $realm Realm name
+     * @param bool $expectedException Are we expecting an exception?
      *
      * @dataProvider realmDataProvider
      */
     public function testLogoutControllerFactoryWithRealm($realm)
     {
-        $config = [];
         // Set realm defined in data provider
-        $mockRequest = $this->createMock(Request::class);
-        $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
-
-        if (!$this->serviceManager->has('Config') || !empty($config)) {
-            if (empty($config)) {
-                $config = static::CONFIG_VALID;
-            }
-            $this->serviceManager->setService('Config', $config);
-        }
-
-        $config = $this->serviceManager->get('config');
-        $config['auth'] = ['session_name' => 'session_name', 'identity_provider' => 'identity_provider'];
-
-        // Create controller config
-        $controllerConfig = new Config(Bootstrap::getConfig());
-        $controllerManager = new ControllerManager($controllerConfig);
-
-        $controllerManager->setServiceLocator($this->serviceManager);
+        $this->mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
+        $this->container->expects('get')->with('Request')->andReturn($this->mockRequest);
+        $this->container->expects('get')->with('Config')->andReturn($this->config);
 
         // Initialise Factory
         $factory = new LogoutControllerFactory();
@@ -85,7 +70,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         // Assert factory returns controller unless exception expected
         self::assertInstanceOf(
             LogoutController::class,
-            $factory->__invoke($controllerManager, LogoutController::class)
+            $factory->__invoke($this->container, LogoutController::class)
         );
     }
 
@@ -116,16 +101,13 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
             'Selfserve logout redirect is not available in config'
         );
 
+        // Set realm defined in data provider
+        $this->mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn('test');
+        $this->container->expects('get')->with('Request')->andReturn($this->mockRequest);
+
         // Remove the redirect URL from config in this mock
-        $config = $this->serviceManager->get('config');
-        unset($config['selfserve_logout_redirect_url']);
-        $this->serviceManager->setService('config', $config);
-
-        // Create controller config
-        $controllerConfig = new Config(Bootstrap::getConfig());
-        $controllerManager = new ControllerManager($controllerConfig);
-
-        $controllerManager->setServiceLocator($this->serviceManager);
+        unset($this->config['selfserve_logout_redirect_url']);
+        $this->container->expects('get')->with('Config')->andReturn($this->config);
 
         // Initialise Factory
         $factory = new LogoutControllerFactory();
@@ -133,7 +115,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         // Assert factory returns controller unless exception expected
         self::assertInstanceOf(
             LogoutController::class,
-            $factory->createService($controllerManager)
+            $factory->__invoke($this->container, LogoutController::class)
         );
     }
 }

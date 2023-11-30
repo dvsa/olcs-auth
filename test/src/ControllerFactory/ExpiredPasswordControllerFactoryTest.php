@@ -7,6 +7,7 @@ use Common\Rbac\JWTIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
+use Common\Test\MocksServicesTrait;
 use Dvsa\Olcs\Auth\Controller\ExpiredPasswordController;
 use Dvsa\Olcs\Auth\ControllerFactory\ExpiredPasswordControllerFactory;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
@@ -21,7 +22,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\Auth\Adapter\SelfserveCommandAdapter;
 use Olcs\Service\Helper\WebDavJsonWebTokenGenerationService;
 use Olcs\Service\Helper\WebDavJsonWebTokenGenerationServiceFactory;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
 
 class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace OlcsTest\Logging\src\ControllerFactory;
+namespace Dvsa\OlcsTest\Auth\src\ControllerFactory;
 
 use Common\Rbac\JWTIdentityProvider;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;

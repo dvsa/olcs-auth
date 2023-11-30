@@ -21,4 +21,4 @@ jobs:
         id: release
         with:
           release-type: php
-          package-name: olcs-utils
+          package-name: olcs-auth

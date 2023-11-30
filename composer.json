@@ -28,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-          "OlcsTest\\Logging\\": "test/"
+          "Dvsa\\OlcsTest\\Auth\\": "test/"
         }
     },
     "config": {

@@ -1,15 +1,18 @@
 <?php
 
-namespace Dvsa\OlcsTest\Auth\ControllerFactory;
+namespace OlcsTest\Logging\src\ControllerFactory;
 
+use Common\Rbac\JWTIdentityProvider;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Dvsa\OlcsTest\Auth\Bootstrap;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
+use Dvsa\OlcsTest\Auth\Bootstrap;
 use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;
+use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\ServiceManager;
+use Mockery as m;
 
 /**
  * Class ControllerFactoryTest
@@ -17,25 +20,34 @@ use Laminas\ServiceManager\ServiceManager;
  */
 class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var ServiceManager */
+    const CONFIG_VALID = [
+        'auth' => [
+            'identity_provider' => JWTIdentityProvider::class
+        ]
+    ];
+
     private $serviceManager;
 
     public function setUp(): void
     {
         // Mock coockie service
         $cookieService = $this->createMock(CookieService::class);
-        $serviceManager->setService('Auth\CookieService', $cookieService);
+
+        $this->serviceManager = m::mock(ServiceManager::class)->makePartial();
+        if ($this->serviceManager !== null) {
+            $this->serviceManager->setService('Auth\CookieService', $cookieService);
+        }
 
         // Mock logout service
         $logoutService = $this->createMock(LogoutService::class);
-        $serviceManager->setService('Auth\LogoutService', $logoutService);
+        $this->serviceManager->setService('Auth\LogoutService', $logoutService);
 
         // Set realm by default, but can be overwritten
         $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn('test');
-        $serviceManager->setService('request', $mockRequest);
+        $this->serviceManager->setService('request', $mockRequest);
 
-        $this->serviceManager = $serviceManager;
+        //$this->serviceManager = $serviceManager;
     }
 
     /**
@@ -46,17 +58,23 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testLogoutControllerFactoryWithRealm($realm)
     {
+        $config = [];
         // Set realm defined in data provider
         $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
-        $this->serviceManager->setService('request', $mockRequest);
+
+        if (!$this->serviceManager->has('Config') || !empty($config)) {
+            if (empty($config)) {
+                $config = static::CONFIG_VALID;
+            }
+            $this->serviceManager->setService('Config', $config);
+        }
 
         $config = $this->serviceManager->get('config');
         $config['auth'] = ['session_name' => 'session_name', 'identity_provider' => 'identity_provider'];
-        $this->serviceManager->setService('config', $config);
 
         // Create controller config
-        $controllerConfig = new \Laminas\ServiceManager\Config(Bootstrap::getConfig());
+        $controllerConfig = new Config(Bootstrap::getConfig());
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);
@@ -104,7 +122,7 @@ class LogoutControllerFactoryTest extends \PHPUnit\Framework\TestCase
         $this->serviceManager->setService('config', $config);
 
         // Create controller config
-        $controllerConfig = new \Laminas\ServiceManager\Config(Bootstrap::getConfig());
+        $controllerConfig = new Config(Bootstrap::getConfig());
         $controllerManager = new ControllerManager($controllerConfig);
 
         $controllerManager->setServiceLocator($this->serviceManager);

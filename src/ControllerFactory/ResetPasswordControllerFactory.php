@@ -10,7 +10,6 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
-
 /**
  * Class ResetPasswordControllerFactory
  * @package Dvsa\Olcs\Auth\ControllerFactory

@@ -9,21 +9,20 @@
         "laminas/laminas-authentication": "^2.5",
         "laminas/laminas-form": "^2.7",
         "laminas/laminas-http": "^2.5",
-        "laminas/laminas-mvc": "^2.7.14 || ^3.0",
-        "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3",
+        "laminas/laminas-mvc": "^2.7.14",
+        "laminas/laminas-servicemanager": "^2.7.5",
         "laminas/laminas-session": "^2.8.1",
-        "laminas/laminas-stdlib": "~2.7.9",
+        "laminas/laminas-stdlib": "^2.7.9",
         "laminas/laminas-view": "^2.11",
         "psr/container": "^1.1.2"
     },
     "require-dev": {
-        "olcs/olcs-common": "~4.206.511",
-        "olcs/olcs-transfer": "~4.206.184",
-        "phpunit/phpunit": "^9.6",
-        "mockery/mockery": "^1.6",
+        "bamarni/composer-bin-plugin": "^1.8",
         "johnkary/phpunit-speedtrap": "^4.0",
-        "bamarni/composer-bin-plugin": "^1.8"
-
+        "mockery/mockery": "^1.6",
+        "olcs/olcs-common": "~4.206.511",
+        "olcs/olcs-transfer": "^5.0.0",
+        "phpunit/phpunit": "^9.6"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

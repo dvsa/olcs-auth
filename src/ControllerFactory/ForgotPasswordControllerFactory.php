@@ -22,6 +22,8 @@ class ForgotPasswordControllerFactory implements FactoryInterface
      * @param $requestedName
      * @param array|null $options
      * @return ForgotPasswordController
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ForgotPasswordController
     {

@@ -158,7 +158,7 @@ class ExpiredPasswordController extends AbstractActionController
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID) {
             $element = $this->form->get('newPassword');
             $element->setMessages(['auth.expired-password.failed.reason.New password does not meet the password policy requirements.']);
-            return $this->renderView(true,'auth.expired-password.failed.reason.New password does not meet the password policy requirements.');
+            return $this->renderView(true, 'auth.expired-password.failed.reason.New password does not meet the password policy requirements.');
         }
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NOT_AUTHORIZED) {
             foreach ($result->getMessages() as $message) {

@@ -24,23 +24,24 @@ class LogoutControllerFactory implements FactoryInterface
 
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): LogoutController
     {
-        /** @var ServiceLocatorInterface $sm */
-        $sm = $container->getServiceLocator();
+        if (method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
 
         /** @var array $config */
-        $config = $sm->get('config');
+        $config = $container->get('Config');
 
         /** @var Request $requestService */
-        $requestService = $sm->get('request');
+        $requestService = $container->get('Request');
 
         /** @var Response $responseService */
         $responseService = new Response();
 
         /** @var CookieService $cookieService */
-        $cookieService = $sm->get('Auth\CookieService');
+        $cookieService = $container->get('Auth\CookieService');
 
         /** @var LogoutService $logoutService */
-        $logoutService = $sm->get('Auth\LogoutService');
+        $logoutService = $container->get('Auth\LogoutService');
 
         $sessionName = $config['auth']['session_name'] ?? '';
         if (empty($sessionName)) {

@@ -6,12 +6,11 @@ use Laminas\Session\Container;
 
 class AuthChallengeContainer extends Container
 {
-    const CONTAINER_NAME = 'authChallenge';
-    const KEY_CHALLENGE_NAME = 'challengeName';
-    const KEY_CHALLENGE_SESSION = 'challengeSession';
-    const KEY_CHALLENGE_IDENTITY = 'challengeIdentity';
-
-    const CHALLENEGE_NEW_PASWORD_REQUIRED = 'NEW_PASSWORD_REQUIRED';
+    protected const CONTAINER_NAME = 'authChallenge';
+    protected const KEY_CHALLENGE_NAME = 'challengeName';
+    protected const KEY_CHALLENGE_SESSION = 'challengeSession';
+    protected const KEY_CHALLENGE_IDENTITY = 'challengeIdentity';
+    public const CHALLENEGE_NEW_PASWORD_REQUIRED = 'NEW_PASSWORD_REQUIRED';
 
     public function __construct()
     {

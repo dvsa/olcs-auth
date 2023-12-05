@@ -5,13 +5,7 @@ namespace Dvsa\OlcsTest\Auth;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\I18n\Translator\Translator;
-use Laminas\Loader\AutoloaderFactory;
 use Laminas\Console\Console;
-use RuntimeException;
-
-date_default_timezone_set('Europe/London');
-error_reporting(E_ALL & ~E_USER_DEPRECATED);
-chdir(__DIR__);
 
 /**
  * Test bootstrap, for setting up autoloading
@@ -35,8 +29,6 @@ class Bootstrap
         if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {
             $zf2ModulePaths[] = $path;
         }
-
-        self::initAutoloader();
 
         $config = [
             'modules' => [
@@ -66,42 +58,11 @@ class Bootstrap
         return self::$config;
     }
 
-    public static function chroot()
-    {
-        $rootPath = dirname(static::findParentPath(''));
-        chdir($rootPath);
-    }
-
     public static function getServiceManager()
     {
         return self::$serviceManager;
     }
 
-    protected static function initAutoloader()
-    {
-        $vendorPath = static::findParentPath('vendor');
-
-        if (file_exists($vendorPath . '/autoload.php')) {
-            include $vendorPath . '/autoload.php';
-        }
-
-        if (! class_exists('Laminas\Loader\AutoloaderFactory')) {
-            throw new RuntimeException(
-                'Unable to load ZF2. Run `php composer.phar install`'
-            );
-        }
-
-        AutoloaderFactory::factory(
-            [
-                'Laminas\Loader\StandardAutoloader' => [
-                    'autoregister_zf' => true,
-                    'namespaces' => [
-                        __NAMESPACE__ => __DIR__ . DIRECTORY_SEPARATOR . __NAMESPACE__,
-                    ],
-                ],
-            ]
-        );
-    }
 
     protected static function findParentPath($path)
     {
@@ -117,6 +78,3 @@ class Bootstrap
         return $dir . DIRECTORY_SEPARATOR . $path;
     }
 }
-
-Bootstrap::init();
-Bootstrap::chroot();

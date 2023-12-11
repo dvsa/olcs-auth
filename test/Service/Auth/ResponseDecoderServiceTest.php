@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;

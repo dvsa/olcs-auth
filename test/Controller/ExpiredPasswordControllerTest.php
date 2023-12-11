@@ -291,9 +291,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(ExpiredPasswordController::MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED);
 
-
         $this->sut->indexAction();
-
     }
 
     public function testIndexActionForPostWithValidDataResultNotOk()
@@ -347,7 +345,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
      *
      * @dataProvider errorMessagesDataProvider
      */
- public function testIndexActionForPostWithValidDataNewPasswordInvalid($errorMessage)
+    public function testIndexActionForPostWithValidDataNewPasswordInvalid($errorMessage)
     {
         $post = [
             'newPassword' => 'new-password',
@@ -420,7 +418,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
     public function errorMessagesDataProvider()
     {
         return [
-            'FAILURE_NEW_PASSWORD_INVALID'=> [ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID],
+            'FAILURE_NEW_PASSWORD_INVALID' => [ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID],
             'FAILURE_NEW_PASSWORD_MATCHES_OLD' => [ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD],
         ];
     }

@@ -11,10 +11,7 @@ use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;
 use Mockery as m;
-/**
- * Class ControllerFactoryTest
- * @covers \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory
- */
+
 class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $container;

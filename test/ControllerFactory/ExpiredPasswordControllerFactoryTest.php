@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Dvsa\OlcsTest\Auth\ControllerFactory;
@@ -7,6 +8,7 @@ use Common\Rbac\JWTIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
+use Common\Test\MocksServicesTrait;
 use Dvsa\Olcs\Auth\Controller\ExpiredPasswordController;
 use Dvsa\Olcs\Auth\ControllerFactory\ExpiredPasswordControllerFactory;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
@@ -21,13 +23,14 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\Auth\Adapter\SelfserveCommandAdapter;
 use Olcs\Service\Helper\WebDavJsonWebTokenGenerationService;
 use Olcs\Service\Helper\WebDavJsonWebTokenGenerationServiceFactory;
-use Olcs\TestHelpers\Service\MocksServicesTrait;
 
 class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
 {
     use MocksServicesTrait;
 
-    const CONFIG_VALID = [
+    protected ExpiredPasswordControllerFactory $sut;
+
+    private const CONFIG_VALID = [
         'auth' => [
             'identity_provider' => JWTIdentityProvider::class
         ]
@@ -36,7 +39,7 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
     /**
      * @test
      */
-    public function __invoke_IsCallable(): void
+    public function invokeIsCallable(): void
     {
         // Setup
         $this->setUpSut();
@@ -47,9 +50,9 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
 
     /**
      * @test
-     * @depends __invoke_IsCallable
+     * @depends invokeIsCallable
      */
-    public function __invoke_ReturnsAnInstanceOfExpiredPasswordController()
+    public function invokeReturnsAnInstanceOfExpiredPasswordController()
     {
         // Setup
         $this->setUpSut();

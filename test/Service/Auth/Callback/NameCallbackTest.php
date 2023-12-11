@@ -1,28 +1,29 @@
 <?php
 
 /**
- * Password Callback Test
+ * Name Callback Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Dvsa\OlcsTest\Auth\Service\Auth\Callback;
 
-use Dvsa\Olcs\Auth\Service\Auth\Callback\PasswordCallback;
+use Dvsa\Olcs\Auth\Service\Auth\Callback\NameCallback;
 
 /**
- * Password Callback Test
+ * Name Callback Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PasswordCallbackTest extends \PHPunit\Framework\TestCase
+class NameCallbackTest extends \PHPUnit\Framework\TestCase
 {
     public function testCallback()
     {
-        $sut = new PasswordCallback('UserPassword', 'ID1', 'test', false);
+        $sut = new NameCallback('Username', 'ID1', 'test');
         $result = $sut->toArray();
         $expected = [
-            'type' => 'PasswordCallback',
-            'output' => [['name' => 'prompt', 'value' => 'UserPassword']],
+            'type' => 'NameCallback',
+            'output' => [['name' => 'prompt', 'value' => 'Username']],
             'input' => [
                 [
                     'name' => 'ID1',

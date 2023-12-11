@@ -3,6 +3,7 @@
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Common\Service\User\LastLoginService;
+use DateTimeImmutable;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -119,13 +120,11 @@ class LoginServiceTest extends MockeryTestCase
                     $this->assertEquals('some-token', $setCookie->getValue());
                     $this->assertEquals('/', $setCookie->getPath());
 
-
                     $this->assertEquals($midnightString, $setCookie->getExpires());
                     $this->assertFalse($setCookie->isSecure());
                     $this->assertTrue($setCookie->isHttponly());
                 }
             );
-
 
         $this->request->shouldReceive('getQuery')->with('goto', false)->once()->andReturn($gotoUrl);
         $this->request->shouldReceive('getUri->getScheme')->with()->atLeast()->times(1)->andReturn('https');

@@ -2,23 +2,13 @@
 
 namespace Dvsa\OlcsTest\Auth\Controller;
 
-use Common\Service\Cqrs\Command\CommandSender;
-use Common\Service\Helper\FlashMessengerHelperService;
-use Common\Service\Helper\FormHelperService;
-use Dvsa\Olcs\Auth\Container\AuthChallengeContainer;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
-use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
-use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Laminas\Authentication\Storage\Session;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\Plugin\Redirect;
-use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\Controller\PluginManager;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Dvsa\OlcsTest\Auth\Bootstrap;
 use Laminas\Session\Container;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -69,8 +59,7 @@ class LogoutControllerTest extends MockeryTestCase
             $this->logoutService,
             true,
             self::REDIRECT_URL,
-            $this->createMock(Container::class),
-            true
+            $this->createMock(Container::class)
         );
 
         // Mock redirect service
@@ -95,8 +84,7 @@ class LogoutControllerTest extends MockeryTestCase
             $this->logoutService,
             false,
             self::REDIRECT_URL,
-            $this->createMock(Container::class),
-            true
+            $this->createMock(Container::class)
         );
 
         // Mock redirect service

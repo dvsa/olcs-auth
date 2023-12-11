@@ -11,15 +11,15 @@ use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangePasswordResult;
-use Laminas\Http\Response as HttpResponse;
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Form\Form;
 use Laminas\Http\Request as HttpRequest;
+use Laminas\Http\Response as HttpResponse;
 use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\PluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Model\ViewModel;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use RuntimeException;
 
 /**

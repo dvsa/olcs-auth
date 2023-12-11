@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
@@ -10,7 +10,7 @@ use RuntimeException;
 
 class PasswordServiceFactory implements FactoryInterface
 {
-    const MSG_MISSING_REALM = 'Auth config is missing the realm';
+    public const MSG_MISSING_REALM = 'Auth config is missing the realm';
 
     /**
      * @param ContainerInterface $container

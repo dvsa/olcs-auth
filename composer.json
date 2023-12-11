@@ -43,6 +43,9 @@
             "bamarni/composer-bin-plugin": true,
             "laminas/laminas-dependency-plugin": true
         },
+        "platform": {
+            "ext-redis": "4.3"
+        },
         "sort-packages": true
     },
     "scripts": {

@@ -2,8 +2,8 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Http\Headers;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * ValidateService contains method to validate user token on open Am
@@ -16,15 +16,13 @@ class ValidateService extends AbstractRestService
     /**
      * Create the logout service
      *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
      * @return $this
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $this->cookieSrv = $serviceLocator->get('Auth\CookieService');
+        $this->cookieSrv = $container->get('Auth\CookieService');
 
-        return parent::createService($serviceLocator);
+        return parent::__invoke($container, $requestedName, $options);
     }
 
     /**

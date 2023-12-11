@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
 
 class PasswordServiceFactory implements FactoryInterface
@@ -33,18 +32,5 @@ class PasswordServiceFactory implements FactoryInterface
         $responseDecoder = $container->get('Auth\ResponseDecoderService');
 
         return new PasswordService($commandSender, $responseDecoder, $config['auth']['realm']);
-    }
-
-    /**
-     * @deprecated Can be removed following Laminas V3 upgrade
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return PasswordService
-     * @throws RuntimeException
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): PasswordService
-    {
-        return $this($serviceLocator, PasswordService::class);
     }
 }

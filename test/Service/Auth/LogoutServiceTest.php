@@ -1,25 +1,15 @@
 <?php
 
-/**
- * Logout Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
+use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Headers;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\ServiceManager;
 
-/**
- * Logout Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LogoutServiceTest extends MockeryTestCase
 {
     /**
@@ -39,13 +29,13 @@ class LogoutServiceTest extends MockeryTestCase
         $this->client = m::mock();
         $this->responseDecoder = m::mock();
 
-        $sm = m::mock(ServiceManager::class)->makePartial();
-        $sm->setService('Auth\CookieService', $this->cookie);
-        $sm->setService('Auth\Client', $this->client);
-        $sm->setService('Auth\ResponseDecoderService', $this->responseDecoder);
+        $container = m::mock(ContainerInterface::class);
+        $container->expects('get')->with('Auth\CookieService')->andReturn($this->cookie);
+        $container->expects('get')->with('Auth\Client')->andReturn($this->client);
+        $container->expects('get')->with('Auth\ResponseDecoderService')->andReturn($this->responseDecoder);
 
         $this->sut = new LogoutService();
-        $this->sut->createService($sm);
+        $this->sut->__invoke($container, LogoutService::class);
     }
 
     public function testLogout()

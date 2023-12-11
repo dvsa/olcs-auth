@@ -6,15 +6,8 @@ use Common\Service\User\LastLoginService;
 use Interop\Container\ContainerInterface;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
-use Laminas\Mvc\Controller\Plugin\Redirect;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * Login Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LoginService implements FactoryInterface
 {
     /**
@@ -39,19 +32,6 @@ class LoginService implements FactoryInterface
         $this->request = $container->get('Request');
 
         return $this;
-    }
-
-    /**
-     * Create the login service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     * @deprecated No longer needed in Laminas 3
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): LoginService
-    {
-        return $this($serviceLocator, LoginService::class);
     }
 
     /**

@@ -12,14 +12,8 @@ use Interop\Container\ContainerInterface;
 use Laminas\Http\Header\SetCookie;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * Cookie Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class CookieService implements FactoryInterface
 {
     /**
@@ -53,20 +47,6 @@ class CookieService implements FactoryInterface
         }
 
         return $this;
-    }
-
-    /**
-     * Create the cookie service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     * @throws RuntimeException
-     * @deprecated No longer needed in Laminas 3
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): CookieService
-    {
-        return $this($serviceLocator, CookieService::class);
     }
 
     /**

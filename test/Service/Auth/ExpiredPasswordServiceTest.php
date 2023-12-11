@@ -1,25 +1,14 @@
 <?php
 
-/**
- * Expired Password Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
+use Interop\Container\Containerinterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Response;
-use Laminas\ServiceManager\ServiceManager;
 
-/**
- * Expired Password Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class ExpiredPasswordServiceTest extends MockeryTestCase
 {
     /**
@@ -36,12 +25,12 @@ class ExpiredPasswordServiceTest extends MockeryTestCase
         $this->client = m::mock();
         $this->responseDecoder = new ResponseDecoderService();
 
-        $sm = m::mock(ServiceManager::class)->makePartial();
-        $sm->setService('Auth\Client', $this->client);
-        $sm->setService('Auth\ResponseDecoderService', $this->responseDecoder);
+        $container = m::mock(ContainerInterface::class);
+        $container->expects('get')->with('Auth\Client')->andReturn($this->client);
+        $container->expects('get')->with('Auth\ResponseDecoderService')->andReturn($this->responseDecoder);
 
         $this->sut = new ExpiredPasswordService();
-        $this->sut->createService($sm);
+        $this->sut->__invoke($container, ExpiredPasswordService::class);
     }
 
     public function testUpdatePassword()

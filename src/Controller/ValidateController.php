@@ -10,7 +10,7 @@ use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * @see ValidateControllerFactory

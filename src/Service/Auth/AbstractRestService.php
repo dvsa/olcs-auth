@@ -6,8 +6,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Client\Client;
 use Interop\Container\ContainerInterface;
 use Laminas\Http\Headers;
 use Laminas\Http\Response;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Abstract Service
@@ -32,19 +31,6 @@ abstract class AbstractRestService implements FactoryInterface
         $this->responseDecoder = $container->get('Auth\ResponseDecoderService');
 
         return $this;
-    }
-
-    /**
-     * Configure a restful service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     * @deprecated No longer needed in Laminas 3
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        return $this($serviceLocator, null);
     }
 
     /**

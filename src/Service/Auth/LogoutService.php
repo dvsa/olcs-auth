@@ -2,14 +2,9 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
+use Interop\Container\Containerinterface;
 use Laminas\Http\Headers;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
-/**
- * Logout Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LogoutService extends AbstractRestService
 {
     /**
@@ -17,18 +12,11 @@ class LogoutService extends AbstractRestService
      */
     private $cookieService;
 
-    /**
-     * Create the logout service
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $this->cookieService = $serviceLocator->get('Auth\CookieService');
+        $this->cookieService = $container->get('Auth\CookieService');
 
-        return parent::createService($serviceLocator);
+        return parent::__invoke($container, $requestedName, $options);
     }
 
     /**

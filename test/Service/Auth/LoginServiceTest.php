@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Login Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Common\Service\User\LastLoginService;
@@ -18,11 +12,6 @@ use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\ServiceManager;
 
-/**
- * Login Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class LoginServiceTest extends MockeryTestCase
 {
     /**
@@ -65,7 +54,7 @@ class LoginServiceTest extends MockeryTestCase
         $sm->setService('redirect', $this->redirect);
 
         $this->sut = new LoginService();
-        $this->sut->createService($sm);
+        $this->sut->__invoke($sm, LoginService::class);
     }
 
     public function testLogin()

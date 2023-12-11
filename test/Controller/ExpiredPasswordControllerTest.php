@@ -18,6 +18,7 @@ use Laminas\Authentication\Storage\Session;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Mvc\Controller\Plugin\Layout;
 use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\Controller\PluginManager;
@@ -89,12 +90,13 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->commandSender = m::mock(CommandSender::class)->makePartial();
         $this->flashMessenger = m::mock(FlashMessengerHelperService::class);
         $this->redirect = m::mock(Redirect::class)->makePartial();
+        $this->layout = m::mock(Layout::class)->makePartial();
         $this->url = m::mock(Url::class)->makePartial();
         $this->authChallengeContainer = m::mock(AuthChallengeContainer::class);
         $this->sessionContainer = m::mock(Session::class);
 
-        $pm = m::mock(PluginManager::class)->makePartial();
-        $pm->setService('redirect', $this->redirect);
+        $this->pm = m::mock(PluginManager::class);
+        $this->pm->shouldReceive('setController')->with(m::type(ExpiredPasswordController::class));
 
         $this->sut = new ExpiredPasswordController(
             $this->authChallengeContainer,
@@ -105,11 +107,14 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             $this->loginService,
             $this->sessionContainer
         );
-        $this->sut->setPluginManager($pm);
+        $this->sut->setPluginManager($this->pm);
     }
 
     public function testIndexActionForGet()
     {
+        $this->pm->expects('get')->with('layout', null)->andReturn($this->layout);
+        $this->layout->expects('__invoke')->with('auth/layout');
+
         $form = m::mock(Form::class);
         $form->expects('remove')
             ->with('oldPassword');
@@ -136,7 +141,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
     public function testIndexActionForInvalidPostRequest()
     {
-        $post = [];
+        $this->pm->expects('get')->with('layout', null)->andReturn($this->layout);
+        $this->layout->expects('__invoke')->with('auth/layout');
 
         $form = m::mock(Form::class);
 
@@ -162,6 +168,9 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
     public function testIndexActionForPostWithInvalidDataOnForm()
     {
         $post = [];
+
+        $this->pm->expects('get')->with('layout', null)->andReturn($this->layout);
+        $this->layout->expects('__invoke')->with('auth/layout');
 
         $form = m::mock(Form::class);
         $form->expects('setData');
@@ -193,6 +202,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             'newPassword' => 'new-password',
             'confirmPassword' => 'new-password'
         ];
+
+        $this->pm->expects('get')->with('redirect', null)->andReturn($this->redirect);
 
         $form = m::mock(Form::class);
         $form->expects('setData');
@@ -341,6 +352,9 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             'confirmPassword' => 'confirm-password'
         ];
 
+        $this->pm->expects('get')->with('layout', null)->andReturn($this->layout);
+        $this->layout->expects('__invoke')->with('auth/layout');
+
         $form = m::mock(Form::class);
         $form->expects('setData');
         $form->expects('isValid')->andReturn(true);
@@ -406,7 +420,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         return [
             'FAILURE_NEW_PASSWORD_INVALID' => [ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID],
             'FAILURE_NEW_PASSWORD_MATCHES_OLD' => [ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD],
-            ];
+        ];
     }
 
     public function testIndexActionForPostWithValidDataNotAuthorizedFailure()
@@ -415,6 +429,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             'newPassword' => 'new-password',
             'confirmPassword' => 'confirm-password'
         ];
+
+        $this->pm->expects('get')->with('redirect', null)->andReturn($this->redirect);
 
         $form = m::mock(Form::class);
         $form->expects('setData');

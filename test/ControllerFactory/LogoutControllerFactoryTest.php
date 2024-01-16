@@ -2,18 +2,16 @@
 
 namespace Dvsa\OlcsTest\Auth\ControllerFactory;
 
-use Dvsa\Olcs\Auth\Controller\LogoutController;
-use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
+use Dvsa\OlcsTest\Auth\Bootstrap;
+use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Interop\Container\ContainerInterface;
+use Laminas\Mvc\Controller\ControllerManager;
+use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;
 use Mockery as m;
 
-/**
- * Class ControllerFactoryTest
- * @covers \Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory
- */
 class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $container;
@@ -45,8 +43,8 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
     }
 
     /**
-     * @param string $realm Realm name
-     * @param bool $expectedException Are we expecting an exception?
+     * @param string $realm             Realm name
+     * @param bool   $expectedException Are we expecting an exception?
      *
      * @dataProvider realmDataProvider
      */
@@ -90,7 +88,8 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testNoSelfServeLogoutUrlSpecified()
     {
         $this->expectException(
-            \InvalidArgumentException::class
+            \InvalidArgumentException::class,
+            'Selfserve logout redirect is not available in config'
         );
 
         // Set realm defined in data provider

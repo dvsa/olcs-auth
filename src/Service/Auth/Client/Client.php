@@ -9,8 +9,7 @@ use Laminas\Http\Header\ContentType;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Client
@@ -37,19 +36,6 @@ class Client extends HttpClient implements FactoryInterface
         $this->setOptions($clientOptions);
 
         return $this;
-    }
-
-    /**
-     * Configure the client
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     * @deprecated No longer needed in Laminas 3
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): Client
-    {
-        return $this($serviceLocator, Client::class);
     }
 
     /**

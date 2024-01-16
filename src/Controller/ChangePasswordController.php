@@ -2,7 +2,6 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Common\Rbac\JWTIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;

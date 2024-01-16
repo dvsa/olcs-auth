@@ -8,7 +8,7 @@ use Dvsa\Olcs\Auth\Controller\ValidateController;
 use Dvsa\Olcs\Auth\Service;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * @see ValidateController

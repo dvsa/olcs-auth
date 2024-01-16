@@ -66,7 +66,7 @@ return [
                         ],
                     ],
                     'validate' => [
-                        'type' => \Laminas\Mvc\Router\Http\Segment::class,
+                        'type' => \Laminas\Router\Http\Segment::class,
                         'options' => [
                             'route' => 'validate[/]',
                             'defaults' => [
@@ -138,9 +138,9 @@ return [
             'ViewJsonStrategy',
         ],
     ],
-    'zfc_rbac' => [
+    'lmc_rbac' => [
         'guards' => [
-            'ZfcRbac\Guard\RoutePermissionsGuard' => [
+            'LmcRbacMvc\Guard\RoutePermissionsGuard' => [
                 'auth/*' => ['*'],
             ]
         ]

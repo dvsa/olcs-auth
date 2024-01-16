@@ -11,7 +11,7 @@ use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
 use Interop\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ZfcRbac\Identity\IdentityProviderInterface;
+use LmcRbacMvc\Identity\IdentityProviderInterface;
 
 /**
  * @see ValidateControllerFactory
@@ -29,11 +29,8 @@ class ValidateControllerFactoryTest extends MockeryTestCase
         $serviceContainer->expects('get')->with(ValidateService::class)->andReturn($validateService);
         $serviceContainer->expects('get')->with(IdentityProviderInterface::class)->andReturn($identityProvider);
 
-        $parentContainer = m::mock(ContainerInterface::class);
-        $parentContainer->expects('getServiceLocator')->withNoArgs()->andReturn($serviceContainer);
-
         $sut = new ValidateControllerFactory();
-        $service = $sut($parentContainer, ValidateController::class);
+        $service = $sut($serviceContainer, ValidateController::class);
 
         self::assertInstanceOf(ValidateController::class, $service);
     }

@@ -4,14 +4,8 @@ namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
 use Interop\Container\ContainerInterface;
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
-/**
- * Uri Builder
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 class UriBuilder implements FactoryInterface
 {
     /**
@@ -39,20 +33,6 @@ class UriBuilder implements FactoryInterface
         }
 
         return $this;
-    }
-
-    /**
-     * Configure the uri builder
-     *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
-     *
-     * @return $this
-     * @throws Exception\RuntimeException
-     * @deprecated No longer needed in Laminas 3
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator): UriBuilder
-    {
-        return $this($serviceLocator, UriBuilder::class);
     }
 
     /**

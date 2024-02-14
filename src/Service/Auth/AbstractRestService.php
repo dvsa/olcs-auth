@@ -3,7 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\Client\Client;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Headers;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\Factory\FactoryInterface;

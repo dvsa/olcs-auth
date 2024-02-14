@@ -3,7 +3,7 @@
 namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Headers;

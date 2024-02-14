@@ -4,7 +4,7 @@ namespace Dvsa\OlcsTest\Auth\Service\Auth;
 
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
-use Interop\Container\Containerinterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Laminas\Http\Response;

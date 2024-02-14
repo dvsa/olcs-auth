@@ -8,7 +8,7 @@ use Dvsa\Olcs\Auth\Controller\ValidateController;
 use Dvsa\Olcs\Auth\ControllerFactory\ValidateControllerFactory;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use LmcRbacMvc\Identity\IdentityProviderInterface;

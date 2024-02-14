@@ -6,7 +6,7 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Controller\ResetPasswordController;
 use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ResetPasswordControllerFactory implements FactoryInterface

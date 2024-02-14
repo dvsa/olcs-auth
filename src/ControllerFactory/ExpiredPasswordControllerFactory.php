@@ -9,7 +9,7 @@ use Dvsa\Olcs\Auth\Container\AuthChallengeContainer;
 use Dvsa\Olcs\Auth\Controller\ExpiredPasswordController;
 use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;

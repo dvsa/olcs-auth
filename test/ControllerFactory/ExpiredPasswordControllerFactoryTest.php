@@ -15,7 +15,7 @@ use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Authentication\Storage\Session;
 use Laminas\ServiceManager\ServiceManager;
 use Mockery as m;

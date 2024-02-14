@@ -3,7 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth\Client;
 
 use Dvsa\Olcs\Auth\Service\Auth\Exception;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Header\ContentType;
 use Laminas\Http\Headers;

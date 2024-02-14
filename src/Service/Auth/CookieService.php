@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 use Dvsa\Olcs\Auth\Service\Auth\Exception\RuntimeException;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Header\SetCookie;
 use Laminas\Http\Request;
 use Laminas\Http\Response;

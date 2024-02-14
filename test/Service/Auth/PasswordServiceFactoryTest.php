@@ -8,7 +8,7 @@ use Common\Service\Cqrs\Command\CommandSender;
 use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 use Dvsa\Olcs\Auth\Service\Auth\PasswordServiceFactory;
 use Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

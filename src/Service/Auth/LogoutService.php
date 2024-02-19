@@ -2,7 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
-use Interop\Container\Containerinterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Headers;
 
 class LogoutService extends AbstractRestService

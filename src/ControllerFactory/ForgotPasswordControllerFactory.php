@@ -5,7 +5,7 @@ namespace Dvsa\Olcs\Auth\ControllerFactory;
 use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Controller\ForgotPasswordController;
 use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

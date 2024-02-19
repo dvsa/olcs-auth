@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use RuntimeException;
 

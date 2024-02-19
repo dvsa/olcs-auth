@@ -7,7 +7,7 @@ namespace Dvsa\Olcs\Auth\ControllerFactory;
 use Dvsa\Olcs\Auth\Controller\ValidateController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use LmcRbacMvc\Identity\IdentityProviderInterface;
 

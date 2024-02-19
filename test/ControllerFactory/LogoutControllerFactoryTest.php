@@ -6,7 +6,7 @@ use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Dvsa\OlcsTest\Auth\Bootstrap;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;

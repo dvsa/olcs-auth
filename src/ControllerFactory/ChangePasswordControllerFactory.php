@@ -3,7 +3,7 @@
 namespace Dvsa\Olcs\Auth\ControllerFactory;
 
 use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ChangePasswordControllerFactory implements FactoryInterface

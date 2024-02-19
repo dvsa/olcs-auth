@@ -3,7 +3,7 @@
 namespace Dvsa\Olcs\Auth\Service\Auth;
 
 use Common\Service\User\LastLoginService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\Factory\FactoryInterface;

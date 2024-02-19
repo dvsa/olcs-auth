@@ -5,7 +5,7 @@ namespace Dvsa\Olcs\Auth\ControllerFactory;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Dvsa\Olcs\Auth\Service\Auth\CookieService;
 use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Http\Response;
 use Laminas\ServiceManager\Factory\FactoryInterface;

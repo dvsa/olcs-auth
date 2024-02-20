@@ -21,8 +21,8 @@
         "bamarni/composer-bin-plugin": "^1.8",
         "johnkary/phpunit-speedtrap": "^4.0",
         "mockery/mockery": "^1.6",
-        "olcs/olcs-common": "^5.0.0",
-        "olcs/olcs-transfer": "^5.0.0",
+        "olcs/olcs-common": "^6.0",
+        "olcs/olcs-transfer": "^6.0",
         "phpunit/phpunit": "^9.6"
     },
     "minimum-stability": "dev",

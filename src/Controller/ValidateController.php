@@ -18,17 +18,11 @@ use LmcRbacMvc\Identity\IdentityProviderInterface;
  */
 class ValidateController extends AbstractActionController
 {
-    private CookieService $cookieSrv;
-    private ValidateService $tokenValidateSrv;
     private IdentityProviderInterface $identityProvider;
 
     public function __construct(
-        CookieService $cookieService,
-        ValidateService $validateService,
         IdentityProviderInterface $identityProvider
     ) {
-        $this->cookieSrv =  $cookieService;
-        $this->tokenValidateSrv =  $validateService;
         $this->identityProvider = $identityProvider;
     }
 
@@ -37,19 +31,6 @@ class ValidateController extends AbstractActionController
      */
     public function indexAction(): JsonModel
     {
-        if ($this->identityProvider instanceof PidIdentityProvider) {
-            $request = $this->getRequest();
-
-            $token = $this->cookieSrv->getCookie($request);
-
-            $respBody = null;
-            if (!empty($token)) {
-                $respBody = $this->tokenValidateSrv->validate($token);
-            }
-
-            return new JsonModel($respBody);
-        }
-
         $respBody = $this->identityProvider->validateToken();
         return new JsonModel($respBody);
     }

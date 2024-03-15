@@ -40,7 +40,9 @@
     "config": {
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true,
-            "laminas/laminas-dependency-plugin": true
+            "laminas/laminas-dependency-plugin": true,
+            "elendev/composer-push": true,
+            "phpstan/extension-installer": true
         },
         "platform": {
             "ext-redis": "4.3"

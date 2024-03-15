@@ -32,22 +32,11 @@ class LogoutControllerTest extends MockeryTestCase
      * @var Response|(Response&m\LegacyMockInterface)|(Response&m\MockInterface)|m\LegacyMockInterface|m\MockInterface
      */
     private $response;
-    /**
-     * @var CookieService|(CookieService&m\LegacyMockInterface)|(CookieService&m\MockInterface)|m\LegacyMockInterface|m\MockInterface
-     */
-    private $cookieService;
-    /**
-     * @var LogoutService|(LogoutService&m\LegacyMockInterface)|(LogoutService&m\MockInterface)|m\LegacyMockInterface|m\MockInterface
-     */
-    private $logoutService;
-
 
     public function setUp(): void
     {
         $this->request = m::mock(Request::class);
         $this->response = m::mock(Response::class);
-        $this->cookieService = m::mock(CookieService::class);
-        $this->logoutService = m::mock(LogoutService::class);
     }
 
     public function testIsRealmSelfServeThenRedirectToGovSite()
@@ -55,8 +44,6 @@ class LogoutControllerTest extends MockeryTestCase
         $controller = new LogoutController(
             $this->request,
             $this->response,
-            $this->cookieService,
-            $this->logoutService,
             true,
             self::REDIRECT_URL,
             $this->createMock(Container::class)
@@ -80,8 +67,6 @@ class LogoutControllerTest extends MockeryTestCase
         $controller = new LogoutController(
             $this->request,
             $this->response,
-            $this->cookieService,
-            $this->logoutService,
             false,
             self::REDIRECT_URL,
             $this->createMock(Container::class)

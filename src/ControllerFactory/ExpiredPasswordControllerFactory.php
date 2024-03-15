@@ -30,10 +30,8 @@ class ExpiredPasswordControllerFactory implements FactoryInterface
         return new ExpiredPasswordController(
             new AuthChallengeContainer(),
             $container->get(CommandSender::class),
-            $container->get(ExpiredPasswordService::class),
             $container->get(FlashMessengerHelperService::class),
             $container->get(FormHelperService::class),
-            $container->get(LoginService::class),
             $container->get(Session::class)
         );
     }

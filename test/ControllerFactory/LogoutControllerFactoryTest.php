@@ -79,8 +79,7 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testNoSelfServeLogoutUrlSpecified()
     {
         $this->expectException(
-            \InvalidArgumentException::class,
-            'Selfserve logout redirect is not available in config'
+            \InvalidArgumentException::class
         );
 
         // Set realm defined in data provider

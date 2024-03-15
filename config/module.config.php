@@ -110,8 +110,6 @@ return [
         'factories' => [
             \Dvsa\Olcs\Auth\Service\Auth\PasswordService::class =>
                 \Dvsa\Olcs\Auth\Service\Auth\PasswordServiceFactory::class,
-            'Auth\Client' => \Dvsa\Olcs\Auth\Service\Auth\Client\Client::class,
-            'Auth\Client\UriBuilder' => \Dvsa\Olcs\Auth\Service\Auth\Client\UriBuilder::class,
         ]
     ],
     'view_manager' => [

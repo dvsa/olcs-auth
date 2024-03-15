@@ -67,11 +67,9 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
      */
     private $sessionContainer;
 
-    /**
-     * @var m\Mock
-     */
+    private $layout;
     private $url;
-
+    private $pm;
 
     public function setUp(): void
     {

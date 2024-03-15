@@ -135,7 +135,7 @@ class ExpiredPasswordController extends AbstractActionController
         $this->authChallengeContainer->clear();
 
         foreach ($result->getMessages() as $message) {
-            $this->flashMessenger()->addSuccessMessage($message);
+            $this->flashMessenger->addSuccessMessage($message);
         }
 
         return $this->redirect()->toRoute(static::ROUTE_INDEX);

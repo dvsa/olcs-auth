@@ -17,7 +17,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Callback\ConfirmationCallback;
  */
 class ConfirmationCallbackTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCallback()
+    public function testCallback(): void
     {
         $sut = new ConfirmationCallback('foo');
         $result = $sut->toArray();

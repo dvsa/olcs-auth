@@ -20,7 +20,7 @@ class ChangePasswordForm
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Type("Password")
      */
-    public $oldPassword = null;
+    public $oldPassword;
 
     /**
      * @Form\Options({
@@ -33,7 +33,7 @@ class ChangePasswordForm
      * @Form\Validator({"name":"Common\Form\Elements\Validators\PasswordConfirm","options":{"token":"confirmPassword"}})
      * @Form\Type("Password")
      */
-    public $newPassword = null;
+    public $newPassword;
 
     /**
      * @Form\Options({
@@ -45,7 +45,7 @@ class ChangePasswordForm
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Type("Password")
      */
-    public $confirmPassword = null;
+    public $confirmPassword;
 
     /**
      * @Form\Attributes({
@@ -55,7 +55,7 @@ class ChangePasswordForm
      * })
      * @Form\Type("Submit")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -69,5 +69,5 @@ class ChangePasswordForm
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

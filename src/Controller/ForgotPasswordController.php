@@ -15,12 +15,9 @@ use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 class ForgotPasswordController extends AbstractController
 {
     private FormHelperService $formHelperService;
+
     private PasswordService $passwordService;
 
-    /**
-     * @param FormHelperService $formHelperService
-     * @param PasswordService $passwordService
-     */
     public function __construct(
         FormHelperService $formHelperService,
         PasswordService $passwordService
@@ -33,12 +30,15 @@ class ForgotPasswordController extends AbstractController
      * Forgot password page
      *
      * @return ViewModel|\Laminas\Http\Response
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function indexAction()
     {
         if ($this->isButtonPressed('cancel')) {
             return $this->redirect()->toRoute('auth/login/GET');
         }
+
         /** @var Request $request */
         $request = $this->getRequest();
 
@@ -52,9 +52,11 @@ class ForgotPasswordController extends AbstractController
         }
 
         try {
+
+            /** @var array $formData */
             $formData = $form->getData();
             $result = $this->passwordService->forgotPassword($formData['username']);
-        } catch (Cqrs\Exception $e) {
+        } catch (Cqrs\Exception $exception) {
             return $this->renderFormView($form, true, 'unknown-error');
         }
 

@@ -3,8 +3,6 @@
 namespace Dvsa\OlcsTest\Auth\Controller;
 
 use Dvsa\Olcs\Auth\Controller\LogoutController;
-use Dvsa\Olcs\Auth\Service\Auth\CookieService;
-use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\Plugin\Redirect;
@@ -24,26 +22,20 @@ class LogoutControllerTest extends MockeryTestCase
      * @var Redirect
      */
     private $redirect;
+
     /**
      * @var Request|(Request&m\LegacyMockInterface)|(Request&m\MockInterface)|m\LegacyMockInterface|m\MockInterface
      */
     private $request;
+
     /**
      * @var Response|(Response&m\LegacyMockInterface)|(Response&m\MockInterface)|m\LegacyMockInterface|m\MockInterface
      */
     private $response;
 
-    public function setUp(): void
-    {
-        $this->request = m::mock(Request::class);
-        $this->response = m::mock(Response::class);
-    }
-
-    public function testIsRealmSelfServeThenRedirectToGovSite()
+    public function testIsRealmSelfServeThenRedirectToGovSite(): void
     {
         $controller = new LogoutController(
-            $this->request,
-            $this->response,
             true,
             self::REDIRECT_URL,
             $this->createMock(Container::class)
@@ -62,11 +54,9 @@ class LogoutControllerTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $controller->indexAction());
     }
 
-    public function testIsRealmNotSelfServeThenRedirectToLogin()
+    public function testIsRealmNotSelfServeThenRedirectToLogin(): void
     {
         $controller = new LogoutController(
-            $this->request,
-            $this->response,
             false,
             self::REDIRECT_URL,
             $this->createMock(Container::class)

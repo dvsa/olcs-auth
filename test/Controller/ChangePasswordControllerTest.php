@@ -2,6 +2,7 @@
 
 namespace Dvsa\OlcsTest\Auth\Controller;
 
+use Common\Controller\Plugin\Redirect;
 use Common\Rbac\JWTIdentityProvider;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Cqrs\Response;
@@ -9,12 +10,10 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Controller\ChangePasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
-use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangePasswordResult;
 use Laminas\Form\Form;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Http\Response as HttpResponse;
-use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\PluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Model\ViewModel;
@@ -45,7 +44,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
     private array $config;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->flashMessenger = m::mock(FlashMessengerHelperService::class);
@@ -68,11 +67,11 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $pm = m::mock(PluginManager::class)->makePartial();
         $pm->setService('redirect', $this->redirect);
 
-        $this->sut = new ChangePasswordController($this->formHelper, $this->flashMessenger, $this->config, $this->commandSender);
+        $this->sut = new ChangePasswordController($this->formHelper, $this->flashMessenger, $this->config, $this->commandSender, $this->redirect);
         $this->sut->setPluginManager($pm);
     }
 
-    public function testIndexActionForGet()
+    public function testIndexActionForGet(): void
     {
         $form = m::mock(Form::class);
 
@@ -89,7 +88,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $this->assertEquals('auth/change-password', $result->getTemplate());
     }
 
-    public function testIndexActionForPostWithInvalidData()
+    public function testIndexActionForPostWithInvalidData(): void
     {
         $post = [];
 
@@ -111,7 +110,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $this->assertEquals('auth/change-password', $result->getTemplate());
     }
 
-    public function testIndexActionForPostWithCancel()
+    public function testIndexActionForPostWithCancel(): void
     {
         $post = [
             'cancel' => '',
@@ -132,7 +131,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $this->sut->indexAction());
     }
 
-    public function testIndexActionForPostWithValidDataSuccess()
+    public function testIndexActionForPostWithValidDataSuccess(): void
     {
         $post = [
             'oldPassword' => 'old-password',
@@ -154,6 +153,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $response = new HttpResponse();
         $response->setStatusCode(HttpResponse::STATUS_CODE_200);
+
         $result = new Response($response);
         $result->setResult([
             'flags' => [
@@ -172,7 +172,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $this->sut->indexAction());
     }
 
-    public function testIndexActionForPostWithValidDataFailure()
+    public function testIndexActionForPostWithValidDataFailure(): void
     {
         $post = [
             'oldPassword' => 'old-password',
@@ -194,6 +194,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $response = new HttpResponse();
         $response->setStatusCode(HttpResponse::STATUS_CODE_200);
+
         $result = new Response($response);
         $result->setResult([
             'flags' => [
@@ -212,7 +213,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $this->assertEquals('error message', $result->getVariable('failureReason'));
     }
 
-    public function testIndexActionForPostWithValidDataBadResult()
+    public function testIndexActionForPostWithValidDataBadResult(): void
     {
         $post = [
             'oldPassword' => 'old-password',
@@ -234,6 +235,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $response = new HttpResponse();
         $response->setStatusCode(HttpResponse::STATUS_CODE_500);
+
         $result = new Response($response);
 
         $this->commandSender->shouldReceive('send')->andReturn($result);

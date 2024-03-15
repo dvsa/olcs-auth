@@ -9,10 +9,8 @@ use Laminas\ServiceManager\Factory\FactoryInterface;
 class ChangePasswordControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return ChangePasswordController
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ChangePasswordController
     {
@@ -21,12 +19,14 @@ class ChangePasswordControllerFactory implements FactoryInterface
         $formHelper = $container->get('Helper\Form');
         $flashMessenger = $container->get('Helper\FlashMessenger');
         $commandSender = $container->get('CommandSender');
+        $redirectPlugin = $container->get('ControllerPluginManager')->get('redirect');
 
         return new ChangePasswordController(
             $formHelper,
             $flashMessenger,
             $config,
-            $commandSender
+            $commandSender,
+            $redirectPlugin
         );
     }
 }

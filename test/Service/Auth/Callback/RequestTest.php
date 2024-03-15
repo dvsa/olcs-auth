@@ -20,7 +20,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Callback\Request;
  */
 class RequestTest extends MockeryTestCase
 {
-    public function testRequest()
+    public function testRequest(): void
     {
         $callback1 = m::mock(CallbackInterface::class);
         $callback1->shouldReceive('toArray')->andReturn(['callback1' => 'stuff']);

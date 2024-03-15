@@ -21,7 +21,7 @@ class ForgotPasswordForm
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Username"})
      * @Form\Type("Text")
      */
-    public $username = null;
+    public $username;
 
     /**
      * @Form\Attributes({
@@ -31,7 +31,7 @@ class ForgotPasswordForm
      * })
      * @Form\Type("Submit")
      */
-    public $submit = null;
+    public $submit;
 
     /**
      * @Form\Attributes({
@@ -45,5 +45,5 @@ class ForgotPasswordForm
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $cancel = null;
+    public $cancel;
 }

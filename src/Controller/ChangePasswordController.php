@@ -10,15 +10,12 @@ use Dvsa\Olcs\Transfer\Command\Auth\ChangePassword;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangePasswordResult;
 use Exception;
 use Laminas\View\Model\ViewModel;
-use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use RuntimeException;
 
 class ChangePasswordController extends AbstractController
 {
     public const MESSAGE_BASE = "Expired Password Change Failed: %s";
     public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
-
-    private ChangePasswordService $changePasswordService;
 
     private FormHelperService $formHelperService;
 
@@ -29,13 +26,11 @@ class ChangePasswordController extends AbstractController
     private CommandSender $commandSender;
 
     public function __construct(
-        ChangePasswordService $changePasswordService,
         FormHelperService $formHelperService,
         FlashMessengerHelperService $flashMessenger,
         array $config,
         CommandSender $commandSender
     ) {
-        $this->changePasswordService = $changePasswordService;
         $this->formHelperService = $formHelperService;
         $this->flashMessenger = $flashMessenger;
         $this->config = $config;

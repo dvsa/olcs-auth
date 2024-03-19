@@ -38,18 +38,9 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
      */
     private $sut;
     /**
-     * @var ExpiredPasswordService|m\LegacyMockInterface|m\MockInterface
-     */
-    private $expiredPasswordService;
-    /**
      * @var mixed|m\LegacyMockInterface|m\MockInterface
      */
     private $formHelper;
-
-    /**
-     * @var LoginService|m\LegacyMockInterface|m\MockInterface
-     */
-    private $loginService;
 
     /**
      * @var m\Mock|CommandSender
@@ -76,17 +67,13 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
      */
     private $sessionContainer;
 
-    /**
-     * @var m\Mock
-     */
+    private $layout;
     private $url;
-
+    private $pm;
 
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
-        $this->loginService = m::mock(LoginService::class);
-        $this->expiredPasswordService = m::mock(ExpiredPasswordService::class);
         $this->commandSender = m::mock(CommandSender::class)->makePartial();
         $this->flashMessenger = m::mock(FlashMessengerHelperService::class);
         $this->redirect = m::mock(Redirect::class)->makePartial();
@@ -101,10 +88,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->sut = new ExpiredPasswordController(
             $this->authChallengeContainer,
             $this->commandSender,
-            $this->expiredPasswordService,
             $this->flashMessenger,
             $this->formHelper,
-            $this->loginService,
             $this->sessionContainer
         );
         $this->sut->setPluginManager($this->pm);

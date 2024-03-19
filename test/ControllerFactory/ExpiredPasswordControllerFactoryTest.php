@@ -84,9 +84,7 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
     {
         $serviceManager->setService(CommandSender::class, $this->setUpMockService(CommandSender::class));
         $serviceManager->setService(FormHelperService::class, $this->setUpMockService(FormHelperService::class));
-        $serviceManager->setService(ExpiredPasswordService::class, $this->setUpMockService(ExpiredPasswordService::class));
         $serviceManager->setService(FlashMessengerHelperService::class, $this->setUpMockService(FlashMessengerHelperService::class));
-        $serviceManager->setService(LoginService::class, $this->setUpMockService(LoginService::class));
         $serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
 
         $this->setUpConfig();

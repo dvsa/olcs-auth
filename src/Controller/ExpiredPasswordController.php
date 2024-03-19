@@ -7,8 +7,6 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Container\AuthChallengeContainer;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
-use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
-use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Dvsa\Olcs\Transfer\Command\Auth\ChangeExpiredPassword;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangeExpiredPasswordResult;
 use Exception;
@@ -39,25 +37,19 @@ class ExpiredPasswordController extends AbstractActionController
     protected CommandSender $commandSender;
     private FormHelperService $formHelper;
     private FlashMessengerHelperService $flashMessenger;
-    private ExpiredPasswordService $expiredPasswordService;
-    private LoginService $loginService;
     private Session $sessionContainer;
 
     public function __construct(
         AuthChallengeContainer $authChallengeContainer,
         CommandSender $commandSender,
-        ExpiredPasswordService $expiredPasswordService,
         FlashMessengerHelperService $flashMessenger,
         FormHelperService $formHelper,
-        LoginService $loginService,
         Session $sessionContainer
     ) {
         $this->authChallengeContainer = $authChallengeContainer;
         $this->commandSender = $commandSender;
-        $this->expiredPasswordService = $expiredPasswordService;
         $this->flashMessenger = $flashMessenger;
         $this->formHelper = $formHelper;
-        $this->loginService = $loginService;
         $this->sessionContainer = $sessionContainer;
     }
 
@@ -143,7 +135,7 @@ class ExpiredPasswordController extends AbstractActionController
         $this->authChallengeContainer->clear();
 
         foreach ($result->getMessages() as $message) {
-            $this->flashMessenger()->addSuccessMessage($message);
+            $this->flashMessenger->addSuccessMessage($message);
         }
 
         return $this->redirect()->toRoute(static::ROUTE_INDEX);

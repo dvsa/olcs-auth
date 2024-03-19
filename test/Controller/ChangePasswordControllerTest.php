@@ -34,8 +34,6 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
     private $formHelper;
 
-    private $changePasswordService;
-
     private $flashMessenger;
 
     private $redirect;
@@ -50,14 +48,12 @@ class ChangePasswordControllerTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
-        $this->changePasswordService = m::mock(ChangePasswordService::class);
         $this->flashMessenger = m::mock(FlashMessengerHelperService::class);
         $this->redirect = m::mock(Redirect::class)->makePartial();
         $this->commandSender = m::mock(CommandSender::class);
 
         $sm = m::mock(ServiceManager::class)->makePartial();
         $sm->setService('Helper\Form', $this->formHelper);
-        $sm->setService('Auth\ChangePasswordService', $this->changePasswordService);
         $sm->setService('Helper\FlashMessenger', $this->flashMessenger);
         $sm->setService('CommandSender', $this->commandSender);
 
@@ -72,7 +68,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
         $pm = m::mock(PluginManager::class)->makePartial();
         $pm->setService('redirect', $this->redirect);
 
-        $this->sut = new ChangePasswordController($this->changePasswordService, $this->formHelper, $this->flashMessenger, $this->config, $this->commandSender);
+        $this->sut = new ChangePasswordController($this->formHelper, $this->flashMessenger, $this->config, $this->commandSender);
         $this->sut->setPluginManager($pm);
     }
 

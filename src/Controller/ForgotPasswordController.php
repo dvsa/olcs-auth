@@ -7,7 +7,6 @@ use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Form\ForgotPasswordForm;
-use Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService;
 use Laminas\Form\Form;
 use Laminas\Http\Request;
 use Laminas\View\Model\ViewModel;

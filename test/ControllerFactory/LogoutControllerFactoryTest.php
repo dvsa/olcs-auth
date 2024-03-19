@@ -21,15 +21,6 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
     public function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
-
-        // Mock coockie service
-        $cookieService = $this->createMock(CookieService::class);
-        $this->container->expects('get')->with('Auth\CookieService')->andReturn($cookieService);
-
-        // Mock logout service
-        $logoutService = $this->createMock(LogoutService::class);
-        $this->container->expects('get')->with('Auth\LogoutService')->andReturn($logoutService);
-
         // Set realm by default, but can be overwritten
         $this->mockRequest = $this->createMock(Request::class);
 
@@ -88,8 +79,7 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testNoSelfServeLogoutUrlSpecified()
     {
         $this->expectException(
-            \InvalidArgumentException::class,
-            'Selfserve logout redirect is not available in config'
+            \InvalidArgumentException::class
         );
 
         // Set realm defined in data provider

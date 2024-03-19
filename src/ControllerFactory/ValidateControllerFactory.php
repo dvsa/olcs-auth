@@ -18,14 +18,7 @@ class ValidateControllerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ValidateController
     {
-        $cookieService = $container->get('Auth\CookieService');
-        $validateService = $container->get(ValidateService::class);
         $identityProvider = $container->get(IdentityProviderInterface::class);
-
-        assert($cookieService instanceof CookieService);
-        assert($validateService instanceof ValidateService);
-        assert($identityProvider instanceof IdentityProviderInterface);
-
-        return new ValidateController($cookieService, $validateService, $identityProvider);
+        return new ValidateController($identityProvider);
     }
 }

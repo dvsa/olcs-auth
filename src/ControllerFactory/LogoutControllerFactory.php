@@ -3,8 +3,6 @@
 namespace Dvsa\Olcs\Auth\ControllerFactory;
 
 use Dvsa\Olcs\Auth\Controller\LogoutController;
-use Dvsa\Olcs\Auth\Service\Auth\CookieService;
-use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Psr\Container\ContainerInterface;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Http\Response;
@@ -27,12 +25,6 @@ class LogoutControllerFactory implements FactoryInterface
         /** @var Response $responseService */
         $responseService = new Response();
 
-        /** @var CookieService $cookieService */
-        $cookieService = $container->get('Auth\CookieService');
-
-        /** @var LogoutService $logoutService */
-        $logoutService = $container->get('Auth\LogoutService');
-
         $sessionName = $config['auth']['session_name'] ?? '';
         if (empty($sessionName)) {
             throw new RunTimeException("Missing auth.session_name from config");
@@ -42,8 +34,6 @@ class LogoutControllerFactory implements FactoryInterface
         return new LogoutController(
             $requestService,
             $responseService,
-            $cookieService,
-            $logoutService,
             $this->isSelfServeUser($requestService),
             $this->getSelfServeLogoutUrl($config),
             $session

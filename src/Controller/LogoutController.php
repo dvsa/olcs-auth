@@ -3,8 +3,6 @@
 namespace Dvsa\Olcs\Auth\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
-use Dvsa\Olcs\Auth\Service\Auth\CookieService;
-use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
 use Laminas\Session\Container;
 use Laminas\Stdlib\RequestInterface;
 use Laminas\Http\Response;
@@ -26,16 +24,6 @@ class LogoutController extends AbstractActionController
     private $responseService;
 
     /**
-     * @var CookieService
-     */
-    private $cookieService;
-
-    /**
-     * @var LogoutService
-     */
-    private $logoutService;
-
-    /**
      * @var bool
      */
     private $isSelfServe;
@@ -55,24 +43,18 @@ class LogoutController extends AbstractActionController
      *
      * @param Request       $requestService       Laminas request service
      * @param Response      $responseService      Laminas response service
-     * @param CookieService $cookieService        Cookie service
-     * @param LogoutService $logoutService        Logout service
      * @param bool          $isSelfServe          Is the current user selfserve?
      * @param string        $selfServeRedirectUrl URL to redirect self serve user
      */
     public function __construct(
         Request $requestService,
         Response $responseService,
-        CookieService $cookieService,
-        LogoutService $logoutService,
         $isSelfServe,
         $selfServeRedirectUrl,
         Container $session
     ) {
         $this->requestService = $requestService;
         $this->responseService = $responseService;
-        $this->cookieService = $cookieService;
-        $this->logoutService = $logoutService;
         $this->isSelfServe = $isSelfServe;
         $this->selfServeRedirectUrl = $selfServeRedirectUrl;
         $this->session = $session;

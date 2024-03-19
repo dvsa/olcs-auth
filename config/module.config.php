@@ -107,23 +107,9 @@ return [
         'invokables' => [
             'Auth\ResponseDecoderService' => \Dvsa\Olcs\Auth\Service\Auth\ResponseDecoderService::class,
         ],
-        'aliases' => [
-            'Auth\ExpiredPasswordService' => ExpiredPasswordService::class,
-        ],
         'factories' => [
-            'Auth\AuthenticationService' => \Dvsa\Olcs\Auth\Service\Auth\AuthenticationService::class,
-            ExpiredPasswordService::class => ExpiredPasswordService::class,
             \Dvsa\Olcs\Auth\Service\Auth\PasswordService::class =>
                 \Dvsa\Olcs\Auth\Service\Auth\PasswordServiceFactory::class,
-            'Auth\ChangePasswordService' => \Dvsa\Olcs\Auth\Service\Auth\ChangePasswordService::class,
-            'Auth\LoginService' => LoginService::class,
-            LoginService::class => LoginService::class,
-            'Auth\LogoutService' => \Dvsa\Olcs\Auth\Service\Auth\LogoutService::class,
-            'Auth\CookieService' => \Dvsa\Olcs\Auth\Service\Auth\CookieService::class,
-            \Dvsa\Olcs\Auth\Service\Auth\ValidateService::class =>
-                \Dvsa\Olcs\Auth\Service\Auth\ValidateService::class,
-            'Auth\Client' => \Dvsa\Olcs\Auth\Service\Auth\Client\Client::class,
-            'Auth\Client\UriBuilder' => \Dvsa\Olcs\Auth\Service\Auth\Client\UriBuilder::class,
         ]
     ],
     'view_manager' => [
@@ -142,20 +128,6 @@ return [
         'guards' => [
             'LmcRbacMvc\Guard\RoutePermissionsGuard' => [
                 'auth/*' => ['*'],
-            ]
-        ]
-    ],
-    'openam' => [
-        'url' => null, // @NOTE This must be implemented
-        'realm' => null,
-        'cookie' => [
-            'name' => 'secureToken',
-            'domain' => null, // @NOTE This must be implemented
-        ],
-        'client' => [
-            'options' => [
-                'adapter' => \Laminas\Http\Client\Adapter\Curl::class,
-                'timeout' => 60,
             ]
         ]
     ],

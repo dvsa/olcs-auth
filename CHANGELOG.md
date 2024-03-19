@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.0.0](https://github.com/dvsa/olcs-auth/compare/v6.0.0...v7.0.0) (2024-03-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove OpenAM logic ([#10](https://github.com/dvsa/olcs-auth/issues/10))
+
+### Features
+
+* remove OpenAM logic ([#10](https://github.com/dvsa/olcs-auth/issues/10)) ([d742f12](https://github.com/dvsa/olcs-auth/commit/d742f12de8094896f08d9a6161f5997d3d7bac7d))
+
 ## [6.0.0](https://github.com/dvsa/olcs-auth/compare/v5.0.0...v6.0.0) (2024-02-20)
 
 

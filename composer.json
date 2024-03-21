@@ -68,5 +68,8 @@
             "bin-links": true,
             "forward-command": true
         }
+    },
+    "conflict": {
+      "doctrine/cache": "<1.4.2"
     }
 }

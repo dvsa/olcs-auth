@@ -26,7 +26,7 @@ class LoginForm
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Username"})
      * @Form\Type("Text")
      */
-    public $username = null;
+    public $username;
 
     /**
      * @Form\Options({
@@ -42,7 +42,7 @@ class LoginForm
      * @Form\Filter({"name": "Laminas\Filter\StringTrim"})
      * @Form\Type("Password")
      */
-    public $password = null;
+    public $password;
 
     /**
      * @Form\Attributes({
@@ -52,5 +52,5 @@ class LoginForm
      * })
      * @Form\Type("Submit")
      */
-    public $submit = null;
+    public $submit;
 }

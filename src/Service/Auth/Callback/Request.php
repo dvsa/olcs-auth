@@ -10,6 +10,7 @@ namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
 class Request
 {
     public const STAGE_AUTHENTICATE = 'LDAP1';
+
     public const STAGE_EXPIRED_PASSWORD = 'LDAP2';
 
     /**
@@ -47,10 +48,8 @@ class Request
      * Add callback
      *
      * @param CallbackInterface $callback Callback
-     *
-     * @return void
      */
-    public function addCallback(CallbackInterface $callback)
+    public function addCallback(CallbackInterface $callback): void
     {
         $this->callbacks[] = $callback;
     }

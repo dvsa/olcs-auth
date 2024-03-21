@@ -2,6 +2,7 @@
 
 namespace Dvsa\Olcs\Auth\Controller;
 
+use Common\Controller\Plugin\Redirect;
 use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
@@ -9,12 +10,14 @@ use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
 use Dvsa\Olcs\Transfer\Command\Auth\ChangePassword;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangePasswordResult;
 use Exception;
+use Laminas\Form\Form;
 use Laminas\View\Model\ViewModel;
 use RuntimeException;
 
 class ChangePasswordController extends AbstractController
 {
     public const MESSAGE_BASE = "Expired Password Change Failed: %s";
+
     public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
 
     private FormHelperService $formHelperService;
@@ -25,28 +28,38 @@ class ChangePasswordController extends AbstractController
 
     private CommandSender $commandSender;
 
+    protected Redirect $redirectPlugin;
+
     public function __construct(
         FormHelperService $formHelperService,
         FlashMessengerHelperService $flashMessenger,
         array $config,
-        CommandSender $commandSender
+        CommandSender $commandSender,
+        Redirect $redirectPlugin
     ) {
         $this->formHelperService = $formHelperService;
         $this->flashMessenger = $flashMessenger;
         $this->config = $config;
         $this->commandSender = $commandSender;
+        $this->redirectPlugin = $redirectPlugin;
+        $this->redirectPlugin->setController($this);
     }
 
     /**
      * Forgot password page
      *
-     * @return ViewModel
+     * @return ViewModel|\Laminas\Http\Response
+     *
      * @throws Exception
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function indexAction()
     {
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
+        /** @var Form $form */
         $form = $this->formHelperService->createFormWithRequest(ChangePasswordForm::class, $request);
 
         if ($request->isPost() === false) {
@@ -64,6 +77,7 @@ class ChangePasswordController extends AbstractController
             return $this->renderView($form);
         }
 
+        /** @var array $data */
         $data = $form->getData();
 
         $result = $this->updatePasswordCommand($data['oldPassword'], $data['newPassword']);
@@ -86,7 +100,7 @@ class ChangePasswordController extends AbstractController
     private function redirectToMyAccount()
     {
         // redir to my account
-        return $this->redirect()->toRouteAjax($this->config['my_account_route']);
+        return $this->redirectPlugin->toRouteAjax($this->config['my_account_route']);
     }
 
     /**

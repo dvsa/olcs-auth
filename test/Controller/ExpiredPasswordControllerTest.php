@@ -11,8 +11,6 @@ use Common\Service\Helper\FormHelperService;
 use Dvsa\Olcs\Auth\Container\AuthChallengeContainer;
 use Dvsa\Olcs\Auth\Controller\ExpiredPasswordController;
 use Dvsa\Olcs\Auth\Form\ChangePasswordForm;
-use Dvsa\Olcs\Auth\Service\Auth\ExpiredPasswordService;
-use Dvsa\Olcs\Auth\Service\Auth\LoginService;
 use Dvsa\Olcs\Transfer\Result\Auth\ChangeExpiredPasswordResult;
 use Laminas\Authentication\Storage\Session;
 use Laminas\Form\ElementInterface;
@@ -20,7 +18,6 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Mvc\Controller\Plugin\Layout;
 use Laminas\Mvc\Controller\Plugin\Redirect;
-use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\Controller\PluginManager;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\ViewModel;
@@ -37,6 +34,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
      * @var ExpiredPasswordController
      */
     private $sut;
+
     /**
      * @var mixed|m\LegacyMockInterface|m\MockInterface
      */
@@ -68,17 +66,16 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
     private $sessionContainer;
 
     private $layout;
-    private $url;
+
     private $pm;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->formHelper = m::mock(FormHelperService::class);
         $this->commandSender = m::mock(CommandSender::class)->makePartial();
         $this->flashMessenger = m::mock(FlashMessengerHelperService::class);
         $this->redirect = m::mock(Redirect::class)->makePartial();
         $this->layout = m::mock(Layout::class)->makePartial();
-        $this->url = m::mock(Url::class)->makePartial();
         $this->authChallengeContainer = m::mock(AuthChallengeContainer::class);
         $this->sessionContainer = m::mock(Session::class);
 
@@ -95,7 +92,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->sut->setPluginManager($this->pm);
     }
 
-    public function testIndexActionForGet()
+    public function testIndexActionForGet(): void
     {
         $this->pm->expects('get')->with('layout', null)->andReturn($this->layout);
         $this->layout->expects('__invoke')->with('auth/layout');
@@ -124,7 +121,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->assertEquals('auth/expired-password', $result->getTemplate());
     }
 
-    public function testIndexActionForInvalidPostRequest()
+    public function testIndexActionForInvalidPostRequest(): void
     {
         $this->pm->expects('get')->with('layout', null)->andReturn($this->layout);
         $this->layout->expects('__invoke')->with('auth/layout');
@@ -150,7 +147,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->assertInstanceOf(ViewModel::class, $result);
         $this->assertEquals('auth/expired-password', $result->getTemplate());
     }
-    public function testIndexActionForPostWithInvalidDataOnForm()
+
+    public function testIndexActionForPostWithInvalidDataOnForm(): void
     {
         $post = [];
 
@@ -181,7 +179,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->assertInstanceOf(ViewModel::class, $result);
         $this->assertEquals('auth/expired-password', $result->getTemplate());
     }
-    public function testIndexActionForPostWithValidDataSuccess()
+
+    public function testIndexActionForPostWithValidDataSuccess(): void
     {
         $post = [
             'newPassword' => 'new-password',
@@ -244,7 +243,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $this->sut->indexAction());
     }
 
-    public function testIndexActionForPostWithValidDataWrongChallenge()
+    public function testIndexActionForPostWithValidDataWrongChallenge(): void
     {
         $post = [
             'newPassword' => 'new-password',
@@ -279,7 +278,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->sut->indexAction();
     }
 
-    public function testIndexActionForPostWithValidDataResultNotOk()
+    public function testIndexActionForPostWithValidDataResultNotOk(): void
     {
         $post = [
             'newPassword' => 'new-password',
@@ -330,7 +329,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
      *
      * @dataProvider errorMessagesDataProvider
      */
-    public function testIndexActionForPostWithValidDataNewPasswordInvalid($errorMessage)
+    public function testIndexActionForPostWithValidDataNewPasswordInvalid($errorMessage): void
     {
         $post = [
             'newPassword' => 'new-password',
@@ -408,7 +407,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         ];
     }
 
-    public function testIndexActionForPostWithValidDataNotAuthorizedFailure()
+    public function testIndexActionForPostWithValidDataNotAuthorizedFailure(): void
     {
         $post = [
             'newPassword' => 'new-password',
@@ -477,7 +476,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $this->sut->indexAction());
     }
 
-    public function testIndexActionForPostWithValidDataInvalidResponse()
+    public function testIndexActionForPostWithValidDataInvalidResponse(): void
     {
         $post = [
             'newPassword' => 'new-password',

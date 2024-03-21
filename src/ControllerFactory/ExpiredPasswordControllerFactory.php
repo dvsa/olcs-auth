@@ -18,10 +18,8 @@ use Psr\Container\NotFoundExceptionInterface as NotFoundExceptionInterfaceAlias;
 class ExpiredPasswordControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return ExpiredPasswordController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterfaceAlias
      */

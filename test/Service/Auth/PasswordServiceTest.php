@@ -40,7 +40,7 @@ class PasswordServiceTest extends MockeryTestCase
         $cqrsResponse = $this->cqrsResponse($laminasResponse);
 
         $commandSender = m::mock(CommandSender::class);
-        $commandSender->expects('send')->with(m::type(ResetPassword::class))->andReturnUsing(
+        $commandSender->shouldReceive('send')->with(m::type(ResetPassword::class))->andReturnUsing(
             function (ResetPassword $resetPasswordCmd) use ($data, $cqrsResponse) {
                 $this->assertEquals($resetPasswordCmd->getArrayCopy(), $data);
                 return $cqrsResponse;
@@ -67,7 +67,7 @@ class PasswordServiceTest extends MockeryTestCase
         $cqrsResponse = $this->cqrsResponse($laminasResponse);
 
         $commandSender = m::mock(CommandSender::class);
-        $commandSender->expects('send')->with(m::type(ChangePassword::class))->andReturnUsing(
+        $commandSender->shouldReceive('send')->with(m::type(ChangePassword::class))->andReturnUsing(
             function (ChangePassword $changePasswordCmd) use ($data, $cqrsResponse) {
                 $this->assertEquals($changePasswordCmd->getArrayCopy(), $data);
                 return $cqrsResponse;
@@ -93,7 +93,7 @@ class PasswordServiceTest extends MockeryTestCase
         $cqrsResponse = $this->cqrsResponse($laminasResponse);
 
         $commandSender = m::mock(CommandSender::class);
-        $commandSender->expects('send')->with(m::type(ForgotPassword::class))->andReturnUsing(
+        $commandSender->shouldReceive('send')->with(m::type(ForgotPassword::class))->andReturnUsing(
             function (ForgotPassword $changePasswordCmd) use ($data, $cqrsResponse) {
                 $this->assertEquals($changePasswordCmd->getArrayCopy(), $data);
                 return $cqrsResponse;
@@ -108,7 +108,7 @@ class PasswordServiceTest extends MockeryTestCase
     private function cqrsResponse($laminasResponse): m\MockInterface
     {
         $cqrsResponse = m::mock(CqrsResponse::class);
-        $cqrsResponse->expects('getHttpResponse')->withNoArgs()->andReturn($laminasResponse);
+        $cqrsResponse->shouldReceive('getHttpResponse')->withNoArgs()->andReturn($laminasResponse);
 
         return $cqrsResponse;
     }
@@ -116,7 +116,7 @@ class PasswordServiceTest extends MockeryTestCase
     private function responseDecoder($laminasResponse): m\MockInterface
     {
         $responseDecoder = m::mock(ResponseDecoderService::class);
-        $responseDecoder->expects('decode')->with($laminasResponse)->andReturn($this->expectedResponse());
+        $responseDecoder->shouldReceive('decode')->with($laminasResponse)->andReturn($this->expectedResponse());
 
         return $responseDecoder;
     }

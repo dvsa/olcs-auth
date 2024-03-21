@@ -23,20 +23,25 @@ use RuntimeException;
 class ExpiredPasswordController extends AbstractActionController
 {
     private const MESSAGE_BASE = "Expired Password Change Failed: %s";
+
     public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
-    private const MESSAGE_AUTH_RESULT_NOT_VALID = 'Result is not valid';
-    private const MESSAGE_IDENTITY_MISSING = 'Result is missing new identity';
+
     public const MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED = 'Expected challenge name to be NEW_PASSWORD_REQUIRED';
 
     public const ROUTE_INDEX = 'dashboard';
+
     public const ROUTE_LOGIN = 'auth/login/GET';
 
     protected Form $form;
 
     private AuthChallengeContainer $authChallengeContainer;
+
     protected CommandSender $commandSender;
+
     private FormHelperService $formHelper;
+
     private FlashMessengerHelperService $flashMessenger;
+
     private Session $sessionContainer;
 
     public function __construct(
@@ -57,9 +62,12 @@ class ExpiredPasswordController extends AbstractActionController
      * Expired password page
      *
      * @return Response|ViewModel
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function indexAction()
     {
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
         $this->form = $this->formHelper->createForm(ChangePasswordForm::class);
@@ -77,6 +85,7 @@ class ExpiredPasswordController extends AbstractActionController
             return $this->renderView();
         }
 
+        /** @var array $data */
         $data = $this->form->getData();
 
         return $this->updatePasswordCommand($data['newPassword']);
@@ -87,8 +96,6 @@ class ExpiredPasswordController extends AbstractActionController
      *
      * @param bool $failed Failed
      * @param string|null $failureReason Failure reason
-     *
-     * @return ViewModel
      */
     private function renderView(bool $failed = false, ?string $failureReason = null): ViewModel
     {
@@ -105,12 +112,15 @@ class ExpiredPasswordController extends AbstractActionController
 
     /**
      * @throws Exception
+     *
      * @returns Response|ViewModel
+     *
+     * @return Response|ViewModel
      */
     private function updatePasswordCommand(string $newPassword)
     {
         if ($this->authChallengeContainer->getChallengeName() !== AuthChallengeContainer::CHALLENEGE_NEW_PASWORD_REQUIRED) {
-            throw new RuntimeException(sprintf(static::MESSAGE_BASE, static::MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED));
+            throw new RuntimeException(sprintf(self::MESSAGE_BASE, self::MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED));
         }
 
         $command = ChangeExpiredPassword::create([
@@ -123,11 +133,11 @@ class ExpiredPasswordController extends AbstractActionController
 
         // We OK?
         if (!$result->isOk()) {
-            throw new RuntimeException(sprintf(static::MESSAGE_BASE, static::MESSAGE_RESULT_NOT_OK));
+            throw new RuntimeException(sprintf(self::MESSAGE_BASE, self::MESSAGE_RESULT_NOT_OK));
         }
 
         $result = ChangeExpiredPasswordResult::fromArray($result->getResult()['flags']);
-        if (!$result->isValid() || empty($result->getIdentity())) {
+        if (!$result->isValid() || $result->getIdentity() === []) {
             return $this->handleInvalidResponse($result);
         }
 
@@ -152,17 +162,21 @@ class ExpiredPasswordController extends AbstractActionController
             $element->setMessages(['auth.expired-password.failed.reason.New password does not meet the password policy requirements.']);
             return $this->renderView(true, 'auth.expired-password.failed.reason.New password does not meet the password policy requirements.');
         }
+
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NOT_AUTHORIZED) {
             foreach ($result->getMessages() as $message) {
                 $this->flashMessenger->addErrorMessage($message);
             }
+
             return $this->redirect()->toRoute(static::ROUTE_LOGIN);
         }
+
         if ($result->getCode() === ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_MATCHES_OLD) {
             $element = $this->form->get('newPassword');
             $element->setMessages(['auth.expired-password.failed.reason.The password must be different. Try again.']);
             return $this->renderView(true, 'auth.expired-password.failed.reason.The password must be different. Try again.');
         }
+
         throw new RuntimeException(sprintf("Invalid response from ChangeExpiredPassword Command: %s", implode('. ', $result->getMessages())));
     }
 }

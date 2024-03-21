@@ -17,7 +17,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Callback\PasswordCallback;
  */
 class PasswordCallbackTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCallback()
+    public function testCallback(): void
     {
         $sut = new PasswordCallback('UserPassword', 'ID1', 'test');
         $result = $sut->toArray();

@@ -17,7 +17,7 @@ use Dvsa\Olcs\Auth\Service\Auth\Callback\NameCallback;
  */
 class NameCallbackTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCallback()
+    public function testCallback(): void
     {
         $sut = new NameCallback('Username', 'ID1', 'test');
         $result = $sut->toArray();

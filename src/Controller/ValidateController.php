@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Dvsa\Olcs\Auth\Controller;
 
-use Common\Rbac\PidIdentityProvider;
+use Common\Rbac\JWTIdentityProvider;
 use Dvsa\Olcs\Auth\ControllerFactory\ValidateControllerFactory;
-use Dvsa\Olcs\Auth\Service\Auth\CookieService;
-use Dvsa\Olcs\Auth\Service\Auth\ValidateService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 use LmcRbacMvc\Identity\IdentityProviderInterface;
@@ -31,7 +29,9 @@ class ValidateController extends AbstractActionController
      */
     public function indexAction(): JsonModel
     {
-        $respBody = $this->identityProvider->validateToken();
+        /** @var JWTIdentityProvider $identityProvider */
+        $identityProvider = $this->identityProvider;
+        $respBody = $identityProvider->validateToken();
         return new JsonModel($respBody);
     }
 }

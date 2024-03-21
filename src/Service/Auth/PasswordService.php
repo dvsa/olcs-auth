@@ -11,7 +11,9 @@ use Dvsa\Olcs\Transfer\Command\CommandInterface;
 class PasswordService
 {
     private CommandSender $commandSender;
+
     private ResponseDecoderService $responseDecoder;
+
     private string $realm;
 
     public function __construct(CommandSender $commandSender, ResponseDecoderService $responseDecoder, string $realm)
@@ -26,8 +28,6 @@ class PasswordService
      *
      * @param string  $oldPassword Old password
      * @param string  $newPassword New password
-     *
-     * @return array
      */
     public function updatePassword($oldPassword, $newPassword): array
     {
@@ -48,8 +48,6 @@ class PasswordService
      * @param string $confirmationId Confirmation id
      * @param string $tokenId        Token id
      * @param string $newPassword    New password
-     *
-     * @return array
      */
     public function resetPassword($username, $confirmationId, $tokenId, $newPassword): array
     {
@@ -69,8 +67,6 @@ class PasswordService
      * Forgot password
      *
      * @param string $username Username
-     *
-     * @return array
      */
     public function forgotPassword($username): array
     {
@@ -83,11 +79,7 @@ class PasswordService
         return $this->response($command);
     }
 
-    /**
-     * @param CommandInterface $command
-     *
-     * @return array
-     */
+
     private function response(CommandInterface $command): array
     {
         return $this->responseDecoder->decode(

@@ -13,11 +13,8 @@ class PasswordServiceFactory implements FactoryInterface
     public const MSG_MISSING_REALM = 'Auth config is missing the realm';
 
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     *
-     * @return PasswordService
      * @throws RuntimeException
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PasswordService

@@ -70,6 +70,6 @@
         }
     },
     "conflict": {
-      "doctrine/cache": "<1.4.2"
+        "doctrine/cache": "<1.4.2"
     }
 }

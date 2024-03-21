@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.0.1](https://github.com/dvsa/olcs-auth/compare/v7.0.0...v7.0.1) (2024-03-21)
+
+
+### Miscellaneous Chores
+
+* enforce lowest `doctrine/cache` ([#13](https://github.com/dvsa/olcs-auth/issues/13)) ([965b1fd](https://github.com/dvsa/olcs-auth/commit/965b1fdc4d88d8b80eeebcff507fca98cb0a8d4a))
+
 ## [7.0.0](https://github.com/dvsa/olcs-auth/compare/v6.0.0...v7.0.0) (2024-03-19)
 
 

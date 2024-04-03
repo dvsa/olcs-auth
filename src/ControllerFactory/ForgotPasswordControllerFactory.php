@@ -13,10 +13,8 @@ use Psr\Container\NotFoundExceptionInterface;
 class ForgotPasswordControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param $requestedName
      * @param array|null $options
-     * @return ForgotPasswordController
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

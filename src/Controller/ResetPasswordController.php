@@ -4,6 +4,7 @@ namespace Dvsa\Olcs\Auth\Controller;
 
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\FormHelperService;
+use Laminas\Form\Form;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Dvsa\Olcs\Auth\Form\ResetPasswordForm;
@@ -11,26 +12,12 @@ use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 
 class ResetPasswordController extends AbstractActionController
 {
-    /**
-     * @var FormHelperService
-     */
     private FormHelperService $formHelperService;
 
-    /**
-     * @var FlashMessengerHelperService
-     */
     private FlashMessengerHelperService $flashMessenger;
 
-    /**
-     * @var PasswordService
-     */
     private PasswordService $passwordService;
 
-    /**
-     * @param FormHelperService $formHelperService
-     * @param FlashMessengerHelperService $flashMessenger
-     * @param PasswordService $passwordService
-     */
     public function __construct(
         FormHelperService $formHelperService,
         FlashMessengerHelperService $flashMessenger,
@@ -45,11 +32,15 @@ class ResetPasswordController extends AbstractActionController
      * Reset password
      *
      * @return \Laminas\Http\Response|ViewModel
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function indexAction()
     {
+        /** @var \Laminas\Http\Request $request */
         $request = $this->getRequest();
 
+        /** @var Form $form */
         $form = $this->formHelperService->createFormWithRequest(ResetPasswordForm::class, $request);
 
         if ($request->isPost() === false) {
@@ -62,6 +53,7 @@ class ResetPasswordController extends AbstractActionController
             return $this->renderView($form);
         }
 
+        /** @var array $data */
         $data = $form->getData();
 
         $confirmationId = $this->params()->fromQuery('confirmationId');

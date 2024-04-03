@@ -22,18 +22,14 @@ class LogoutControllerFactory implements FactoryInterface
         /** @var Request $requestService */
         $requestService = $container->get('Request');
 
-        /** @var Response $responseService */
-        $responseService = new Response();
-
         $sessionName = $config['auth']['session_name'] ?? '';
         if (empty($sessionName)) {
             throw new RunTimeException("Missing auth.session_name from config");
         }
+
         $session = new Container($sessionName);
 
         return new LogoutController(
-            $requestService,
-            $responseService,
             $this->isSelfServeUser($requestService),
             $this->getSelfServeLogoutUrl($config),
             $session

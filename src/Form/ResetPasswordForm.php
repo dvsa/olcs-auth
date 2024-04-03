@@ -28,7 +28,7 @@ class ResetPasswordForm
      * })
      * @Form\Type("Password")
      */
-    public $newPassword = null;
+    public $newPassword;
 
     /**
      * @Form\Options({
@@ -41,7 +41,7 @@ class ResetPasswordForm
      * @Form\Validator({"name":"Laminas\Validator\StringLength","options":{"min":12}})
      * @Form\Type("Password")
      */
-    public $confirmPassword = null;
+    public $confirmPassword;
 
     /**
      * @Form\Attributes({
@@ -51,5 +51,5 @@ class ResetPasswordForm
      * })
      * @Form\Type("Submit")
      */
-    public $submit = null;
+    public $submit;
 }

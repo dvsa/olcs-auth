@@ -45,14 +45,14 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
         $this->setUpSut();
 
         // Assert
-        $this->assertIsCallable([$this->sut, '__invoke']);
+        $this->assertIsCallable(fn(\Psr\Container\ContainerInterface $container, string $requestedName, ?array $options = null): \Dvsa\Olcs\Auth\Controller\ExpiredPasswordController => $this->sut->__invoke($container, $requestedName, $options));
     }
 
     /**
      * @test
      * @depends invokeIsCallable
      */
-    public function invokeReturnsAnInstanceOfExpiredPasswordController()
+    public function invokeReturnsAnInstanceOfExpiredPasswordController(): void
     {
         // Setup
         $this->setUpSut();
@@ -71,12 +71,14 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
 
     protected function setUpConfig(array $config = []): array
     {
-        if (!$this->serviceManager->has('Config') || !empty($config)) {
-            if (empty($config)) {
-                $config = static::CONFIG_VALID;
+        if (!$this->serviceManager->has('Config') || $config !== []) {
+            if ($config === []) {
+                $config = self::CONFIG_VALID;
             }
+
             $this->serviceManager->setService('Config', $config);
         }
+
         return $this->serviceManager->get('Config');
     }
 

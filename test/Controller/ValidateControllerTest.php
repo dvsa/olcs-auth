@@ -15,9 +15,6 @@ use LmcRbacMvc\Identity\IdentityProviderInterface;
  */
 class ValidateControllerTest extends MockeryTestCase
 {
-    /** @var  ValidateController */
-    private $sut;
-
     public function testIndexAction(): void
     {
         $returnedArray = ['response' => 'content'];

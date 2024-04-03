@@ -21,7 +21,7 @@ use Laminas\Http\Response;
  */
 class ResponseDecoderServiceTest extends MockeryTestCase
 {
-    public function testDecodeFailed()
+    public function testDecodeFailed(): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -32,7 +32,7 @@ class ResponseDecoderServiceTest extends MockeryTestCase
         $sut->decode($response);
     }
 
-    public function testDecode()
+    public function testDecode(): void
     {
         $response = new Response();
         $response->setStatusCode(200);

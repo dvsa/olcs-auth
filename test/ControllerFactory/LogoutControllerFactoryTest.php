@@ -15,10 +15,12 @@ use Mockery as m;
 class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $container;
+
     private $mockRequest;
+
     private $config;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->container = m::mock(ContainerInterface::class);
         // Set realm by default, but can be overwritten
@@ -35,11 +37,10 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
 
     /**
      * @param string $realm             Realm name
-     * @param bool   $expectedException Are we expecting an exception?
      *
      * @dataProvider realmDataProvider
      */
-    public function testLogoutControllerFactoryWithRealm($realm)
+    public function testLogoutControllerFactoryWithRealm($realm): void
     {
         // Set realm defined in data provider
         $this->mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
@@ -76,7 +77,7 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
         ];
     }
 
-    public function testNoSelfServeLogoutUrlSpecified()
+    public function testNoSelfServeLogoutUrlSpecified(): void
     {
         $this->expectException(
             \InvalidArgumentException::class

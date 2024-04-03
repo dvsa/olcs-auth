@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.1.0](https://github.com/dvsa/olcs-auth/compare/v7.0.0...v7.1.0) (2024-04-03)
+
+
+### Features
+
+* apply static analysis ([8a4f157](https://github.com/dvsa/olcs-auth/commit/8a4f157716ffd9b78ca25eaeedd169be7a67700c))
+
+
+### Miscellaneous Chores
+
+* enforce lowest `doctrine/cache` ([#13](https://github.com/dvsa/olcs-auth/issues/13)) ([965b1fd](https://github.com/dvsa/olcs-auth/commit/965b1fdc4d88d8b80eeebcff507fca98cb0a8d4a))
+
 ## [7.0.0](https://github.com/dvsa/olcs-auth/compare/v6.0.0...v7.0.0) (2024-03-19)
 
 

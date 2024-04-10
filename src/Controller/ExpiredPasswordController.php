@@ -34,28 +34,8 @@ class ExpiredPasswordController extends AbstractActionController
 
     protected Form $form;
 
-    private AuthChallengeContainer $authChallengeContainer;
-
-    protected CommandSender $commandSender;
-
-    private FormHelperService $formHelper;
-
-    private FlashMessengerHelperService $flashMessenger;
-
-    private Session $sessionContainer;
-
-    public function __construct(
-        AuthChallengeContainer $authChallengeContainer,
-        CommandSender $commandSender,
-        FlashMessengerHelperService $flashMessenger,
-        FormHelperService $formHelper,
-        Session $sessionContainer
-    ) {
-        $this->authChallengeContainer = $authChallengeContainer;
-        $this->commandSender = $commandSender;
-        $this->flashMessenger = $flashMessenger;
-        $this->formHelper = $formHelper;
-        $this->sessionContainer = $sessionContainer;
+    public function __construct(private AuthChallengeContainer $authChallengeContainer, protected CommandSender $commandSender, private FlashMessengerHelperService $flashMessenger, private FormHelperService $formHelper, private Session $sessionContainer)
+    {
     }
 
     /**

@@ -12,20 +12,8 @@ use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 
 class ResetPasswordController extends AbstractActionController
 {
-    private FormHelperService $formHelperService;
-
-    private FlashMessengerHelperService $flashMessenger;
-
-    private PasswordService $passwordService;
-
-    public function __construct(
-        FormHelperService $formHelperService,
-        FlashMessengerHelperService $flashMessenger,
-        PasswordService $passwordService
-    ) {
-        $this->formHelperService = $formHelperService;
-        $this->flashMessenger = $flashMessenger;
-        $this->passwordService = $passwordService;
+    public function __construct(private FormHelperService $formHelperService, private FlashMessengerHelperService $flashMessenger, private PasswordService $passwordService)
+    {
     }
 
     /**

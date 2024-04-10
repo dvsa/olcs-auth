@@ -15,21 +15,6 @@ abstract class AbstractTextPromptCallback implements CallbackInterface
     protected $type;
 
     /**
-     * @var string
-     */
-    protected $value;
-
-    /**
-     * @var string
-     */
-    private $label;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * Construct the object
      *
      * @param string $label Label
@@ -38,11 +23,8 @@ abstract class AbstractTextPromptCallback implements CallbackInterface
      *
      * @return void
      */
-    public function __construct($label, $name, $value)
+    public function __construct(private $label, private $name, protected $value)
     {
-        $this->label = $label;
-        $this->name = $name;
-        $this->value = $value;
     }
 
     /**

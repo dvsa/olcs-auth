@@ -10,20 +10,14 @@ namespace Dvsa\Olcs\Auth\Service\Auth\Callback;
 class ConfirmationCallback implements CallbackInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * Create a confirmation callback
      *
      * @param string $name Name
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct(private $name)
     {
-        $this->name = $name;
     }
 
     /**

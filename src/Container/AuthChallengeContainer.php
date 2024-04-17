@@ -4,6 +4,11 @@ namespace Dvsa\Olcs\Auth\Container;
 
 use Laminas\Session\Container;
 
+/**
+ * Class AuthChallengeContainer
+ *
+ * @template-extends Container<string, string>
+ */
 class AuthChallengeContainer extends Container
 {
     protected const CONTAINER_NAME = 'authChallenge';

@@ -82,7 +82,7 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
         return $this->serviceManager->get('Config');
     }
 
-    protected function setUpDefaultServices(ServiceManager $serviceManager)
+    protected function setUpDefaultServices(ServiceManager $serviceManager): ServiceManager|array
     {
         $serviceManager->setService(CommandSender::class, $this->setUpMockService(CommandSender::class));
         $serviceManager->setService(FormHelperService::class, $this->setUpMockService(FormHelperService::class));
@@ -90,6 +90,7 @@ class ExpiredPasswordControllerFactoryTest extends MockeryTestCase
         $serviceManager->setService(Session::class, $this->setUpMockService(Session::class));
 
         $this->setUpConfig();
+        return $serviceManager;
     }
 
     protected function setUp(): void

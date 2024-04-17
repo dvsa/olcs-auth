@@ -4,7 +4,7 @@
     "license": "MIT",
     "type": "library",
     "require": {
-        "php": "^8.0",
+        "php": "~8.0.0",
         "laminas/laminas-authentication": "^2.5",
         "laminas/laminas-form": "^3.0.0",
         "laminas/laminas-http": "^2.5",

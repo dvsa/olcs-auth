@@ -20,28 +20,13 @@ class ChangePasswordController extends AbstractController
 
     public const MESSAGE_RESULT_NOT_OK = 'Result is not ok';
 
-    private FormHelperService $formHelperService;
-
-    private FlashMessengerHelperService $flashMessenger;
-
-    private array $config;
-
-    private CommandSender $commandSender;
-
-    protected Redirect $redirectPlugin;
-
     public function __construct(
-        FormHelperService $formHelperService,
-        FlashMessengerHelperService $flashMessenger,
-        array $config,
-        CommandSender $commandSender,
-        Redirect $redirectPlugin
+        private FormHelperService $formHelperService,
+        private FlashMessengerHelperService $flashMessenger,
+        private array $config,
+        private CommandSender $commandSender,
+        protected Redirect $redirectPlugin
     ) {
-        $this->formHelperService = $formHelperService;
-        $this->flashMessenger = $flashMessenger;
-        $this->config = $config;
-        $this->commandSender = $commandSender;
-        $this->redirectPlugin = $redirectPlugin;
         $this->redirectPlugin->setController($this);
     }
 

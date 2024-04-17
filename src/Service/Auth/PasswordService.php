@@ -10,17 +10,8 @@ use Dvsa\Olcs\Transfer\Command\CommandInterface;
 
 class PasswordService
 {
-    private CommandSender $commandSender;
-
-    private ResponseDecoderService $responseDecoder;
-
-    private string $realm;
-
-    public function __construct(CommandSender $commandSender, ResponseDecoderService $responseDecoder, string $realm)
+    public function __construct(private CommandSender $commandSender, private ResponseDecoderService $responseDecoder, private string $realm)
     {
-        $this->commandSender = $commandSender;
-        $this->responseDecoder = $responseDecoder;
-        $this->realm = $realm;
     }
 
     /**

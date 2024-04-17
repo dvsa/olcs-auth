@@ -14,16 +14,8 @@ use Dvsa\Olcs\Auth\Service\Auth\PasswordService;
 
 class ForgotPasswordController extends AbstractController
 {
-    private FormHelperService $formHelperService;
-
-    private PasswordService $passwordService;
-
-    public function __construct(
-        FormHelperService $formHelperService,
-        PasswordService $passwordService
-    ) {
-        $this->formHelperService = $formHelperService;
-        $this->passwordService = $passwordService;
+    public function __construct(private FormHelperService $formHelperService, private PasswordService $passwordService)
+    {
     }
 
     /**
@@ -56,7 +48,7 @@ class ForgotPasswordController extends AbstractController
             /** @var array $formData */
             $formData = $form->getData();
             $result = $this->passwordService->forgotPassword($formData['username']);
-        } catch (Cqrs\Exception $exception) {
+        } catch (Cqrs\Exception) {
             return $this->renderFormView($form, true, 'unknown-error');
         }
 

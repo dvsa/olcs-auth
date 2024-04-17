@@ -14,21 +14,6 @@ class Request
     public const STAGE_EXPIRED_PASSWORD = 'LDAP2';
 
     /**
-     * @var string
-     */
-    private $authId;
-
-    /**
-     * @var string
-     */
-    private $stage;
-
-    /**
-     * @var CallbackInterface[]|array
-     */
-    private $callbacks = [];
-
-    /**
      * Create a request
      *
      * @param string                    $authId    Auth id
@@ -37,11 +22,8 @@ class Request
      *
      * @return void
      */
-    public function __construct($authId, $stage, array $callbacks = [])
+    public function __construct(private $authId, private $stage, private array $callbacks = [])
     {
-        $this->authId = $authId;
-        $this->stage = $stage;
-        $this->callbacks = $callbacks;
     }
 
     /**

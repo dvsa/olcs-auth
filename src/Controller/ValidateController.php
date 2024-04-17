@@ -16,12 +16,8 @@ use LmcRbacMvc\Identity\IdentityProviderInterface;
  */
 class ValidateController extends AbstractActionController
 {
-    private IdentityProviderInterface $identityProvider;
-
-    public function __construct(
-        IdentityProviderInterface $identityProvider
-    ) {
-        $this->identityProvider = $identityProvider;
+    public function __construct(private IdentityProviderInterface $identityProvider)
+    {
     }
 
     /**

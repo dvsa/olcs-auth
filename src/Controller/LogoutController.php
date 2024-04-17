@@ -11,34 +11,13 @@ use Laminas\Session\Container;
 class LogoutController extends AbstractActionController
 {
     /**
-     * @var bool
-     */
-    private $isSelfServe;
-
-    /**
-     * @var string
-     */
-    private $selfServeRedirectUrl;
-
-    /**
-     * @var Container
-     */
-    private $session;
-
-    /**
      * LogoutController constructor.
      *
      * @param bool          $isSelfServe          Is the current user selfserve?
      * @param string        $selfServeRedirectUrl URL to redirect self serve user
      */
-    public function __construct(
-        $isSelfServe,
-        $selfServeRedirectUrl,
-        Container $session
-    ) {
-        $this->isSelfServe = $isSelfServe;
-        $this->selfServeRedirectUrl = $selfServeRedirectUrl;
-        $this->session = $session;
+    public function __construct(private $isSelfServe, private $selfServeRedirectUrl, private Container $session)
+    {
     }
 
     /**

@@ -1,5 +1,21 @@
 # Changelog
 
+## [8.0.0](https://github.com/dvsa/olcs-auth/compare/v7.1.0...v8.0.0) (2024-04-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Apply Rector set for PHP 8 ([#15](https://github.com/dvsa/olcs-auth/issues/15))
+
+### Features
+
+* Apply Rector set for PHP 8 ([#15](https://github.com/dvsa/olcs-auth/issues/15)) ([bf240ed](https://github.com/dvsa/olcs-auth/commit/bf240ede590afef1b277587bb4b2c0435ea7e3f1))
+
+
+### Miscellaneous Chores
+
+* bump common minimum dependency ([#17](https://github.com/dvsa/olcs-auth/issues/17)) ([a163c2b](https://github.com/dvsa/olcs-auth/commit/a163c2b4442c8d546e915de9b9affe3840f5ec8e))
+
 ## [7.1.0](https://github.com/dvsa/olcs-auth/compare/v7.0.0...v7.1.0) (2024-04-03)
 
 

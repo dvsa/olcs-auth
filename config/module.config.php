@@ -126,7 +126,7 @@ return [
     ],
     'lmc_rbac' => [
         'guards' => [
-            'LmcRbacMvc\Guard\RoutePermissionsGuard' => [
+            \LmcRbacMvc\Guard\RoutePermissionsGuard::class => [
                 'auth/*' => ['*'],
             ]
         ]

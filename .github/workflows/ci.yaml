@@ -16,7 +16,7 @@ jobs:
   static-analysis:
     uses: dvsa/.github/.github/workflows/php-library-static.yml@main
     with:
-      php-versions: "[\"8.0\", \"8.1\", \"8.2\", \"8.3\"]"
+      php-version: '8.3'
 
   tests:
     uses: dvsa/.github/.github/workflows/php-library-tests.yml@main

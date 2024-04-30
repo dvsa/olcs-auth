@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.1.0](https://github.com/dvsa/olcs-auth/compare/v8.0.0...v8.1.0) (2024-04-30)
+
+
+### Features
+
+* PHP ^8.0 ([#18](https://github.com/dvsa/olcs-auth/issues/18)) ([e353bb7](https://github.com/dvsa/olcs-auth/commit/e353bb7f545525342ddddc01033466f368d7b778))
+
 ## [8.0.0](https://github.com/dvsa/olcs-auth/compare/v7.1.0...v8.0.0) (2024-04-18)
 
 

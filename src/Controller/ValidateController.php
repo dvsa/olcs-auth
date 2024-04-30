@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dvsa\Olcs\Auth\Controller;
 
+use ArrayAccess;
 use Common\Rbac\JWTIdentityProvider;
 use Dvsa\Olcs\Auth\ControllerFactory\ValidateControllerFactory;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -27,6 +28,7 @@ class ValidateController extends AbstractActionController
     {
         /** @var JWTIdentityProvider $identityProvider */
         $identityProvider = $this->identityProvider;
+        /** @var ArrayAccess<string, mixed> $respBody */
         $respBody = $identityProvider->validateToken();
         return new JsonModel($respBody);
     }

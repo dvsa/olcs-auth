@@ -44,7 +44,7 @@
             "laminas/laminas-dependency-plugin": true
         },
         "platform": {
-            "ext-redis": "^5.0.2 || ^6.0"
+            "ext-redis": "5.0.2"
         },
         "sort-packages": true
     },

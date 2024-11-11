@@ -23,7 +23,7 @@
         "bamarni/composer-bin-plugin": "^1.8",
         "johnkary/phpunit-speedtrap": "^4.0",
         "mockery/mockery": "^1.6",
-        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan": "^1.10 || ^2.0",
         "phpunit/phpunit": "^9.6"
     },
     "minimum-stability": "dev",

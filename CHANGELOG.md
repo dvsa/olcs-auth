@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.1.1](https://github.com/dvsa/olcs-auth/compare/v8.1.0...v8.1.1) (2024-11-12)
+
+
+### Bug Fixes
+
+* expired password journey now redirects correctly VOL-5896 ([#23](https://github.com/dvsa/olcs-auth/issues/23)) ([de9e538](https://github.com/dvsa/olcs-auth/commit/de9e538c725278456773af07b359e50cb1fdfc6e))
+
 ## [8.1.0](https://github.com/dvsa/olcs-auth/compare/v8.0.0...v8.1.0) (2024-04-30)
 
 

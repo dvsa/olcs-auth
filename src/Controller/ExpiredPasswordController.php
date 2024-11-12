@@ -28,7 +28,7 @@ class ExpiredPasswordController extends AbstractActionController
 
     public const MESSAGE_CHALLENGE_NOT_NEW_PASSWORD_REQUIRED = 'Expected challenge name to be NEW_PASSWORD_REQUIRED';
 
-    public const ROUTE_INDEX = 'dashboard';
+    public const ROUTE_INDEX = 'index';
 
     public const ROUTE_LOGIN = 'auth/login/GET';
 

@@ -16,7 +16,7 @@
         "laminas/laminas-view": "^2.11",
         "lm-commons/lmc-rbac-mvc": "^3.3.1",
         "olcs/olcs-common": "^7.1",
-        "olcs/olcs-transfer": "^7.1",
+        "olcs/olcs-transfer": "^7.1 || dev-VOL-5882-PSV-Epic",
         "psr/container": "^1.1|^2"
     },
     "require-dev": {

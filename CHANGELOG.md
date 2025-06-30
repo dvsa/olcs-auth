@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.2.0](https://github.com/dvsa/olcs-auth/compare/v8.1.1...v8.2.0) (2025-06-30)
+
+
+### Features
+
+* common-bump ([#28](https://github.com/dvsa/olcs-auth/issues/28)) ([b50c308](https://github.com/dvsa/olcs-auth/commit/b50c308721f861e5029a98943b8fc2cd586b7b64))
+
 ## [8.1.1](https://github.com/dvsa/olcs-auth/compare/v8.1.0...v8.1.1) (2024-11-12)
 
 

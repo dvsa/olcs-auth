@@ -23,6 +23,7 @@ class ResetPasswordController extends AbstractActionController
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */

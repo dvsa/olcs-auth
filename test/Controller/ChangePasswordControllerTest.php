@@ -69,6 +69,8 @@ class ChangePasswordControllerTest extends MockeryTestCase
 
         $this->sut = new ChangePasswordController($this->formHelper, $this->flashMessenger, $this->config, $this->commandSender, $this->redirect);
         $this->sut->setPluginManager($pm);
+
+        parent::setUp();
     }
 
     public function testIndexActionForGet(): void
@@ -79,6 +81,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
             ->andReturn($form);
 
+        /** @var HttpRequest $request */
         $request = $this->sut->getRequest();
         $request->setMethod('GET');
 
@@ -100,6 +103,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
             ->andReturn($form);
 
+        /** @var HttpRequest $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
@@ -122,6 +126,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
             ->andReturn($form);
 
+        /** @var HttpRequest $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
@@ -147,6 +152,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
             ->andReturn($form);
 
+        /** @var HttpRequest $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
@@ -188,6 +194,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
             ->andReturn($form);
 
+        /** @var HttpRequest $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new \Laminas\Stdlib\Parameters($post));
@@ -229,6 +236,7 @@ class ChangePasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class, m::type(HttpRequest::class))
             ->andReturn($form);
 
+        /** @var HttpRequest $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new \Laminas\Stdlib\Parameters($post));

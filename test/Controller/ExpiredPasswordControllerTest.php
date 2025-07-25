@@ -15,6 +15,7 @@ use Dvsa\Olcs\Transfer\Result\Auth\ChangeExpiredPasswordResult;
 use Laminas\Authentication\Storage\Session;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
+use Laminas\Http\Request;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Mvc\Controller\Plugin\Layout;
 use Laminas\Mvc\Controller\Plugin\Redirect;
@@ -30,40 +31,19 @@ use RuntimeException;
  */
 class ExpiredPasswordControllerTest extends MockeryTestCase
 {
-    /**
-     * @var ExpiredPasswordController
-     */
-    private $sut;
+    private ExpiredPasswordController $sut;
 
-    /**
-     * @var mixed|m\LegacyMockInterface|m\MockInterface
-     */
-    private $formHelper;
+    private m\MockInterface|m\ExpectationInterface $formHelper;
 
-    /**
-     * @var m\Mock|CommandSender
-     */
-    private $commandSender;
+    private m\MockInterface|m\ExpectationInterface $commandSender;
 
-    /**
-     * @var FlashMessengerHelperService|m\LegacyMockInterface|m\MockInterface
-     */
-    private $flashMessenger;
+    private m\MockInterface|m\ExpectationInterface $flashMessenger;
 
-    /**
-     * @var m\Mock
-     */
-    private $redirect;
+    private m\MockInterface|m\ExpectationInterface $redirect;
 
-    /**
-     * @var AuthChallengeContainer|m\LegacyMockInterface|m\MockInterface
-     */
-    private $authChallengeContainer;
+    private m\MockInterface|m\ExpectationInterface $authChallengeContainer;
 
-    /**
-     * @var Session|m\LegacyMockInterface|m\MockInterface
-     */
-    private $sessionContainer;
+    private m\MockInterface|m\ExpectationInterface $sessionContainer;
 
     private $layout;
 
@@ -90,6 +70,8 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             $this->sessionContainer
         );
         $this->sut->setPluginManager($this->pm);
+
+        parent::setUp();
     }
 
     public function testIndexActionForGet(): void
@@ -112,6 +94,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class)
             ->andReturn($form);
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('GET');
 
@@ -139,6 +122,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class)
             ->andReturn($form);
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('GET');
 
@@ -170,6 +154,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->with(ChangePasswordForm::class)
             ->andReturn($form);
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
@@ -236,6 +221,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->with(ExpiredPasswordController::ROUTE_INDEX)
             ->andReturn('REDIRECT');
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
@@ -268,6 +254,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->expects('getChallengeName')
             ->andReturn('challenge-name');
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
@@ -316,6 +303,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->commandSender->expects('send')
             ->andReturn($mockResponse);
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
@@ -326,7 +314,6 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
     }
 
     /**
-     *
      * @dataProvider errorMessagesDataProvider
      */
     public function testIndexActionForPostWithValidDataNewPasswordInvalid($errorMessage): void
@@ -384,6 +371,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->commandSender->expects('send')
             ->andReturn($mockResponse);
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
@@ -396,10 +384,9 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
 
 
     /**
-     * @return array[]
      * dataProvider for testIndexActionForPostWithValidDataNewPasswordInvalid
      */
-    public function errorMessagesDataProvider()
+    public function errorMessagesDataProvider(): array
     {
         return [
             'FAILURE_NEW_PASSWORD_INVALID' => [ChangeExpiredPasswordResult::FAILURE_NEW_PASSWORD_INVALID],
@@ -469,6 +456,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
             ->with(ExpiredPasswordController::ROUTE_LOGIN)
             ->andReturn('REDIRECT');
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));
@@ -529,6 +517,7 @@ class ExpiredPasswordControllerTest extends MockeryTestCase
         $this->commandSender->shouldReceive('send')
             ->andReturn($mockResponse);
 
+        /** @var Request $request */
         $request = $this->sut->getRequest();
         $request->setMethod('POST');
         $request->setPost(new Parameters($post));

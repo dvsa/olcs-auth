@@ -25,6 +25,7 @@ class ForgotPasswordController extends AbstractController
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
+    #[\Override]
     public function indexAction()
     {
         if ($this->isButtonPressed('cancel')) {

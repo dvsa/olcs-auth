@@ -113,7 +113,7 @@ class PasswordServiceTest extends MockeryTestCase
         return $cqrsResponse;
     }
 
-    private function responseDecoder($laminasResponse): m\MockInterface
+    private function responseDecoder(m\MockInterface $laminasResponse): m\MockInterface|ResponseDecoderService
     {
         $responseDecoder = m::mock(ResponseDecoderService::class);
         $responseDecoder->shouldReceive('decode')->with($laminasResponse)->andReturn($this->expectedResponse());

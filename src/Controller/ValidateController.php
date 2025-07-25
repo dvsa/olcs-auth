@@ -24,6 +24,7 @@ class ValidateController extends AbstractActionController
     /**
      * Validate is user session (token) is valid (active)
      */
+    #[\Override]
     public function indexAction(): JsonModel
     {
         /** @var JWTIdentityProvider $identityProvider */

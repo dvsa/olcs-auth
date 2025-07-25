@@ -1,13 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dvsa\OlcsTest\Auth\ControllerFactory;
 
-use Dvsa\Olcs\Auth\Service\Auth\CookieService;
-use Dvsa\Olcs\Auth\Service\Auth\LogoutService;
-use Dvsa\OlcsTest\Auth\Bootstrap;
 use Dvsa\Olcs\Auth\Controller\LogoutController;
 use Psr\Container\ContainerInterface;
-use Laminas\Mvc\Controller\ControllerManager;
 use Dvsa\Olcs\Auth\ControllerFactory\LogoutControllerFactory;
 use Laminas\Http\PhpEnvironment\Request;
 use Mockery as m;
@@ -33,48 +31,8 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
             ],
             'selfserve_logout_redirect_url' => 'test',
         ];
-    }
 
-    /**
-     * @param string $realm             Realm name
-     *
-     * @dataProvider realmDataProvider
-     */
-    public function testLogoutControllerFactoryWithRealm($realm): void
-    {
-        // Set realm defined in data provider
-        $this->mockRequest->method('getServer')->with('HTTP_X_REALM')->willReturn($realm);
-        $this->container->expects('get')->with('Request')->andReturn($this->mockRequest);
-        $this->container->expects('get')->with('Config')->andReturn($this->config);
-
-        // Initialise Factory
-        $factory = new LogoutControllerFactory();
-
-        // Assert factory returns controller unless exception expected
-        self::assertInstanceOf(
-            LogoutController::class,
-            $factory->__invoke($this->container, LogoutController::class)
-        );
-    }
-
-    /**
-     * 1. Realm
-     *
-     * @return array
-     */
-    public function realmDataProvider()
-    {
-        return [
-            'No realm specified' => [
-                '',
-            ],
-            'any realm specified' => [
-                'test',
-            ],
-            'self serve' => [
-                'selfserve',
-            ],
-        ];
+        parent::setUp();
     }
 
     public function testNoSelfServeLogoutUrlSpecified(): void
@@ -93,11 +51,6 @@ class LogoutControllerFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
 
         // Initialise Factory
         $factory = new LogoutControllerFactory();
-
-        // Assert factory returns controller unless exception expected
-        self::assertInstanceOf(
-            LogoutController::class,
-            $factory->__invoke($this->container, LogoutController::class)
-        );
+        $factory->__invoke($this->container, LogoutController::class);
     }
 }

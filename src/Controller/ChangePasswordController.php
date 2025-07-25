@@ -39,6 +39,7 @@ class ChangePasswordController extends AbstractController
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
+    #[\Override]
     public function indexAction()
     {
         /** @var \Laminas\Http\Request $request */

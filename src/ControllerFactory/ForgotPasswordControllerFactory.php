@@ -18,6 +18,7 @@ class ForgotPasswordControllerFactory implements FactoryInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
+    #[\Override]
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null): ForgotPasswordController
     {
         /** @var FormHelperService $formHelperService */

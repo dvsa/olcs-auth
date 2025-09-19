@@ -25,6 +25,7 @@ class ConfirmationCallback implements CallbackInterface
      *
      * @return array
      */
+    #[\Override]
     public function toArray()
     {
         return [

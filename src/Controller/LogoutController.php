@@ -27,6 +27,7 @@ class LogoutController extends AbstractActionController
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */
+    #[\Override]
     public function indexAction()
     {
         $this->session->exchangeArray([]);

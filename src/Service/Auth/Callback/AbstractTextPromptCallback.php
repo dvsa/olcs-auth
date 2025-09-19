@@ -32,6 +32,7 @@ abstract class AbstractTextPromptCallback implements CallbackInterface
      *
      * @return array
      */
+    #[\Override]
     public function toArray()
     {
         return [

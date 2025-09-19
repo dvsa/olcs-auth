@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.0.0](https://github.com/dvsa/olcs-auth/compare/v8.2.0...v9.0.0) (2025-09-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* update ci to target minimum php 8.2, bump composer deps, fix static analysis VOL-6497 ([#30](https://github.com/dvsa/olcs-auth/issues/30))
+
+### Code Refactoring
+
+* update ci to target minimum php 8.2, bump composer deps, fix static analysis VOL-6497 ([#30](https://github.com/dvsa/olcs-auth/issues/30)) ([9f5c822](https://github.com/dvsa/olcs-auth/commit/9f5c8227f83ed08cd3690cca617a1638fb4ca490))
+
 ## [8.2.0](https://github.com/dvsa/olcs-auth/compare/v8.1.1...v8.2.0) (2025-06-30)
 
 

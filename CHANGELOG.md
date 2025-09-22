@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1](https://github.com/dvsa/olcs-auth/compare/v9.0.0...v9.0.1) (2025-09-22)
+
+
+### Miscellaneous Chores
+
+* bump required common and transfer to new major versions ([#33](https://github.com/dvsa/olcs-auth/issues/33)) ([817a90d](https://github.com/dvsa/olcs-auth/commit/817a90d3398c848cb88da6f544654a7e73178e54))
+
 ## [9.0.0](https://github.com/dvsa/olcs-auth/compare/v8.2.0...v9.0.0) (2025-09-19)
 
 

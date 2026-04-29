@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.2](https://github.com/dvsa/olcs-auth/compare/v9.0.1...v9.0.2) (2026-04-29)
+
+
+### Miscellaneous Chores
+
+* vol 6349 secrets scan ([#36](https://github.com/dvsa/olcs-auth/issues/36)) ([665ef04](https://github.com/dvsa/olcs-auth/commit/665ef04e61fe283932f247bc5efef456bcabf64f))
+
 ## [9.0.1](https://github.com/dvsa/olcs-auth/compare/v9.0.0...v9.0.1) (2025-09-22)
 
 

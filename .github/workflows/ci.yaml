@@ -5,6 +5,12 @@ on:
   schedule:
     - cron: '0 0 * * 1'
 
+permissions:
+  contents: read
+  pull-requests: read
+  security-events: write
+  actions: read
+
 jobs:
   security:
     uses: dvsa/.github/.github/workflows/php-library-security.yml@main

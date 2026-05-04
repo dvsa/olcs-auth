@@ -15,7 +15,7 @@
         "laminas/laminas-stdlib": "^3.19",
         "laminas/laminas-validator": "2.64.0",
         "laminas/laminas-view": "^2.41",
-        "lm-commons/lmc-rbac-mvc": "^3.5",
+        "lm-commons/lmc-rbac-mvc": "^3.5 || ^4.0",
         "olcs/olcs-common": "^9.0",
         "olcs/olcs-transfer": "^8.0",
         "psr/container": "^1.1|^2"
